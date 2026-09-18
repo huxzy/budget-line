@@ -43,7 +43,7 @@ export function ResultCard({ project, variant = "compact", cited = false, index 
       <Link
         href={href}
         className={cn(
-          "grid grid-cols-1 items-center gap-3 rounded-[14px] bg-card px-5 py-4 no-underline shadow-card transition-transform active:scale-[0.99] hover:no-underline sm:grid-cols-[minmax(0,1fr)_170px_auto] sm:gap-6",
+          "grid grid-cols-1 items-center gap-3 rounded-[14px] bg-card px-5 py-4 no-underline shadow-card transition-transform active:scale-[0.99] hover:no-underline sm:grid-cols-[minmax(0,1fr)_170px_190px] sm:gap-6",
           className,
         )}
       >

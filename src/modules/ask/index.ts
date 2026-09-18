@@ -3,4 +3,4 @@ export * from "./types";
 export { AskScreen } from "./components/AskScreen";
 export { VoiceRail } from "./components/VoiceRail";
 export { startersFor } from "./services/starters";
-export { countWord, sectorLabel, toTurn } from "./services/turns";
+export { countWord, toTurn } from "./services/turns";

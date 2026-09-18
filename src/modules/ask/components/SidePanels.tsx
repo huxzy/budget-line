@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Amount } from "@/components/ui";
 import { formatCompact, type StateSummary } from "@/modules/budget";
 import type { SummaryPayload } from "../types";
-import { countWord, sectorLabel } from "../services/turns";
+import { sectorLabel } from "@/modules/budget";
+import { countWord } from "../services/turns";
 
 export function LgaSummaryPanel({ summary, sector, shown }: { summary: SummaryPayload; sector?: string | null; shown?: number }) {
   const place = summary.lgaLabel.replace(/ LGA$/, "");

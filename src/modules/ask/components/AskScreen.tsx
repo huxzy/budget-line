@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AppHeader } from "@/components/shell";
 import type { StateSummary } from "@/modules/budget";
@@ -25,7 +26,10 @@ export function AskScreen({ voice, registry, lgas, languageName }: Props) {
   const session = useVoiceSession(voice, { lga: prefs.lga, lgaLabel: prefs.lgaLabel });
   const summary = useLgaSummary(ready ? prefs.lga : null);
   const place = prefs.lgaLabel?.replace(/ LGA$/, "") ?? null;
-  const starters = useMemo(() => startersFor(place), [place]);
+  // A question handed over from another screen ("Ask about this") leads the starters;
+  // it still needs a tap, since a call cannot start without one.
+  const handed = useSearchParams().get("ask");
+  const starters = useMemo(() => (handed ? [{ text: handed }, ...startersFor(place)] : startersFor(place)), [handed, place]);
 
   const turns: Turn[] = useMemo(() => session.results.map((r, i) => toTurn(r, i)), [session.results]);
   const turn = turns.length ? turns[turns.length - 1] : null;

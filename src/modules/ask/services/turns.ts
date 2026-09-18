@@ -1,19 +1,6 @@
-import { formatCompact } from "@/modules/budget";
+import { formatCompact, sectorLabel } from "@/modules/budget";
 import type { ToolResult } from "@/modules/voice";
 import type { MissPayload, ProjectsPayload, SummaryPayload, Turn } from "../types";
-
-const SECTOR_LABEL: Record<string, string> = {
-  health: "Health",
-  "roads and works": "Roads and works",
-  education: "Education",
-  water: "Water",
-  agriculture: "Agriculture",
-  other: "Other",
-};
-
-export function sectorLabel(s: string | null | undefined) {
-  return s ? (SECTOR_LABEL[s] ?? s) : null;
-}
 
 export function isProjects(p: unknown): p is ProjectsPayload {
   return !!p && typeof p === "object" && (p as ProjectsPayload).found === true && Array.isArray((p as ProjectsPayload).projects);
