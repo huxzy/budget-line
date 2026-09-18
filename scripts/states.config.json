@@ -43,11 +43,19 @@
     "name": "Bauchi",
     "year": 2026,
     "file": "bauchi-2026-approved.pdf",
-    "pages": "326-335,338-347,349-353,355-359",
-    "notes": "Excel LTSC derived, 360pp, location column on 30 pages.",
-    "amount_columns": null,
+    "pages": "326-360",
+    "notes": "Excel LTSC derived, 360pp, location column on 30 pages. Official total from the summary on p31 (2026 Approved Budget, 4th column). Pages 336, 348, 354 and 360 are continuation pages without a header row.",
+    "amount_columns": [
+      "amt_2025_approved",
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2026_tag_nutrition"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 568314961119.42,
+    "cell_mode": "runs",
+    "mda_from_headings": true
   },
   {
     "slug": "bayelsa",
@@ -55,43 +63,86 @@
     "year": 2026,
     "file": "bayelsa-2026-approved.pdf",
     "pages": "140-156",
-    "notes": "Excel 2021 derived, 156pp - smallest of the strong candidates.",
-    "amount_columns": null,
+    "notes": "Excel 2021 derived, 156pp - smallest of the strong candidates. Official total from the summary on p10 (2026 Approved Budget, 4th column). Each page carries the whole sheet in its content stream; only the part inside the page box is counted (clip_to_page).",
+    "amount_columns": [
+      "amt_2025_original",
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2027_estimate",
+      "amt_2028_estimate",
+      "amt_2026_three_year",
+      "amt_2026_tag_climate",
+      "amt_2026_tag_nutrition"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 661537012281.15,
+    "cell_mode": "runs",
+    "mda_from_headings": true,
+    "clip_to_page": true,
+    "skip": "Document pages are overlapping windows onto one sheet: several MDA sections print twice, so the table over-counts its own summary (\u20a6734.67bn of MDA totals vs \u20a6661.54bn official, +\u20a673.13bn). Reconciling would need row de-duplication, which is not allowed."
   },
   {
     "slug": "kaduna",
     "name": "Kaduna",
     "year": 2026,
     "file": "kaduna-2026-approved.pdf",
-    "pages": "192-195,197-200,202-203,212-218",
-    "notes": "Excel 2019. Cover mentions climate tagging columns - confirm column count with --inspect.",
-    "amount_columns": null,
+    "pages": "192-218",
+    "notes": "Excel 2019. Cover mentions climate tagging columns - confirm column count with --inspect. No 2025 approved column; seven columns. Official total from the summary on p28 (2026 Approved Budget, 3rd column). Pages 196, 201 and 204-211 are continuation pages.",
+    "amount_columns": [
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2026_tag_climate_adaptation",
+      "amt_2026_tag_climate_mitigation",
+      "amt_2026_tag_nutrition",
+      "amt_2026_tag_cdc"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 698978771786.82,
+    "cell_mode": "runs",
+    "mda_from_headings": true
   },
   {
     "slug": "ogun",
     "name": "Ogun",
     "year": 2026,
     "file": "ogun-2026-approved.pdf",
-    "pages": "496-528,530-567",
-    "notes": "EXCEL.EXE derived. Location column on 71 pages.",
-    "amount_columns": null,
+    "pages": "496-567",
+    "notes": "EXCEL.EXE derived. Location column on 71 pages. Official total from the summary on p32 (2026 Approved Budget, 4th column). Page 529 is a continuation page.",
+    "amount_columns": [
+      "amt_2024_actual",
+      "amt_2025_final",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2026_tag_nutrition",
+      "amt_2026_tag_climate"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 1043234210524.78,
+    "cell_mode": "runs",
+    "mda_from_headings": true
   },
   {
     "slug": "sokoto",
     "name": "Sokoto",
     "year": 2026,
     "file": "sokoto-2026-approved.pdf",
-    "pages": "210-226,228-231",
-    "notes": "Excel 2016 derived.",
-    "amount_columns": null,
+    "pages": "210-231",
+    "notes": "Excel 2016 derived. Official total from the summary on p25 (2026 Approved Budget, 4th column). Page 227 is a continuation page.",
+    "amount_columns": [
+      "amt_2024_actual",
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2027_estimate",
+      "amt_2028_estimate",
+      "amt_2026_tag_nutrition"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 553343592103.46,
+    "cell_mode": "runs",
+    "mda_from_headings": true
   },
   {
     "slug": "lagos",
@@ -110,10 +161,20 @@
     "year": 2026,
     "file": "borno-2026-approved.pdf",
     "pages": "209-225",
-    "notes": "PDFium rendered, clean text layer.",
-    "amount_columns": null,
+    "notes": "PDFium rendered, clean text layer. Official total from the summary on p22 (2026 Approved Budget, 5th column).",
+    "amount_columns": [
+      "amt_2024_actual",
+      "amt_2025_approved",
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2026_tag_climate",
+      "amt_2026_tag_nutrition"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 507323910000.0,
+    "cell_mode": "runs",
+    "mda_from_headings": true
   },
   {
     "slug": "anambra",

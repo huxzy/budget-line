@@ -56,6 +56,38 @@ def text_at(chars, lo, hi):
     return re.sub(r'\s+', ' ', ''.join(c['text'] for c in cs)).strip()
 
 
+def split_runs(chars):
+    """Split a line's chars (stream order) into the strings they were drawn as.
+
+    Within one string consecutive glyphs (spaces included) touch; a new string
+    starts with a jump in x, forward or back.
+    """
+    runs, cur = [], []
+    for c in chars:
+        if cur and abs(c['x0'] - cur[-1]['x1']) > 1.5:
+            runs.append(cur)
+            cur = []
+        cur.append(c)
+    if cur:
+        runs.append(cur)
+    return runs
+
+
+def numeric_runs(chars):
+    """Amount tokens read as runs, for cell_mode="runs" documents.
+
+    When a text cell overflows into the amount columns, extract_words fuses
+    the figure's digits with the text's glyphs and the number is lost. Each
+    figure is one contiguous string in the stream, so read it as a run.
+    """
+    out = []
+    for run in split_runs(chars):
+        t = ''.join(c['text'] for c in run).replace(' ', '')
+        if NUM.match(t) or t in DASH - {''}:
+            out.append({'text': t, 'x1': run[-1]['x1'], 'top': run[0]['top']})
+    return out
+
+
 def cells_by_runs(chars, cols):
     """Per-state option cell_mode="runs": read cells from content-stream order.
 
@@ -66,16 +98,7 @@ def cells_by_runs(chars, cols):
     starts in.
     """
     out = {name: [] for _, _, name in cols}
-    runs, cur = [], []
-    for c in chars:  # chars arrive in stream order
-        # Within one cell consecutive glyphs (spaces included) touch; a new
-        # cell starts with a jump in x, forward or back.
-        if cur and abs(c['x0'] - cur[-1]['x1']) > 1.5:
-            runs.append(cur)
-            cur = []
-        cur.append(c)
-    if cur:
-        runs.append(cur)
+    runs = split_runs(chars)
     def home_of(run):
         x = run[0]['x0']
         home = None
@@ -267,6 +290,12 @@ def extract(pdf_path, cfg):
 
         for i in page_list:
             page = pdf.pages[i]
+            if cfg.get('clip_to_page'):
+                # Per-state option: some documents place one huge sheet across
+                # pages, so each page's content stream carries rows that render
+                # outside its box (and again on the neighbouring pages). Only
+                # what is inside the page box is on that page.
+                page = page.crop((0, 0, page.width, page.height), strict=False)
             centres = detect_amount_columns(page, len(amount_names))
             if not centres:
                 skipped += 1
@@ -286,7 +315,11 @@ def extract(pdf_path, cfg):
             # truncate wide right-aligned figures; assigning by tolerance would
             # let one figure be claimed by two adjacent lines.
             per_line = collections.defaultdict(dict)
-            for w in page.extract_words():
+            if runs_mode:
+                tokens = [tok for _, chars in groups for tok in numeric_runs(chars)]
+            else:
+                tokens = page.extract_words()
+            for w in tokens:
                 t = w['text'].replace(' ', '')
                 if not (NUM.match(t) or t in DASH - {''}):
                     continue
