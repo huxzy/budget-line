@@ -1,8 +1,10 @@
-import re, json, collections, pandas as pd, pdfplumber
+import os, re, json, collections, pandas as pd, pdfplumber
 
-PDF = '/mnt/user-data/uploads/dataset_NIGER_STATE_APPROVED_BUDGET_FOR_THE_YEAR_2026.pdf'
+PDF = os.environ.get('PDF', '/mnt/user-data/uploads/dataset_NIGER_STATE_APPROVED_BUDGET_FOR_THE_YEAR_2026.pdf')
+LOOKUP = os.environ.get('LOOKUP', '/home/claude/lookup.json')
+OUT = os.environ.get('OUT', '/home/claude/v3.csv')
 NUM = re.compile(r'^-?[\d,]+\.\d{2}$')
-lookup = json.load(open('/home/claude/lookup.json'))
+lookup = json.load(open(LOOKUP))
 
 COLS = [(45,170,'project'),(170,260,'mda'),(260,350,'economic'),(350,430,'function'),(430,487,'location')]
 AMTS = [(487,545,'amt_2024_actual'),(545,597,'amt_2025_revised'),
@@ -48,7 +50,8 @@ with pdfplumber.open(PDF) as pdf:
             vals = {n: cell(chars, lo, hi) for lo, hi, n in AMTS}
             money = any(v and (NUM.match(v.replace(' ','')) or v.strip() == '-') for v in vals.values())
             fields = {n: cell(chars, lo, hi) for lo, hi, n in COLS}
-            lines.append({'top': top, 'money': money, 'vals': vals, 'f': fields})
+            bottom = max(c['bottom'] for c in chars)
+            lines.append({'top': top, 'bottom': bottom, 'money': money, 'vals': vals, 'f': fields})
 
         anchors = [n for n, l in enumerate(lines) if l['money']]
         if not anchors: continue
@@ -61,17 +64,22 @@ with pdfplumber.open(PDF) as pdf:
             if 'Project Name' in l['f'].get('project','') or 'Code and' in l['f'].get('economic',''): continue
             if 'Approved Budget -' in l['f'].get('project',''): continue
             nearest = min(anchors, key=lambda a: abs(lines[a]['top'] - l['top']))
-            extra[nearest].append((l['top'], l['f']))
+            extra[nearest].append((l['top'], l['f'], l['bottom']))
 
         for a in anchors:
             l = lines[a]
-            parts = sorted(extra[a] + [(l['top'], l['f'])], key=lambda t: t[0])
+            parts = sorted(extra[a] + [(l['top'], l['f'], l['bottom'])], key=lambda t: t[0])
             rec = {}
             for k in ('project','mda','economic','function','location'):
                 rec[k] = re.sub(r'\s+', ' ', ' '.join(p[1][k] for p in parts if p[1][k]).strip())
             if 'total capital expenditure' in rec['project'].lower(): continue
             for n in l['vals']: rec[n] = parse(l['vals'][n])
             rec['source_page'] = i + 1
+            # Vertical extent of the row on its page, as fractions of page
+            # height (0 = top), so the source viewer can draw a highlight band
+            # at any render size.
+            rec['page_y_top'] = round(min(p[0] for p in parts) / page.height, 4)
+            rec['page_y_bottom'] = round(max(p[2] for p in parts) / page.height, 4)
             rows.append(rec)
 
 df = pd.DataFrame(rows)
@@ -88,12 +96,13 @@ for col, (cc, dc, w) in {'mda':('mda_code','mda_name',12), 'economic':('econ_cod
 
 df['project'] = df['project'].str.replace(r'\s+', ' ', regex=True).str.strip()
 df = df[['project','mda_code','mda_name','lga_code','lga_name','econ_code','econ_name','func_code','func_name',
-         'amt_2024_actual','amt_2025_revised','amt_2025_perf_jan_sep','amt_2026_approved','source_page']]
+         'amt_2024_actual','amt_2025_revised','amt_2025_perf_jan_sep','amt_2026_approved','source_page',
+         'page_y_top','page_y_bottom']]
 df['mda_code'] = df['mda_code'].replace('', pd.NA).ffill()
 df['mda_name'] = df['mda_name'].replace('', pd.NA).ffill()
 df = df.fillna('')
 
-df.to_csv('/home/claude/v3.csv', index=False)
+df.to_csv(OUT, index=False)
 print('rows:', len(df))
 print('2026 sum: {:,.2f}  official: 783,694,704,491.00'.format(df.amt_2026_approved.sum()))
 bleed = df.project.str.match(r'^(services|the state|e\.t\.c\.|and |of |in |for )', case=False, na=False)
