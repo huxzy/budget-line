@@ -82,11 +82,25 @@ function toPosition([x, y, size, path, duration, delay]: Row): Position {
   return { x, y, size, drift: { path, duration: Math.round(duration * 0.5), delay } };
 }
 
-/** Fallback for a key the table does not know: a stable spot from its name. */
-function fallback(key: string): Position {
-  let h = 0;
-  for (const c of key) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-  return { x: 10 + (h % 70), y: 10 + ((h >> 4) % 70), size: 56, drift: { path: ((h % 6) + 1) as Drift["path"], duration: 22 + (h % 12), delay: h % 26 } };
+/**
+ * States without a hand-placed table get a staggered grid: alphabetical,
+ * left to right, rows offset so it reads as a cluster rather than a table.
+ * Still decorative, still carries no data.
+ */
+function gridPosition(index: number, count: number): Position {
+  const cols = Math.max(4, Math.ceil(Math.sqrt(count * 1.6)));
+  const rows = Math.ceil(count / cols);
+  const r = Math.floor(index / cols);
+  const c = index % cols;
+  const x = 8 + ((c + (r % 2 ? 0.5 : 0)) * 84) / Math.max(1, cols - 0.5);
+  const y = 8 + (rows > 1 ? (r * 78) / (rows - 1) : 40);
+  const sizes: (56 | 64 | 72)[] = [56, 64, 72];
+  return {
+    x: Math.round(x),
+    y: Math.round(y),
+    size: sizes[index % 3],
+    drift: { path: ((index % 6) + 1) as Drift["path"], duration: 22 + (index % 12), delay: (index * 7) % 26 },
+  };
 }
 type Drift = Position["drift"];
 
@@ -97,10 +111,11 @@ function stretchX(p: Position): Position {
 
 export function statePosition(slug: string): Position {
   const row = STATES[slug];
-  return row ? stretchX(toPosition(row)) : fallback(slug);
+  return row ? stretchX(toPosition(row)) : gridPosition(Object.keys(STATES).length, Object.keys(STATES).length + 1);
 }
 
-export function lgaPosition(state: string, key: string): Position {
+/** Niger's local governments are placed by hand; other states use the grid. */
+export function lgaPosition(state: string, key: string, index = 0, count = 1): Position {
   const row = state === "niger" ? NIGER_LGAS[key] : undefined;
-  return row ? toPosition(row) : fallback(key);
+  return row ? toPosition(row) : gridPosition(index, count);
 }

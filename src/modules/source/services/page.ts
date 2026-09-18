@@ -1,15 +1,11 @@
 import { getPageRows, getProject, getState } from "@/modules/budget/server";
 import type { SourcePageData } from "../types";
 
-/** Pages 68–101 of the Niger document hold every row in the dataset. */
-const RANGE: Record<string, { first: number; last: number }> = {
-  niger: { first: 68, last: 101 },
-};
-
 export function loadSourcePage(slug: string, page: number, rowId?: string): SourcePageData | null {
   const state = getState(slug);
-  const range = RANGE[slug];
-  if (!state || state.status !== "live" || !range) return null;
+  if (!state || state.status !== "live" || !state.sourcePages) return null;
+  // The registry records the first and last document page carrying a dataset row.
+  const range = { first: state.sourcePages[0], last: state.sourcePages[1] };
   if (!Number.isInteger(page) || page < range.first || page > range.last) return null;
 
   const rows = getPageRows(slug, page);

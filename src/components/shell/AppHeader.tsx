@@ -15,7 +15,7 @@ const NAV = [
 export function AppHeader({ className }: { className?: string }) {
   const path = usePathname();
   const { prefs, ready } = usePreferences();
-  const lgaQuery = prefs.lga ? `?lga=${encodeURIComponent(prefs.lga)}` : "";
+  const lgaQuery = prefs.lga ? `?state=${prefs.state ?? ""}&lga=${encodeURIComponent(prefs.lga)}` : "";
 
   return (
     <header className={cn("flex items-center justify-between gap-4 border-b border-hairline px-4 py-3.5 sm:px-10", className)}>

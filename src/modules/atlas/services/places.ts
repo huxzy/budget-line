@@ -1,4 +1,4 @@
-import { formatCompact, formatNaira, getLgas, getLgaSummary, getProjects, getState, getStates, STATE_WIDE } from "@/modules/budget/server";
+import { formatCompact, formatNaira, getLgaSummary, getPlaces, getProjects, getState, getStates, lgaSlug } from "@/modules/budget/server";
 import type { AtlasData, Figures, Place } from "../types";
 
 function figuresFor(total: number, projects: number): Figures {
@@ -24,15 +24,15 @@ export function loadAtlas(stateSlug = "niger"): AtlasData {
       figures: s.status === "live" && s.total_2026 && s.projects ? figuresFor(s.total_2026, s.projects) : undefined,
     }));
 
-  const lgas: Place[] = getLgas(slug)
-    .filter((l) => l.lga !== STATE_WIDE && l.lga !== "OUTSIDE STATE")
+  const lgas: Place[] = getPlaces(slug)
+
     .map((l) => {
       const summary = getLgaSummary(slug, l.lga);
       return {
         kind: "lga",
         key: l.lga,
         name: l.lgaLabel.replace(/ LGA$/, ""),
-        href: `/s/${slug}/${l.lga.toLowerCase()}`,
+        href: `/s/${slug}/${lgaSlug(l.lga)}`,
         status: "live",
         stateName: current.name,
         figures: summary ? figuresFor(summary.total, summary.projects) : undefined,

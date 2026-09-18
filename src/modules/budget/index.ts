@@ -5,3 +5,5 @@
 export * from "./types";
 export { formatCompact, formatDisplay, formatNaira, formatPlain, formatSpoken, toKobo } from "./services/format";
 export { SECTOR_ORDER, sectorLabel } from "./services/sectors";
+export { documentName, REGISTRY, stateName } from "./services/registry";
+export { lgaSlug } from "./services/keys";

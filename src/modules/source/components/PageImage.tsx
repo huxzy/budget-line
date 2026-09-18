@@ -6,8 +6,8 @@ import type { Project } from "@/modules/budget";
 /**
  * The rendered budget page with a full-width marigold band over the cited
  * row. Band position comes from the extractor (fractions of page height), so
- * it holds at any width. Pages are landscape, 792×612pt. Zoomed, the page is
- * 2.2× wide inside a scroll box and opens centred on the row.
+ * it holds at any width or page shape. Zoomed, the page is 2.2× wide inside
+ * a scroll box and opens centred on the row.
  */
 export function PageImage({ src, page, cited, zoom }: { src: string; page: number; cited: Project | null; zoom: boolean }) {
   const bandRef = useRef<HTMLDivElement>(null);
@@ -18,9 +18,9 @@ export function PageImage({ src, page, cited, zoom }: { src: string; page: numbe
 
   return (
     <div className={zoom ? "max-h-[70vh] overflow-auto rounded-[12px] bg-white shadow-card" : "rounded-[12px] bg-white shadow-card"}>
-      <div className="relative" style={{ width: zoom ? "220%" : "100%", aspectRatio: "792 / 612" }}>
+      <div className="relative" style={{ width: zoom ? "220%" : "100%" }}>
         {/* eslint-disable-next-line @next/next/no-img-element -- static pre-rendered page */}
-        <img src={src} alt={`Budget document, page ${page}`} className="block h-full w-full" loading="eager" decoding="async" />
+        <img src={src} alt={`Budget document, page ${page}`} className="block h-auto w-full" loading="eager" decoding="async" />
         {cited && (
           <div
             ref={bandRef}

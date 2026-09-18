@@ -85,10 +85,13 @@ export type StateResolution =
   | { ok: true; state: StateSummary }
   | { ok: false; payload: { found: false; reason: "unknown_state" | "not_live"; query: string; state?: StateSummary; covered: StateSummary[] } };
 
-/** Resolve a spoken state name; defaults to Niger when nothing is given. */
+/**
+ * Resolve a spoken state name. With nothing given, the first live state is
+ * used; handlers that take an LGA search every live state instead.
+ */
 export function requireLiveState(input: unknown): StateResolution {
   const query = str(input);
-  const state = query ? resolveState(query) : getState("niger");
+  const state = query ? resolveState(query) : (liveStates()[0] ?? getState("niger"));
   if (!state) return { ok: false, payload: { found: false, reason: "unknown_state", query, covered: liveStates() } };
   if (state.status !== "live") {
     return { ok: false, payload: { found: false, reason: "not_live", query, state, covered: liveStates() } };

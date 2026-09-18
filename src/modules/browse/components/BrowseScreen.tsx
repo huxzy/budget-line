@@ -11,6 +11,7 @@ import type { BrowseData } from "../types";
 
 function href(base: BrowseData["query"], patch: Partial<Record<"lga" | "sector" | "unspent" | "sort", string | undefined>>) {
   const q = new URLSearchParams();
+  q.set("state", base.state);
   const lga = patch.lga ?? base.lga;
   const sector = "sector" in patch ? patch.sector : base.sector;
   const unspent = "unspent" in patch ? patch.unspent : base.unspentOnly ? "1" : undefined;
@@ -143,8 +144,9 @@ export function BrowseScreen({ data }: { data: BrowseData }) {
             <div className="max-w-[560px]">
               <span className="eyebrow">Where these figures come from</span>
               <p className="mt-1 text-[14px] leading-snug text-muted">
-                {registry.document}, published {publishedOn(registry)}. <span data-num>{registry.pages}</span> pages, read line by line,
-                reconciling to the official state total.
+                {registry.document}
+                {registry.published ? `, published ${publishedOn(registry)}` : ""}. <span data-num>{registry.pages}</span> pages, read
+                line by line, reconciling to the official state total.
               </p>
             </div>
             <div className="text-right">

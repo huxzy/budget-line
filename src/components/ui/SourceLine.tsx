@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import { documentName } from "@/modules/budget";
 
 type Props = {
   state: string;
@@ -13,7 +14,7 @@ type Props = {
 };
 
 /** Marigold means verifiable. Every amount on screen carries one of these. */
-export function SourceLine({ state, page, rowId, document = "Niger State 2026 Approved Budget", variant = "full", className }: Props) {
+export function SourceLine({ state, page, rowId, document, variant = "full", className }: Props) {
   const href = `/source/${state}/${page}${rowId ? `?row=${rowId}` : ""}`;
   return (
     <Link
@@ -21,7 +22,8 @@ export function SourceLine({ state, page, rowId, document = "Niger State 2026 Ap
       className={cn("inline-flex items-center gap-2 text-[14px] font-semibold text-marigold-text hover:text-ink", className)}
     >
       <span>
-        {variant === "full" ? `${document} · ` : ""}page <span data-num>{page}</span>
+        {variant === "full" ? `${document ?? documentName(state)} · ` : ""}page{" "}
+        <span data-num>{page}</span>
       </span>
       <span className="font-display font-bold" aria-hidden>
         →

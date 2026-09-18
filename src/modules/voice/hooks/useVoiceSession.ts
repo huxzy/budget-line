@@ -30,7 +30,7 @@ export function useVoiceSession(config: VoiceConfig, ctx: CallContext = {}): Voi
   const [calls, setCalls] = useState<VoiceSession["calls"]>([]);
   const [results, setResults] = useState<ToolResult[]>([]);
 
-  const client = useMemo(() => createVoiceClient(config.publicKey, config.target), [config.publicKey, config.target]);
+  const client = useMemo(() => createVoiceClient(config.publicKey, config.target, config.coverage), [config.publicKey, config.target, config.coverage]);
   const stopRef = useRef(client.stop);
   stopRef.current = client.stop;
 

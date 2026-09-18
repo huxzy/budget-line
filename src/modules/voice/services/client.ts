@@ -24,7 +24,7 @@
 import type Vapi from "@vapi-ai/web";
 
 import { TOOL_ROUTES, type ToolName } from "@/modules/tools";
-import type { CallContext, ToolResult, VoiceClient, VoiceEvents, VoiceTarget } from "../types";
+import type { CallContext, Coverage, ToolResult, VoiceClient, VoiceEvents, VoiceTarget } from "../types";
 
 function parseResult(raw: unknown): Record<string, unknown> {
   if (typeof raw === "string") {
@@ -37,7 +37,7 @@ function parseResult(raw: unknown): Record<string, unknown> {
   return (raw as Record<string, unknown>) ?? {};
 }
 
-export function createVoiceClient(publicKey: string | undefined, target: VoiceTarget): VoiceClient {
+export function createVoiceClient(publicKey: string | undefined, target: VoiceTarget, coverage: Coverage): VoiceClient {
   const listeners: { [E in keyof VoiceEvents]: Set<VoiceEvents[E]> } = {
     status: new Set(),
     transcript: new Set(),
@@ -122,11 +122,23 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
   async function start(ctx: CallContext = {}) {
     emit("status", "connecting");
     const place = ctx.lgaLabel?.replace(/ LGA$/, "");
+    const st = ctx.state;
     const overrides = {
-      variableValues: { lga: ctx.lga ?? "none", lgaLabel: place ?? "none" },
+      variableValues: {
+        lga: ctx.lga ?? "none",
+        lgaLabel: place ?? "none",
+        stateName: st?.name ?? "any",
+        stateScope: st ? `${st.name} State` : `${coverage.stateCount} states: ${coverage.coveredStates}`,
+        coveredStates: coverage.coveredStates,
+        documentName: st?.document ?? coverage.documentName,
+        documentPages: String(st?.pages ?? coverage.documentPages),
+        projectCount: (st?.projects ?? coverage.projectCount).toLocaleString("en-NG"),
+      },
       firstMessage: place
         ? `This is Budget Line. Ask me what has been budgeted in ${place}.`
-        : "This is Budget Line. Which local government do you want to ask about?",
+        : st
+          ? `This is Budget Line. Which local government in ${st.name} State do you want to ask about?`
+          : "This is Budget Line. Which state or local government do you want to ask about?",
     };
     try {
       const v = await client();

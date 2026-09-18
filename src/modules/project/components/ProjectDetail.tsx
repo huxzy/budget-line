@@ -13,7 +13,7 @@ export function ProjectDetail({ project, registry }: { project: Project; registr
   const a25 = formatNaira(project.approved2025);
   const s25 = formatNaira(project.spent2025);
   const place = project.lgaLabel.replace(/ LGA$/, "");
-  const backHref = `/browse?lga=${encodeURIComponent(project.lga)}&sector=${encodeURIComponent(project.sector)}`;
+  const backHref = `/browse?state=${project.state}&lga=${encodeURIComponent(project.lga)}&sector=${encodeURIComponent(project.sector)}`;
 
   return (
     <div className="min-h-dvh bg-surface">

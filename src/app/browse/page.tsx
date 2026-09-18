@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default async function BrowsePage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   const params = await searchParams;
-  const data = loadBrowse("niger", params);
+  const data = loadBrowse(params.state ?? "", params);
   if (!data) notFound();
   return <BrowseScreen data={data} />;
 }

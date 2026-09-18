@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Amount } from "@/components/ui";
-import { formatCompact, type StateSummary } from "@/modules/budget";
+import { formatCompact, stateName, type StateSummary } from "@/modules/budget";
 import type { SummaryPayload } from "../types";
 import { sectorLabel } from "@/modules/budget";
 import { countWord } from "../services/turns";
@@ -11,7 +11,7 @@ export function LgaSummaryPanel({ summary, sector, shown }: { summary: SummaryPa
   return (
     <div className="flex flex-col gap-2 rounded-[20px] bg-card p-5 shadow-card">
       <span className="eyebrow">
-        {summary.lgaLabel}, {summary.state === "niger" ? 2026 : ""}
+        {summary.lgaLabel}, {stateName(summary.state)} State
       </span>
       <Amount display={formatCompact(summary.total)} plain={summary.plain.replace(/^about /, "")} size="lg" />
       <p className="text-[14px] leading-snug text-muted">
@@ -26,7 +26,7 @@ export function LgaSummaryPanel({ summary, sector, shown }: { summary: SummaryPa
       <p className="text-[13px] text-soft">
         <span data-num>{summary.stateWide.projects}</span> more projects are state-wide and may include {place}.
       </p>
-      <Link href={`/browse?lga=${encodeURIComponent(summary.lga)}`} className="text-[14px] font-semibold">
+      <Link href={`/browse?state=${summary.state}&lga=${encodeURIComponent(summary.lga)}`} className="text-[14px] font-semibold">
         Browse all {summary.projects} →
       </Link>
     </div>
@@ -42,8 +42,9 @@ export function ProvenancePanel({ registry }: { registry: StateSummary }) {
     <div className="flex flex-col gap-1.5 rounded-[20px] border border-hairline-strong bg-card-soft p-5">
       <span className="font-display text-[15px] font-bold">Where these figures come from</span>
       <p className="text-[13px] leading-snug text-muted">
-        {registry.document}, published {publishedOn(registry)}. <span data-num>{registry.pages}</span> pages, read line by line,
-        reconciling to the official state total within two kobo.
+        {registry.document}
+        {registry.published ? `, published ${publishedOn(registry)}` : ""}. <span data-num>{registry.pages}</span> pages, read line by
+        line, reconciling to the official state total within ₦1.
       </p>
       <Link href={`/source/${registry.slug}/69`} className="text-[13px] font-semibold">
         Open the document →

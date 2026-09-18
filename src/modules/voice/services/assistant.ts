@@ -14,8 +14,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { CreateAssistantDTO, CreateFunctionToolDTO, JsonSchema } from "@vapi-ai/web/dist/api";
-import { getLgas, STATE_WIDE } from "@/modules/budget/server";
-import type { VoiceConfig } from "../types";
+import { getPlaces, getStates } from "@/modules/budget/server";
+import type { Coverage, VoiceConfig } from "../types";
 
 const PROMPTS_DIR = path.join(process.cwd(), "prompts");
 
@@ -37,13 +37,12 @@ export function publicBaseUrl(): string {
   return "";
 }
 
-/** LGA names plus the towns the resolver knows, title-cased for the transcriber. */
+/** Every live state's local governments, plus the towns the resolver knows, for the transcriber. */
 function placeNames(): string[] {
-  const lgas = getLgas("niger")
-    .map((l) => l.lga)
-    .filter((l) => l !== STATE_WIDE && l !== "OUTSIDE STATE")
-    .map((l) => l.charAt(0) + l.slice(1).toLowerCase());
-  return [...lgas, "Minna", "Niger State", "local government", "health", "roads", "water", "education", "agriculture", "projects", "budget", "spent", "unspent"];
+  const live = getStates().filter((s) => s.status === "live");
+  const lgas = live.flatMap((s) => getPlaces(s.slug).map((l) => l.lgaLabel.replace(/ LGA$/, "")));
+  const states = live.map((s) => `${s.name} State`);
+  return [...new Set([...lgas, ...states, "Minna", "local government", "health", "roads", "water", "education", "agriculture", "projects", "budget", "spent", "unspent"])];
 }
 
 function readPrompt(file: string): string {
@@ -57,7 +56,7 @@ export function systemPromptFor(lang: string): string {
 
 const STATE_PARAM = {
   type: "string",
-  description: 'State name, e.g. "Niger". Omit for Niger.',
+  description: 'State name, e.g. "Plateau". Omit only if the caller has not said a state; the tools then search every covered state.',
 } as const;
 
 function tool(
@@ -169,12 +168,27 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
   };
 }
 
+/** What the prompt says about coverage when no state is chosen — from the registry. */
+export function coverage(): Coverage {
+  const live = getStates().filter((s) => s.status === "live");
+  const names = live.map((s) => s.name);
+  const list = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : (names[0] ?? "");
+  return {
+    coveredStates: list,
+    stateCount: live.length,
+    documentName: live.length === 1 ? (live[0].document ?? "") : `approved ${live[0]?.year ?? 2026} budgets of ${live.length} states`,
+    documentPages: live.reduce((n, s) => n + (s.pages ?? 0), 0),
+    projectCount: live.reduce((n, s) => n + (s.projects ?? 0), 0),
+  };
+}
+
 /** Everything the voice UI needs for one language, resolved on the server. */
 export function voiceConfigFor(lang: string): VoiceConfig {
   const assistantId = assistantIdFor(lang);
   return {
     publicKey: process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY || undefined,
     target: assistantId ? { assistantId } : { assistant: buildAssistant(lang) },
+    coverage: coverage(),
     publicUrl: publicBaseUrl(),
   };
 }

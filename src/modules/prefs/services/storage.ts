@@ -1,7 +1,7 @@
 import type { Preferences } from "../types";
 
 const KEY = "budgetline.prefs";
-export const DEFAULT_PREFS: Preferences = { lga: null, lgaLabel: null, lang: "en" };
+export const DEFAULT_PREFS: Preferences = { lga: null, lgaLabel: null, state: null, lang: "en" };
 
 /** localStorage can throw (private mode, blocked storage); never let it crash a render. */
 export function readPrefs(): Preferences {

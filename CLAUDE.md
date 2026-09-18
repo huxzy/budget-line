@@ -46,9 +46,10 @@ them is a bug.
 3. **The agent never states a figure that did not come from a tool result.**
 4. **The UI renders from tool results, never from parsed speech.**
 5. **Every displayed amount carries its source page.** No exceptions.
-6. **Never claim the dataset is partial.** All 1,523 Niger rows are extracted
-   and reconcile to the official state total within two kobo. Do not write copy
-   like "verified rows shown" or "still being checked".
+6. **Never claim the dataset is partial.** Every live state's rows are
+   extracted in full and reconcile to that state's official capital total
+   within ₦1 (Niger: 1,523 rows, within two kobo). Do not write copy like
+   "verified rows shown" or "still being checked".
 
 ## Data contract
 
@@ -163,9 +164,20 @@ spacing defects ("The biggestis", "ofAdditional"); do not reproduce them.
 ```bash
 npm run dev
 npm run build
-npm run data      # rebuild data/states/*.json from the CSV
-npm run pages     # re-render budget page images
+npm run data      # rebuild data/states/*.json and states.json from data/raw + scripts/states.config.json
+npm run pages     # re-render budget page images for every live state (DOCS=<pdf folder>)
 ```
+
+## Adding a state
+
+A state is live when `scripts/states.config.json` has its `amount_columns`
+and `official_total`, it is not `skip`ped, and `data/raw/<slug>-<year>-capital.csv`
+exists. `python scripts/extract_ncoa.py --config scripts/states.config.json
+--state <slug> --docs <pdfs>` produces the CSV; `npm run data` builds the JSON
+and the registry and fails if the state does not reconcile within ₦1; `npm run
+pages <slug>` renders its source pages. Niger's local governments are placed by
+hand in `modules/atlas/services/positions.ts`; other states use the grid
+layout there until a row is added. Nothing else changes.
 
 ## Environment
 

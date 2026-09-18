@@ -78,7 +78,7 @@ export function StateView({ data, view, micState, onMic }: Props) {
         <Cluster
           className={view === "map" ? "mt-4 hidden w-full lg:block" : "hidden"}
           places={data.lgas}
-          positionFor={(p) => lgaPosition("niger", p.key)}
+          positionFor={(p, i, n) => lgaPosition(data.registry.slug, p.key, i, n)}
           featureLive
           liveStateName={niger.name}
           status={`All ${data.lgas.length} have figures`}

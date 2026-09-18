@@ -3,7 +3,7 @@ import { PlaceCircle } from "./PlaceCircle";
 
 type Props = {
   places: Place[];
-  positionFor: (p: Place) => Position;
+  positionFor: (p: Place, index: number, count: number) => Position;
   featuredKey?: string;
   /** Every live circle gets the full treatment: fill, rings, breathe, figures. */
   featureLive?: boolean;
@@ -26,11 +26,11 @@ export function Cluster({ places, positionFor, featuredKey, featureLive = false,
   return (
     <div className={className}>
       <div className="relative w-full [container-type:inline-size]" style={{ height }} role="group" aria-label="Places">
-        {places.map((p) => (
+        {places.map((p, i) => (
           <PlaceCircle
             key={p.key}
             place={p}
-            position={positionFor(p)}
+            position={positionFor(p, i, places.length)}
             featured={p.key === featuredKey || (featureLive && p.status === "live")}
             showFigures={figuresFor.includes(p.key) || (featureLive && p.status === "live")}
             liveStateName={liveStateName}

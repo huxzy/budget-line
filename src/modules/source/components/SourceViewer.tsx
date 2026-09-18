@@ -134,7 +134,9 @@ export function SourceViewer({ data }: { data: SourcePageData }) {
                       Page <span data-num>{page}</span>, line <span data-num>{line}</span> — highlighted at left.
                     </>,
                     <>Figures read from the published PDF, never retyped.</>,
-                    <>All 1,523 rows reconcile to the official state total within two kobo.</>,
+                    <>
+                      All <span data-num>{state.projects?.toLocaleString("en-NG")}</span> rows reconcile to the official state total within ₦1.
+                    </>,
                   ].map((t, i) => (
                     <li key={i} className="flex gap-3">
                       <span data-num className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-clay-raised text-[11px] font-bold">
@@ -158,8 +160,10 @@ export function SourceViewer({ data }: { data: SourcePageData }) {
             </>
           )}
           <p className="text-[12px] leading-snug text-on-clay-muted">
-            {doc} · <span data-num>{state.pages}</span> pages · published{" "}
-            {state.published ? new Date(state.published).toLocaleDateString("en-NG", { day: "numeric", month: "long", year: "numeric" }) : ""}
+            {doc} · <span data-num>{state.pages}</span> pages
+            {state.published
+              ? ` · published ${new Date(state.published).toLocaleDateString("en-NG", { day: "numeric", month: "long", year: "numeric" })}`
+              : ""}
           </p>
           {cited && (
             <Link href={`/source/${state.slug}/${page}${rowQuery}&text=1`} className="sr-only">

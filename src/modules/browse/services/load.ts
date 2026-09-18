@@ -1,30 +1,36 @@
 import {
-  getLgas,
+  getPlaces,
   getLgaSummary,
   getProjects,
   getState,
+  getStates,
   getStateWide,
   resolveLga,
   resolveSector,
   SECTOR_ORDER,
   sectorLabel,
-  STATE_WIDE,
   type Project,
   type Sector,
 } from "@/modules/budget/server";
 import type { BrowseData, BrowseQuery } from "../types";
 
 /** The ledger for one LGA, optionally one sector, optionally unspent only. */
-export function loadBrowse(slug: string, params: { lga?: string; sector?: string; unspent?: string; sort?: string }): BrowseData | null {
-  const registry = getState(slug);
+export function loadBrowse(stateSlug: string, params: { lga?: string; sector?: string; unspent?: string; sort?: string }): BrowseData | null {
+  const live = getStates().filter((s) => s.status === "live");
+  // No state named: the state that has this LGA, else the first live state.
+  const registry =
+    (stateSlug && getState(stateSlug)) ||
+    (params.lga && live.find((s) => resolveLga(s.slug, params.lga!).found)) ||
+    live[0];
   if (!registry || registry.status !== "live") return null;
-  const lgas = getLgas(slug).filter((l) => l.lga !== STATE_WIDE && l.lga !== "OUTSIDE STATE");
+  const slug = registry.slug;
+  const lgas = getPlaces(slug);
 
   const resolved = params.lga ? resolveLga(slug, params.lga) : null;
   const lga = resolved?.found ? resolved.match.lga : lgas[0].lga;
   const sector = resolveSector(params.sector);
   const sort = (["amount", "page", "name"] as const).find((s) => s === params.sort) ?? "amount";
-  const query: BrowseQuery = { lga, sector, unspentOnly: params.unspent === "1", sort };
+  const query: BrowseQuery = { state: slug, lga, sector, unspentOnly: params.unspent === "1", sort };
 
   const summary = getLgaSummary(slug, lga)!;
   const projects = getProjects(slug, { lga, sector, unspentOnly: query.unspentOnly, sort });

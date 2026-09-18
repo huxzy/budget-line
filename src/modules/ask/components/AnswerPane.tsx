@@ -39,7 +39,7 @@ export function AnswerPane({ turn, headline, speaking, summary, registry, onAsk,
             {summary.bySector.map((s) => (
               <Link
                 key={s.sector}
-                href={`/browse?lga=${encodeURIComponent(summary.lga)}&sector=${encodeURIComponent(s.sector)}`}
+                href={`/browse?state=${summary.state}&lga=${encodeURIComponent(summary.lga)}&sector=${encodeURIComponent(s.sector)}`}
                 className="flex items-center justify-between rounded-[16px] bg-card px-5 py-4 text-left no-underline shadow-card hover:bg-hairline hover:no-underline"
               >
                 <span>
@@ -94,7 +94,7 @@ export function AnswerPane({ turn, headline, speaking, summary, registry, onAsk,
             {payload.bySector.map((s) => (
               <Link
                 key={s.sector}
-                href={`/browse?lga=${encodeURIComponent(payload.lga)}&sector=${encodeURIComponent(s.sector)}`}
+                href={`/browse?state=${payload.state}&lga=${encodeURIComponent(payload.lga)}&sector=${encodeURIComponent(s.sector)}`}
                 className="flex items-center justify-between rounded-[16px] bg-card px-5 py-4 text-left no-underline shadow-card hover:bg-hairline hover:no-underline"
               >
                 <span>

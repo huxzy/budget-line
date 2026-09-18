@@ -6,6 +6,11 @@ export * from "./index";
 export {
   getLanguages,
   getLgas,
+  getPlaces,
+  isPlace,
+  lgaSlug,
+  LOCATION_NOT_READ,
+  OUTSIDE_STATE,
   getLgaSummary,
   getPageRows,
   getProject,
@@ -14,5 +19,6 @@ export {
   getStates,
   getStateWide,
   STATE_WIDE,
+  stateOfProjectId,
 } from "./services/data";
 export { resolveLga, resolveSector, resolveState } from "./services/resolve";

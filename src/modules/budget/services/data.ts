@@ -19,6 +19,7 @@ import type {
   StateWideBand,
 } from "../types";
 import { formatNaira, toKobo } from "./format";
+export { lgaSlug } from "./keys";
 
 /**
  * Rows the budget assigns to the whole state rather than one LGA (517 of
@@ -28,6 +29,14 @@ import { formatNaira, toKobo } from "./format";
  * dropped.
  */
 export const STATE_WIDE = "STATE WIDE";
+export const OUTSIDE_STATE = "OUTSIDE STATE";
+/** Rows whose location the extractor could not read; kept in every total, never shown as a place. */
+export const LOCATION_NOT_READ = "LOCATION NOT READ";
+
+/** True for a real local government key, false for the three buckets. */
+export function isPlace(lga: string): boolean {
+  return lga !== STATE_WIDE && lga !== OUTSIDE_STATE && lga !== LOCATION_NOT_READ;
+}
 
 type StateData = {
   projects: Project[];
@@ -103,13 +112,18 @@ export function getState(slug: string): StateSummary | null {
   return registry.find((s) => s.slug === slug) ?? null;
 }
 
-/** Distinct LGA keys for a live state, as they appear in the data ("BIDA"). */
+/** Distinct LGA keys for a live state, as they appear in the data ("BIDA"), buckets included. */
 export function getLgas(slug: string): { lga: string; lgaLabel: string; projects: number }[] {
   const data = loadState(slug);
   if (!data) return [];
   return [...data.byLga.entries()]
     .map(([lga, list]) => ({ lga, lgaLabel: list[0].lgaLabel, projects: list.length }))
     .sort((a, b) => a.lga.localeCompare(b.lga));
+}
+
+/** The real local governments of a live state — what pickers and clusters show. */
+export function getPlaces(slug: string) {
+  return getLgas(slug).filter((l) => isPlace(l.lga));
 }
 
 export function getProjects(slug: string, q: ProjectQuery = {}): Project[] {
@@ -153,6 +167,11 @@ export function getPageRows(slug: string, page: number): Project[] {
   const data = loadState(slug);
   if (!data) return [];
   return data.projects.filter((p) => p.page === page).sort((a, b) => a.rowTop - b.rowTop);
+}
+
+/** The state a project id belongs to ("akwa-ibom-2026-p0001" → Akwa Ibom). */
+export function stateOfProjectId(id: string): StateSummary | null {
+  return registry.find((s) => s.status === "live" && id.startsWith(`${s.slug}-${s.year}-`)) ?? null;
 }
 
 export function getProject(slug: string, id: string): Project | null {

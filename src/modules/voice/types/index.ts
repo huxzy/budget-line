@@ -31,6 +31,18 @@ export type VoiceTarget = { assistantId: string } | { assistant: CreateAssistant
 export type CallContext = {
   lga?: string | null;
   lgaLabel?: string | null;
+  /** The state the caller is looking at; absent on the Nigeria view. */
+  state?: { slug: string; name: string; document: string; pages?: number; projects?: number } | null;
+};
+
+/** What the prompt's variables are filled from when no state is chosen. */
+export type Coverage = {
+  /** "Niger, Plateau and Ebonyi" */
+  coveredStates: string;
+  documentName: string;
+  documentPages: number;
+  projectCount: number;
+  stateCount: number;
 };
 
 export type VoiceClient = {
@@ -46,6 +58,7 @@ export type VoiceClient = {
 export type VoiceConfig = {
   publicKey?: string;
   target: VoiceTarget;
+  coverage: Coverage;
   /** Empty when the app is not reachable by Vapi (tools will fail). */
   publicUrl: string;
 };

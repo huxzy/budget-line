@@ -27,9 +27,13 @@ type Props = {
 export function AskScreen({ voice, registry, lgas, languageName, area }: Props) {
   const { prefs, ready, update } = usePreferences();
   useEffect(() => {
-    if (ready && prefs.lga !== area.lga) update({ lga: area.lga, lgaLabel: area.lgaLabel });
-  }, [ready, prefs.lga, area.lga, area.lgaLabel, update]);
-  const session = useVoiceSession(voice, { lga: area.lga, lgaLabel: area.lgaLabel });
+    if (ready && (prefs.lga !== area.lga || prefs.state !== registry.slug)) update({ lga: area.lga, lgaLabel: area.lgaLabel, state: registry.slug });
+  }, [ready, prefs.lga, prefs.state, area.lga, area.lgaLabel, registry.slug, update]);
+  const session = useVoiceSession(voice, {
+    lga: area.lga,
+    lgaLabel: area.lgaLabel,
+    state: { slug: registry.slug, name: registry.name, document: registry.document ?? "", pages: registry.pages, projects: registry.projects },
+  });
   const summary = useLgaSummary(area.lga);
   const place = area.lgaLabel.replace(/ LGA$/, "");
   // A question handed over from another screen ("Ask about this") leads the starters;

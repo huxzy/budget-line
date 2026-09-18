@@ -31,7 +31,16 @@ CSV export; the federal tier and other states; phone, USSD and SMS access.
 
 ## The data and the integrity claim
 
-`data/raw/niger_2026_capital_projects.csv` holds **1,523 capital projects**
+Eight states are live: Niger, Plateau, Bauchi, Ogun, Sokoto, Borno, Anambra
+and Ebonyi — 17,807 capital projects in all. Each state's rows are extracted
+from its 2026 approved budget PDF by `scripts/extract_ncoa.py` (column
+positions detected per document; `scripts/states.config.json` records the
+page range, amount columns and official capital total per state), and
+`npm run data` fails the build unless every state reconciles to its own
+document's capital expenditure total within ₦1. States whose documents do
+not reconcile stay pending, with the reason recorded in the config.
+
+Niger, the reference: `data/raw/niger_2026_capital_projects.csv` holds **1,523 capital projects**
 extracted from pages 68–101 of the 399-page Niger State 2026 Approved Budget
 (published 8 January 2026) by `scripts/extract_niger_budget.py`, using
 `pdfplumber`. Each row keeps its project name, ministry, local government,

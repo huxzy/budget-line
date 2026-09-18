@@ -5,7 +5,7 @@
  */
 import Fuse from "fuse.js";
 import type { LgaMatch, LgaResolution, Sector, StateSummary } from "../types";
-import { getLgas, getStates, STATE_WIDE } from "./data";
+import { getPlaces, getStates } from "./data";
 
 const NOISE = /\b(lga|l\.g\.a\.?|local\s+gov(ernment|t)?(\s+area)?|council|town|area|in|the)\b/gi;
 
@@ -23,7 +23,7 @@ function cleanLga(input: string) {
 }
 
 /** A match at or under this score is accepted as the LGA the person meant. */
-const MATCH = 0.35;
+const MATCH = 0.32;
 
 const lgaIndexes = new Map<string, Fuse<LgaMatch>>();
 
@@ -31,9 +31,11 @@ function lgaIndex(slug: string) {
   let idx = lgaIndexes.get(slug);
   if (!idx) {
     // The state-wide bucket is not a place; it must never match a spoken LGA.
-    const lgas = getLgas(slug).filter((l) => l.lga !== STATE_WIDE && l.lga !== "OUTSIDE STATE");
-    // Loose threshold so we can always offer "nearest" suggestions; MATCH decides acceptance.
-    idx = new Fuse(lgas, { keys: ["lga"], threshold: 0.7, includeScore: true, ignoreLocation: true });
+    const lgas = getPlaces(slug);
+    // Loose threshold so we can always offer "nearest" suggestions; MATCH decides
+    // acceptance. A short `distance` makes the match have to sit at the start of
+    // the name, so "Zaria" does not score as OHAOZARA and "Bida" not as ABADAM.
+    idx = new Fuse(lgas, { keys: ["lga"], threshold: 0.7, includeScore: true, location: 0, distance: 6 });
     lgaIndexes.set(slug, idx);
   }
   return idx;
@@ -44,7 +46,7 @@ export function resolveLga(slug: string, input: string): LgaResolution {
   const alias = PLACE_ALIASES[query.toLowerCase()];
   const results = query ? lgaIndex(slug).search(alias ?? query) : [];
   if (results.length && (results[0].score ?? 1) <= MATCH) {
-    return { found: true, match: results[0].item };
+    return { found: true, match: results[0].item, score: results[0].score ?? 0 };
   }
   return { found: false, query: input, nearest: results.slice(0, 3).map((r) => r.item) };
 }

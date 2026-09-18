@@ -1,6 +1,7 @@
 import type { LgaSummary, Project, Sector, StateSummary } from "@/modules/budget";
 
 export type BrowseQuery = {
+  state: string;
   lga: string;
   sector?: Sector;
   unspentOnly: boolean;
