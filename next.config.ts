@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   // lib/data.ts reads data/ from disk at request time; make sure the JSON
   // ships with the serverless bundle on Vercel.
   outputFileTracingIncludes: {
-    "/**": ["./data/states.json", "./data/states/*.json"],
+    "/**": ["./data/*.json", "./data/states/*.json", "./prompts/*.md"],
   },
 };
 
