@@ -1,0 +1,251 @@
+[
+  {
+    "slug": "niger",
+    "name": "Niger",
+    "year": 2026,
+    "file": "niger-2026-approved.pdf",
+    "pages": "68-101",
+    "amount_columns": [
+      "amt_2024_actual",
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_approved"
+    ],
+    "reconcile_column": "amt_2026_approved",
+    "official_total": 783694704491.0,
+    "notes": "Reference state, already live. Verified: 1,523 rows, reconciles to within 2 kobo."
+  },
+  {
+    "slug": "plateau",
+    "name": "Plateau",
+    "year": 2026,
+    "file": "plateau-2026-approved.pdf",
+    "pages": "198-222",
+    "notes": "EXCEL.EXE via ilovepdf - SAME pipeline as Niger, so most likely to extract cleanly. Try first. Official total from the summary on p21 (2026 Approved Budget column; 577.3bn is the executive proposal). Cells overflow into the next column, so cells are read by stream order; the MDA is a heading line, not a column. Pages 200 and 208 are continuation pages without a header row and carry \u20a653.6bn between them; the inventory's range skipped them.",
+    "amount_columns": [
+      "amt_2025_approved",
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_proposal",
+      "amt_2026_approved",
+      "amt_2026_tag_nutrition",
+      "amt_2026_tag_covid",
+      "amt_2026_tag_justice",
+      "amt_2026_tag_climate"
+    ],
+    "reconcile_column": "amt_2026_approved",
+    "official_total": 501091599942.0,
+    "cell_mode": "runs",
+    "mda_from_headings": true
+  },
+  {
+    "slug": "bauchi",
+    "name": "Bauchi",
+    "year": 2026,
+    "file": "bauchi-2026-approved.pdf",
+    "pages": "326-335,338-347,349-353,355-359",
+    "notes": "Excel LTSC derived, 360pp, location column on 30 pages.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "bayelsa",
+    "name": "Bayelsa",
+    "year": 2026,
+    "file": "bayelsa-2026-approved.pdf",
+    "pages": "140-156",
+    "notes": "Excel 2021 derived, 156pp - smallest of the strong candidates.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "kaduna",
+    "name": "Kaduna",
+    "year": 2026,
+    "file": "kaduna-2026-approved.pdf",
+    "pages": "192-195,197-200,202-203,212-218",
+    "notes": "Excel 2019. Cover mentions climate tagging columns - confirm column count with --inspect.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "ogun",
+    "name": "Ogun",
+    "year": 2026,
+    "file": "ogun-2026-approved.pdf",
+    "pages": "496-528,530-567",
+    "notes": "EXCEL.EXE derived. Location column on 71 pages.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "sokoto",
+    "name": "Sokoto",
+    "year": 2026,
+    "file": "sokoto-2026-approved.pdf",
+    "pages": "210-226,228-231",
+    "notes": "Excel 2016 derived.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "lagos",
+    "name": "Lagos",
+    "year": 2026,
+    "file": "lagos-2026-approved.pdf",
+    "pages": "340-369",
+    "notes": "Appropriation Law - NCoA. Image cover, text body. Highest recognition value.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "borno",
+    "name": "Borno",
+    "year": 2026,
+    "file": "borno-2026-approved.pdf",
+    "pages": "209-225",
+    "notes": "PDFium rendered, clean text layer.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "anambra",
+    "name": "Anambra",
+    "year": 2026,
+    "file": "anambra-2026-approved.pdf",
+    "pages": "469-484",
+    "notes": "PDFsam / SAMBox.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "imo",
+    "name": "Imo",
+    "year": 2026,
+    "file": "imo-2026-approved.pdf",
+    "pages": "209-216,218-220",
+    "notes": "Word generated, 222pp.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "yobe",
+    "name": "Yobe",
+    "year": 2026,
+    "file": "yobe-2026-approved.pdf",
+    "pages": "246-258",
+    "notes": "Nitro Pro.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "abia",
+    "name": "Abia",
+    "year": 2026,
+    "file": "abia-2026-approved.pdf",
+    "pages": "298-301,303-308,310-311,313-320,322-328",
+    "notes": "Adobe Acrobat Pro. Multi-year budget document.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "delta",
+    "name": "Delta",
+    "year": 2026,
+    "file": "delta-2026-approved.pdf",
+    "pages": "288-298,301-302,304,306-314,316-321",
+    "notes": "WPS Writer via macOS Quartz - layout may differ from the NCoA norm.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "ebonyi",
+    "name": "Ebonyi",
+    "year": 2026,
+    "file": "ebonyi-2026-approved.pdf",
+    "pages": "427-433,435-442,446-451,453-454,456-459,461-463,465-477,479-481,484-486,488,490-494,496",
+    "notes": "iText body, designed image cover.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "ondo",
+    "name": "Ondo",
+    "year": 2026,
+    "file": "ondo-2026-approved.pdf",
+    "pages": "123-127,343-350,352-358,361-363,365-375,378-394,396,403-414,416-417",
+    "notes": "iLovePDF merged. Location column on 66 pages.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "gombe",
+    "name": "Gombe",
+    "year": 2026,
+    "file": "gombe-2026-approved.pdf",
+    "pages": "287-293,295-306,308-309",
+    "notes": "WPS Writer via Quartz, non-standard layout. Cover has a publication-date typo.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "osun",
+    "name": "Osun",
+    "year": 2026,
+    "file": "osun-2026-approved.pdf",
+    "pages": "486,493,495,498,502,504,506-507,511,516-517,519,521,523,525,527,529,532,535,538,540,549,554-555,560-561,564,566,569,573-574,579,585-586,590,596-597,599-600,602,608,610-611,613,615,617,620,622,625,629-630,632,638,640,646,650,655,657-660,671,779,782,785-787,791,794,798,805,813,816,820,825,833,835,837-838,843,847-848,850,861-862,864,866-867",
+    "notes": "45MB, 868pp. Heavily fragmented page ranges - slowest to extract.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "oyo",
+    "name": "Oyo",
+    "year": 2026,
+    "file": "oyo-2026-approved.pdf",
+    "pages": "1-13,16-28,30-33",
+    "notes": "From Oyo's own budget office, not openstates. Sept 2026 supplementary NOT in this document - say so if shipped.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "akwa-ibom",
+    "name": "Akwa Ibom",
+    "year": 2026,
+    "file": "akwa-ibom-2026-approved.pdf",
+    "pages": "53,56,89,100",
+    "notes": "Location column only PROBABLE. Verify with --inspect before investing time.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  },
+  {
+    "slug": "rivers",
+    "name": "Rivers",
+    "year": 2025,
+    "file": "rivers-2025-approved.pdf",
+    "pages": "207-220,222-233,236-240",
+    "skip": "2025 only - 2026 Appropriation Law signed 3 Sept 2026 but not yet published. Keep pending.",
+    "notes": "EXCEL.EXE via ilovepdf.",
+    "amount_columns": null,
+    "reconcile_column": "amt_2026_approved",
+    "official_total": null
+  }
+]
