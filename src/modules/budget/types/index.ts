@@ -42,6 +42,14 @@ export type StateSummary = {
   pages?: number;
   published?: string;
   lgas?: number;
+  /** First and last document page that carries a dataset row. */
+  sourcePages?: [number, number];
+  /** Page box in PDF points, e.g. [792, 612]. */
+  pageSize?: [number, number];
+  /** Which source column stands for "approved for 2025" in this document. */
+  approved2025Column?: string;
+  /** A caveat that belongs with the document, e.g. a later supplementary appropriation. */
+  note?: string;
 };
 
 export type Language = {
@@ -97,5 +105,5 @@ export type Lang = "en" | "ha";
 export type LgaMatch = { lga: string; lgaLabel: string; projects: number };
 
 export type LgaResolution =
-  | { found: true; match: LgaMatch }
+  | { found: true; match: LgaMatch; score: number }
   | { found: false; query: string; nearest: LgaMatch[] };

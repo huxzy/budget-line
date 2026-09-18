@@ -1,5 +1,89 @@
 [
   {
+    "code": "NG-AN",
+    "slug": "anambra",
+    "name": "Anambra",
+    "status": "live",
+    "year": 2026,
+    "projects": 1162,
+    "total_2026": 596771685500,
+    "document": "Anambra State 2026 Approved Budget",
+    "pages": 484,
+    "lgas": 6,
+    "sourcePages": [
+      469,
+      484
+    ],
+    "pageSize": [
+      792,
+      612
+    ],
+    "approved2025Column": "amt_2025_original"
+  },
+  {
+    "code": "NG-BA",
+    "slug": "bauchi",
+    "name": "Bauchi",
+    "status": "live",
+    "year": 2026,
+    "projects": 2176,
+    "total_2026": 568314961119.42,
+    "document": "Bauchi State 2026 Approved Budget",
+    "pages": 360,
+    "lgas": 20,
+    "sourcePages": [
+      326,
+      360
+    ],
+    "pageSize": [
+      842,
+      595
+    ],
+    "approved2025Column": "amt_2025_revised"
+  },
+  {
+    "code": "NG-BO",
+    "slug": "borno",
+    "name": "Borno",
+    "status": "live",
+    "year": 2026,
+    "projects": 1294,
+    "total_2026": 507323910000,
+    "document": "Borno State 2026 Approved Budget",
+    "pages": 225,
+    "lgas": 22,
+    "sourcePages": [
+      209,
+      225
+    ],
+    "pageSize": [
+      792,
+      612
+    ],
+    "approved2025Column": "amt_2025_revised"
+  },
+  {
+    "code": "NG-EB",
+    "slug": "ebonyi",
+    "name": "Ebonyi",
+    "status": "live",
+    "year": 2026,
+    "projects": 1512,
+    "total_2026": 719548322583.22,
+    "document": "Ebonyi State 2026 Approved Budget",
+    "pages": 498,
+    "lgas": 13,
+    "sourcePages": [
+      427,
+      497
+    ],
+    "pageSize": [
+      1440,
+      810
+    ],
+    "approved2025Column": "amt_2025_revised"
+  },
+  {
     "code": "NG-NI",
     "slug": "niger",
     "name": "Niger",
@@ -9,8 +93,79 @@
     "total_2026": 783694704491,
     "document": "Niger State 2026 Approved Budget",
     "pages": 399,
-    "published": "2026-01-08",
-    "lgas": 25
+    "lgas": 25,
+    "sourcePages": [
+      68,
+      101
+    ],
+    "pageSize": [
+      792,
+      612
+    ],
+    "approved2025Column": "amt_2025_revised"
+  },
+  {
+    "code": "NG-OG",
+    "slug": "ogun",
+    "name": "Ogun",
+    "status": "live",
+    "year": 2026,
+    "projects": 6013,
+    "total_2026": 1043234210524.78,
+    "document": "Ogun State 2026 Approved Budget",
+    "pages": 567,
+    "lgas": 20,
+    "sourcePages": [
+      496,
+      567
+    ],
+    "pageSize": [
+      792,
+      612
+    ],
+    "approved2025Column": "amt_2025_final"
+  },
+  {
+    "code": "NG-PL",
+    "slug": "plateau",
+    "name": "Plateau",
+    "status": "live",
+    "year": 2026,
+    "projects": 2417,
+    "total_2026": 501091599942,
+    "document": "Plateau State 2026 Approved Budget",
+    "pages": 222,
+    "lgas": 17,
+    "sourcePages": [
+      198,
+      222
+    ],
+    "pageSize": [
+      792,
+      612
+    ],
+    "approved2025Column": "amt_2025_revised"
+  },
+  {
+    "code": "NG-SO",
+    "slug": "sokoto",
+    "name": "Sokoto",
+    "status": "live",
+    "year": 2026,
+    "projects": 1710,
+    "total_2026": 553343592103.46,
+    "document": "Sokoto State 2026 Approved Budget",
+    "pages": 231,
+    "lgas": 20,
+    "sourcePages": [
+      210,
+      231
+    ],
+    "pageSize": [
+      792,
+      612
+    ],
+    "approved2025Column": "amt_2025_revised"
   },
   {
     "code": "NG-AB",
@@ -31,18 +186,6 @@
     "status": "pending"
   },
   {
-    "code": "NG-AN",
-    "slug": "anambra",
-    "name": "Anambra",
-    "status": "pending"
-  },
-  {
-    "code": "NG-BA",
-    "slug": "bauchi",
-    "name": "Bauchi",
-    "status": "pending"
-  },
-  {
     "code": "NG-BY",
     "slug": "bayelsa",
     "name": "Bayelsa",
@@ -55,12 +198,6 @@
     "status": "pending"
   },
   {
-    "code": "NG-BO",
-    "slug": "borno",
-    "name": "Borno",
-    "status": "pending"
-  },
-  {
     "code": "NG-CR",
     "slug": "cross-river",
     "name": "Cross River",
@@ -70,12 +207,6 @@
     "code": "NG-DE",
     "slug": "delta",
     "name": "Delta",
-    "status": "pending"
-  },
-  {
-    "code": "NG-EB",
-    "slug": "ebonyi",
-    "name": "Ebonyi",
     "status": "pending"
   },
   {
@@ -163,12 +294,6 @@
     "status": "pending"
   },
   {
-    "code": "NG-OG",
-    "slug": "ogun",
-    "name": "Ogun",
-    "status": "pending"
-  },
-  {
     "code": "NG-ON",
     "slug": "ondo",
     "name": "Ondo",
@@ -187,21 +312,9 @@
     "status": "pending"
   },
   {
-    "code": "NG-PL",
-    "slug": "plateau",
-    "name": "Plateau",
-    "status": "pending"
-  },
-  {
     "code": "NG-RI",
     "slug": "rivers",
     "name": "Rivers",
-    "status": "pending"
-  },
-  {
-    "code": "NG-SO",
-    "slug": "sokoto",
-    "name": "Sokoto",
     "status": "pending"
   },
   {
