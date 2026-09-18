@@ -1,0 +1,34 @@
+{
+  "name": "budgetline",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "data": "tsx scripts/build-data.ts",
+    "data:check": "tsx scripts/check-data.ts"
+  },
+  "dependencies": {
+    "fuse.js": "^7.5.0",
+    "next": "^16.3.5",
+    "number-to-words": "^1.2.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^20",
+    "@types/number-to-words": "^1.2.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "csv-parse": "^5.5.6",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.19.0",
+    "typescript": "^5"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}
