@@ -74,6 +74,8 @@ type Row = {
   amt_2025_perf_jan_sep: string;
   amt_2026_approved: string;
   source_page: string;
+  page_y_top: string;
+  page_y_bottom: string;
 };
 
 const rows: Row[] = parse(fs.readFileSync(CSV, "utf8"), {
@@ -91,6 +93,9 @@ const projects: Project[] = rows.map((r, i) => {
   }
   const page = Number(r.source_page);
   if (!Number.isInteger(page) || page < 1) throw new Error(`Row ${i + 1}: bad source_page`);
+  const rowTop = Number(r.page_y_top);
+  const rowBottom = Number(r.page_y_bottom);
+  if (!(rowTop >= 0 && rowTop < rowBottom && rowBottom <= 1)) throw new Error(`Row ${i + 1}: bad row position`);
 
   return {
     id: `${STATE}-${YEAR}-p${String(i + 1).padStart(4, "0")}`,
@@ -107,6 +112,8 @@ const projects: Project[] = rows.map((r, i) => {
     unspent2025: approved2025 > 0 && spent2025 === 0,
     ...formatNaira(approved2026),
     page,
+    rowTop,
+    rowBottom,
   };
 });
 

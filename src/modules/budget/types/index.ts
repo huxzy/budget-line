@@ -25,6 +25,9 @@ export type Project = {
   plain: string;
   spoken: string;
   page: number;
+  /** Vertical extent of the row on its page, as fractions of page height. */
+  rowTop: number;
+  rowBottom: number;
 };
 
 export type StateSummary = {
