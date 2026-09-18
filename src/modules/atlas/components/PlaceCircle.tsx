@@ -74,7 +74,7 @@ export function PlaceCircle({ place, position, filled = false, featured = false,
   const discEl = (
     <span
       className={cn(
-        "relative block rounded-full transition-[transform,background-color,box-shadow] duration-160 ease-out",
+        "relative block rounded-full [container-type:inline-size] transition-[transform,background-color,box-shadow] duration-160 ease-out",
         live
           ? solid
             ? "bg-marigold shadow-[0_12px_26px_-14px_rgba(58,31,23,0.6)]"
@@ -96,8 +96,9 @@ export function PlaceCircle({ place, position, filled = false, featured = false,
       )}
       {solid && (
         <span
-          className="absolute inset-0 flex items-center justify-center overflow-hidden px-2 text-center font-display font-bold leading-tight text-clay"
-          style={{ fontSize: `clamp(10px, ${place.name.length >= 7 ? 0.95 : 1.3}cqw, ${place.name.length >= 7 ? 14 : 20}px)` }}
+          className="absolute inset-0 flex items-center justify-center overflow-hidden px-[12%] text-center font-display font-bold leading-tight text-clay"
+          // Sized against the disc itself (its own container), so any name keeps a 12% margin.
+          style={{ fontSize: `clamp(9px, min(24cqw, ${Math.round(115 / place.name.length)}cqw), 20px)` }}
         >
           {place.name}
         </span>
