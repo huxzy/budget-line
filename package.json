@@ -11,6 +11,7 @@
     "data:check": "tsx scripts/check-data.ts"
   },
   "dependencies": {
+    "@vapi-ai/web": "^2.7.0",
     "fuse.js": "^7.5.0",
     "next": "^16.3.5",
     "number-to-words": "^1.2.4",
