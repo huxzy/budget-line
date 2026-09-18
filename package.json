@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "data": "tsx scripts/build-data.ts",
-    "data:check": "tsx scripts/check-data.ts"
+    "data:check": "tsx scripts/check-data.ts",
+    "pages": "bash scripts/render-pages.sh"
   },
   "dependencies": {
     "@vapi-ai/web": "^2.7.0",
