@@ -1,9 +1,16 @@
-// Placeholder until Phase 4. Screens are built after the tool endpoints work.
-export default function Home() {
+import { Suspense } from "react";
+import { HomeGate } from "@/modules/home";
+import { loadFirstRun } from "@/modules/home/server";
+import { voiceConfigFor } from "@/modules/voice/server";
+
+export const dynamic = "force-dynamic";
+
+export default function HomePage() {
+  const data = loadFirstRun("niger");
+  const language = data.languages.find((l) => l.status === "live") ?? data.languages[0];
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-semibold">Budget Line</h1>
-      <p className="mt-2">Tool endpoints live under /api. Screens arrive in Phase 4.</p>
-    </main>
+    <Suspense>
+      <HomeGate data={data} voice={voiceConfigFor(language.code)} registry={data.registry} languageName={language.name} />
+    </Suspense>
   );
 }
