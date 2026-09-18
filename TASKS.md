@@ -90,7 +90,7 @@ Build in this order. Stop when the clock says stop; earlier screens matter more.
 - [ ] Home / idle — area summary, mic button, starter questions
 - [ ] Listening state — waveform, live transcript
 - [ ] Project detail — figures, history, source link
-- [ ] First run — LGA picker (27 live + pending states), then language picker
+- [ ] First run — LGA picker (25 LGAs + pending states), then language picker
 - [ ] No result — honest copy, search counts, nearest match
 - [ ] Browse LGA — sector groups, unspent filter
 - [ ] Share card — portrait 1080×1350, legible at 176px, with the source line

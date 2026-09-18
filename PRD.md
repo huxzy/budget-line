@@ -48,8 +48,8 @@ official state total of ₦783,694,704,491.00 — a two-kobo rounding difference
 The dataset accounts for 100% of the state's capital budget. This claim is
 central to the pitch and must be verifiable from the repo.
 
-27 local government areas (plus STATE WIDE entries). 124 MDAs. 446 projects
-carry ₦0 for 2026.
+25 local government areas, plus STATE WIDE (517 rows) and OUTSIDE STATE
+(1 row) buckets. 124 MDAs. 446 projects carry ₦0 for 2026.
 
 ### 4.2 Multi-state architecture (build it now, fill it later)
 
@@ -77,7 +77,7 @@ Registry shape:
   "document": "Niger State 2026 Approved Budget",
   "pages": 399,
   "published": "2026-01-08",
-  "lgas": 27
+  "lgas": 25
 }
 ```
 
