@@ -22,49 +22,9 @@
 "use client";
 
 import type Vapi from "@vapi-ai/web";
-import type { CreateAssistantDTO } from "@vapi-ai/web/dist/api";
 
-export type VoiceStatus =
-  | "unavailable" // no key, or the browser refused the microphone
-  | "idle"
-  | "connecting"
-  | "listening"
-  | "thinking" // a tool call is in flight
-  | "speaking"
-  | "error";
-
-export type ToolName = "projects_by_lga" | "lga_summary" | "project_detail" | "state_coverage";
-
-const TOOL_ROUTES: Record<ToolName, string> = {
-  projects_by_lga: "/api/projects",
-  lga_summary: "/api/summary",
-  project_detail: "/api/project",
-  state_coverage: "/api/coverage",
-};
-
-export type ToolResult = {
-  name: ToolName | string;
-  /** The JSON our route returned, already parsed. */
-  payload: Record<string, unknown>;
-};
-
-export type Transcript = { role: "user" | "assistant"; text: string; final: boolean };
-
-export type VoiceEvents = {
-  status: (status: VoiceStatus, detail?: string) => void;
-  transcript: (t: Transcript) => void;
-  toolCall: (name: string, args: Record<string, unknown>) => void;
-  toolResult: (r: ToolResult) => void;
-};
-
-export type VoiceTarget = { assistantId: string } | { assistant: CreateAssistantDTO };
-
-export type VoiceClient = {
-  start: () => Promise<void>;
-  stop: () => void;
-  on: <E extends keyof VoiceEvents>(event: E, fn: VoiceEvents[E]) => () => void;
-  available: boolean;
-};
+import { TOOL_ROUTES, type ToolName } from "@/modules/tools";
+import type { ToolResult, VoiceClient, VoiceEvents, VoiceTarget } from "../types";
 
 function parseResult(raw: unknown): Record<string, unknown> {
   if (typeof raw === "string") {

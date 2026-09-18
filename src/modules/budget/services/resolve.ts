@@ -4,12 +4,8 @@
  * Fuzzy matching is fuse.js; we only prepare the query and pick thresholds.
  */
 import Fuse from "fuse.js";
-import { getLgas, getStates, STATE_WIDE, type Sector, type StateSummary } from "./data";
-
-export type LgaMatch = { lga: string; lgaLabel: string; projects: number };
-export type LgaResolution =
-  | { found: true; match: LgaMatch }
-  | { found: false; query: string; nearest: LgaMatch[] };
+import type { LgaMatch, LgaResolution, Sector, StateSummary } from "../types";
+import { getLgas, getStates, STATE_WIDE } from "./data";
 
 const NOISE = /\b(lga|l\.g\.a\.?|local\s+gov(ernment|t)?(\s+area)?|council|town|area|in|the)\b/gi;
 

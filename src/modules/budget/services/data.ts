@@ -1,6 +1,6 @@
 /**
- * The only data access module. Components and route handlers call these
- * functions; nothing else reads data/ directly.
+ * The only data access module. Everything reads the dataset through here;
+ * nothing else touches data/ directly. Server only (uses fs).
  *
  * One state in memory at a time: a state's JSON is read from disk on first
  * request, indexed, and cached for the life of the process. The registry
@@ -8,72 +8,17 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import type {
+  Language,
+  LgaSummary,
+  Project,
+  ProjectQuery,
+  Sector,
+  SectorSummary,
+  StateSummary,
+  StateWideBand,
+} from "../types";
 import { formatNaira, toKobo } from "./format";
-
-export type Sector =
-  | "health"
-  | "roads and works"
-  | "education"
-  | "water"
-  | "agriculture"
-  | "other";
-
-export type Project = {
-  id: string;
-  state: string;
-  project: string;
-  lga: string;
-  lgaLabel: string;
-  mda: string;
-  sector: Sector;
-  tier: "STATE" | "FEDERAL";
-  approved2026: number;
-  approved2025: number;
-  spent2025: number;
-  unspent2025: boolean;
-  display: string;
-  plain: string;
-  spoken: string;
-  page: number;
-};
-
-export type StateSummary = {
-  code: string;
-  slug: string;
-  name: string;
-  status: "live" | "pending";
-  year?: number;
-  projects?: number;
-  total_2026?: number;
-  document?: string;
-  pages?: number;
-  published?: string;
-  lgas?: number;
-};
-
-export type Language = {
-  code: string;
-  name: string;
-  native: string;
-  status: "live" | "planned";
-};
-
-export type ProjectQuery = {
-  lga?: string;
-  sector?: Sector;
-  unspentOnly?: boolean;
-  limit?: number;
-  sort?: "amount" | "page" | "name";
-};
-
-export type SectorSummary = {
-  sector: Sector;
-  projects: number;
-  total: number;
-  display: string;
-  plain: string;
-  spoken: string;
-};
 
 /**
  * Rows the budget assigns to the whole state rather than one LGA (517 of
@@ -83,30 +28,6 @@ export type SectorSummary = {
  * dropped.
  */
 export const STATE_WIDE = "STATE WIDE";
-
-export type StateWideBand = {
-  projects: number;
-  total: number;
-  display: string;
-  plain: string;
-  spoken: string;
-  note: string;
-};
-
-export type LgaSummary = {
-  state: string;
-  lga: string;
-  lgaLabel: string;
-  projects: number;
-  zero2026: number;
-  unspent2025: number;
-  total: number;
-  display: string;
-  plain: string;
-  spoken: string;
-  bySector: SectorSummary[];
-  stateWide: StateWideBand;
-};
 
 type StateData = {
   projects: Project[];

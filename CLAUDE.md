@@ -75,42 +75,60 @@ type Project = {
 
 `display`, `plain` and `spoken` are generated at build time by
 `scripts/build-data.ts`, never computed in a request handler or by the model.
+Aggregates (LGA and sector totals) are formatted by the same functions in
+`modules/budget/services`.
 
-Access the data only through `lib/data.ts`. Do not import JSON files directly
-from components or route handlers.
+Access the data only through `@/modules/budget/server`. Do not import JSON
+files directly from components or route handlers.
 
-## Layout
+## Structure and module convention
+
+`src/` is the code root. Same convention as the clinic line repo; it holds for
+the rest of the build.
 
 ```
-app/
-  page.tsx                     # first run / home
-  ask/page.tsx                 # listening + answer
-  project/[id]/page.tsx        # detail
-  source/[state]/[page]/page.tsx  # source verification
-  browse/page.tsx
-  api/
-    projects/route.ts          # Vapi tool: projects_by_lga
-    project/route.ts           # Vapi tool: project_detail
-    summary/route.ts           # Vapi tool: lga_summary
-    coverage/route.ts          # Vapi tool: state_coverage
-lib/
-  data.ts                      # the only data access module
-  vapi.ts                      # client init, assistant config, event wiring
-  format.ts                    # naira display / plain / spoken
-components/
-  ResultCard.tsx               # the core component
-  MicButton.tsx
-  SourceViewer.tsx
-  ShareCard.tsx
-data/
-  states.json
-  states/niger-2026.json
-public/pages/niger-2026/069.webp   # pre-rendered budget pages
-scripts/
-  extract.py                   # PDF → CSV (already written, keep as provenance)
-  build-data.ts                # CSV → JSON with derived fields
-  render-pages.sh              # PDF pages → WebP
+src/
+  app/                 # ROUTING ONLY: layout.tsx, page.tsx, route.ts, globals.css
+    ask/page.tsx       # composes module components, nothing else
+    api/*/route.ts     # one line: export const POST = toolRoute(handler)
+  modules/<name>/      # one folder per feature
+    components/        # React components for this feature (own their states)
+    hooks/             # React hooks
+    services/          # logic: data access, formatting, API clients, config
+    types/index.ts     # the module's TypeScript types
+    index.ts           # PUBLIC ENTRY, client-safe
+    server.ts          # PUBLIC ENTRY for code that touches fs/env; server only
+  components/ui/       # shared primitives used by more than one module
+  lib/                 # small shared helpers with no feature knowledge
+data/, prompts/, scripts/, public/   # stay at the repo root
 ```
+
+Modules today: `budget` (dataset access, formatting, LGA/sector resolution),
+`tools` (the four Vapi tool handlers and the request envelope), `voice`
+(assistant config, browser client, session hook, voice components). Phase 4
+adds `results`, `source`, `browse`, `share`, `home` as needed.
+
+Rules:
+
+- **Where logic lives:** in `modules/*/services`. Not in pages, not in
+  components, not in route handlers.
+- **What `app/` may contain:** routing files only. A page reads params,
+  calls a module's server entry for data, and renders module components. A
+  page never assembles markup itself and never contains business logic.
+- **Public entries only.** Import a module through `@/modules/<name>` or
+  `@/modules/<name>/server`, never through its internals
+  (`@/modules/budget/services/data` is wrong). Inside a module use relative
+  imports.
+- **Client/server split.** `index.ts` must be safe to import from a client
+  component. Anything using `node:fs`, `process.env` secrets or server-only
+  data goes behind `server.ts`. `budget` and `voice` have both; `tools` is
+  server only.
+- **Everything is componentised.** The result card, mic button, amount
+  display, chips, skeletons and panels are shared (`components/ui`) or module
+  components, and each handles its own states (default, unspent, zero,
+  loading, pressed) internally. Pages compose; they do not style.
+- **Data access** goes through `@/modules/budget/server` only. No JSON
+  imports anywhere else.
 
 ## Design system
 

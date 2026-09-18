@@ -10,8 +10,7 @@
  * figure.
  */
 import { toWords } from "number-to-words";
-
-export type Lang = "en" | "ha";
+import type { Lang } from "../types";
 
 const SCALES = [
   { value: 1_000_000_000, en: "billion", ha: "biliyan" },

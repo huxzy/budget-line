@@ -2,7 +2,7 @@
  * Print the assistant config exactly as it is sent to Vapi, for review.
  *   npx tsx scripts/dump-assistant.ts [lang] [--prompt]
  */
-import { buildAssistant, systemPromptFor } from "../lib/assistant";
+import { buildAssistant, systemPromptFor } from "../src/modules/voice/server";
 
 const lang = process.argv[2] && !process.argv[2].startsWith("--") ? process.argv[2] : "en";
 if (process.argv.includes("--prompt")) {

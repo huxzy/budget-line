@@ -13,11 +13,9 @@
  * so the assistant can say "not found" instead of the call failing.
  */
 import { NextResponse } from "next/server";
-import { getState, getStates, type StateSummary } from "./data";
-import { resolveState } from "./resolve";
+import { getState, getStates, resolveState, type StateSummary } from "@/modules/budget/server";
 
-type Args = Record<string, unknown>;
-type Handler = (args: Args) => unknown;
+import type { ToolArgs as Args, ToolHandler as Handler } from "../types";
 
 type VapiToolCall = {
   id: string;

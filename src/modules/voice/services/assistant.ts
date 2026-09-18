@@ -1,5 +1,5 @@
 /**
- * Server-side assistant configuration for Vapi. Never import from client code.
+ * Server-side assistant configuration for Vapi. Exposed via "@/modules/voice/server".
  *
  * The assistant is defined here, in the repo, and passed to the web SDK as a
  * transient config at call start — so the prompt is version-controlled and
@@ -14,7 +14,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { CreateAssistantDTO, CreateFunctionToolDTO, JsonSchema } from "@vapi-ai/web/dist/api";
-import { getLgas, STATE_WIDE } from "./data";
+import { getLgas, STATE_WIDE } from "@/modules/budget/server";
+import type { VoiceConfig } from "../types";
 
 const PROMPTS_DIR = path.join(process.cwd(), "prompts");
 
@@ -162,5 +163,15 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
     // Give the caller room to finish a sentence before the assistant replies.
     startSpeakingPlan: { waitSeconds: 0.8, smartEndpointingEnabled: "livekit" },
     maxDurationSeconds: 600,
+  };
+}
+
+/** Everything the voice UI needs for one language, resolved on the server. */
+export function voiceConfigFor(lang: string): VoiceConfig {
+  const assistantId = assistantIdFor(lang);
+  return {
+    publicKey: process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY || undefined,
+    target: assistantId ? { assistantId } : { assistant: buildAssistant(lang) },
+    publicUrl: publicBaseUrl(),
   };
 }

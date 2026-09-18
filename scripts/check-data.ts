@@ -2,8 +2,7 @@
  * Phase 1 checkpoint: exercise lib/data.ts and lib/format.ts from the CLI.
  *   npm run data:check
  */
-import { getProjects, getLgaSummary, getState } from "../lib/data";
-import { formatNaira } from "../lib/format";
+import { formatNaira, getLgaSummary, getProjects, getState } from "../src/modules/budget/server";
 
 const niger = getState("niger");
 console.log("registry: niger =", JSON.stringify(niger));

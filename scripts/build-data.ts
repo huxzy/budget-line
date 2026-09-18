@@ -14,8 +14,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parse } from "csv-parse/sync";
-import { formatNaira } from "../lib/format";
-import type { Project, Sector, StateSummary } from "../lib/data";
+import { formatNaira, type Project, type Sector, type StateSummary } from "../src/modules/budget";
 
 const ROOT = path.resolve(__dirname, "..");
 const CSV = path.join(ROOT, "data/raw/niger_2026_capital_projects.csv");
