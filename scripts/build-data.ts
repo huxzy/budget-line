@@ -160,7 +160,7 @@ const niger: StateSummary = {
   lgas,
 };
 
-// ISO 3166-2:NG. The 35 other states; FCT has no state budget and is not listed.
+// ISO 3166-2:NG. The 35 other states plus the FCT, all pending.
 const PENDING: [code: string, name: string][] = [
   ["AB", "Abia"], ["AD", "Adamawa"], ["AK", "Akwa Ibom"], ["AN", "Anambra"],
   ["BA", "Bauchi"], ["BY", "Bayelsa"], ["BE", "Benue"], ["BO", "Borno"],
@@ -170,7 +170,7 @@ const PENDING: [code: string, name: string][] = [
   ["KE", "Kebbi"], ["KO", "Kogi"], ["KW", "Kwara"], ["LA", "Lagos"],
   ["NA", "Nasarawa"], ["OG", "Ogun"], ["ON", "Ondo"], ["OS", "Osun"],
   ["OY", "Oyo"], ["PL", "Plateau"], ["RI", "Rivers"], ["SO", "Sokoto"],
-  ["TA", "Taraba"], ["YO", "Yobe"], ["ZA", "Zamfara"],
+  ["TA", "Taraba"], ["YO", "Yobe"], ["ZA", "Zamfara"], ["FC", "FCT"],
 ];
 
 const registry: StateSummary[] = [

@@ -1,16 +1,10 @@
-import { Suspense } from "react";
-import { HomeGate } from "@/modules/home";
-import { loadFirstRun } from "@/modules/home/server";
+import { AtlasEntry } from "@/modules/atlas";
+import { loadAtlas } from "@/modules/atlas/server";
 import { voiceConfigFor } from "@/modules/voice/server";
 
 export const dynamic = "force-dynamic";
 
+/** Always land on the Nigeria view. A saved area is offered as "continue", never skipped to. */
 export default function HomePage() {
-  const data = loadFirstRun("niger");
-  const language = data.languages.find((l) => l.status === "live") ?? data.languages[0];
-  return (
-    <Suspense>
-      <HomeGate data={data} voice={voiceConfigFor(language.code)} registry={data.registry} languageName={language.name} />
-    </Suspense>
-  );
+  return <AtlasEntry data={loadAtlas()} voice={voiceConfigFor("en")} level="nigeria" />;
 }

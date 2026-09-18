@@ -44,10 +44,10 @@ export function AppHeader({ className }: { className?: string }) {
       </div>
       <div className="flex items-center gap-2.5">
         <Link
-          href="/?change=lga"
+          href="/"
           className="inline-flex items-center gap-1.5 rounded-full bg-card px-3.5 py-2 text-[14px] font-semibold text-ink no-underline shadow-card hover:no-underline"
         >
-          {ready && prefs.lgaLabel ? prefs.lgaLabel : "Choose area"}
+          {ready && prefs.lgaLabel ? prefs.lgaLabel : "Choose an area"}
           <span aria-hidden className="text-muted">
             ▾
           </span>

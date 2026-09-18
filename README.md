@@ -87,8 +87,10 @@ npx tsx scripts/dump-assistant.ts [--prompt]   # the assistant config as sent to
 
 Next.js App Router, TypeScript, Tailwind. No database: per-state JSON loaded
 lazily and cached in memory. `src/app` is routing only; features live in
-`src/modules/*` (budget, tools, voice, results, source, ask, home, browse,
-project, share, prefs). See `CLAUDE.md` for the conventions and the product
+`src/modules/*` (atlas, budget, tools, voice, results, source, ask, browse,
+project, share, prefs). Routes: `/` the Nigeria view, `/s/niger` the state
+expanded, `/s/niger/bida` the area page, plus `/browse`, `/project/[id]`,
+`/source/[state]/[page]` and `/share/[id]`. See `CLAUDE.md` for the conventions and the product
 rules.
 
 ```

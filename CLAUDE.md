@@ -89,7 +89,9 @@ the rest of the build.
 ```
 src/
   app/                 # ROUTING ONLY: layout.tsx, page.tsx, route.ts, globals.css
-    ask/page.tsx       # composes module components, nothing else
+    page.tsx           # /            Nigeria view (atlas)
+    s/[state]/         # /s/niger     state expanded, local governments as circles
+    s/[state]/[lga]/   # /s/niger/bida  the area page (ask screen)
     api/*/route.ts     # one line: export const POST = toolRoute(handler)
   modules/<name>/      # one folder per feature
     components/        # React components for this feature (own their states)
@@ -103,10 +105,11 @@ src/
 data/, prompts/, scripts/, public/   # stay at the repo root
 ```
 
-Modules today: `budget` (dataset access, formatting, LGA/sector resolution),
+Modules: `budget` (dataset access, formatting, LGA/sector resolution),
 `tools` (the four Vapi tool handlers and the request envelope), `voice`
-(assistant config, browser client, session hook, voice components). Phase 4
-adds `results`, `source`, `browse`, `share`, `home` as needed.
+(assistant config, browser client, session hook), `prefs` (remembered area),
+`atlas` (the entry experience: Nigeria and state clusters, list view, search,
+voice-from-map), `ask`, `results`, `source`, `browse`, `project`, `share`.
 
 Rules:
 
@@ -145,6 +148,10 @@ Follow the approved design in `design/` (PDF export). Summary:
   red badge, never an alert. It is a fact on a record.
 - **Mic:** a real microphone glyph inside the disc, with the expanding rings
   originating from it. The mic button is always the largest object on screen.
+- **Atlas circles:** size steps through a fixed decorative rotation (56/64/72)
+  and encodes nothing; the line "Circle size is decorative and carries no
+  data" stays visible on every cluster view. Drift is CSS keyframes only, off
+  under `prefers-reduced-motion`, where the list view is the default.
 - **Motion:** result cards rise 16px and fade in, staggered 90ms; amounts count
   up from zero over 600ms with digits locked by tabular figures.
 

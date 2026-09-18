@@ -19,14 +19,19 @@ type Props = {
   registry: StateSummary;
   lgas: number;
   languageName: string;
+  /** The area this page is for. Remembered as the saved area on arrival. */
+  area: { lga: string; lgaLabel: string };
 };
 
 /** Listening + answer: the rail is the call, the cream side is what it found. */
-export function AskScreen({ voice, registry, lgas, languageName }: Props) {
-  const { prefs, ready } = usePreferences();
-  const session = useVoiceSession(voice, { lga: prefs.lga, lgaLabel: prefs.lgaLabel });
-  const summary = useLgaSummary(ready ? prefs.lga : null);
-  const place = prefs.lgaLabel?.replace(/ LGA$/, "") ?? null;
+export function AskScreen({ voice, registry, lgas, languageName, area }: Props) {
+  const { prefs, ready, update } = usePreferences();
+  useEffect(() => {
+    if (ready && prefs.lga !== area.lga) update({ lga: area.lga, lgaLabel: area.lgaLabel });
+  }, [ready, prefs.lga, area.lga, area.lgaLabel, update]);
+  const session = useVoiceSession(voice, { lga: area.lga, lgaLabel: area.lgaLabel });
+  const summary = useLgaSummary(area.lga);
+  const place = area.lgaLabel.replace(/ LGA$/, "");
   // A question handed over from another screen ("Ask about this") leads the starters;
   // it still needs a tap, since a call cannot start without one.
   const handed = useSearchParams().get("ask");

@@ -223,6 +223,12 @@
     "status": "pending"
   },
   {
+    "code": "NG-FC",
+    "slug": "fct",
+    "name": "FCT",
+    "status": "pending"
+  },
+  {
     "code": "NG",
     "slug": "federal",
     "name": "Federal",
