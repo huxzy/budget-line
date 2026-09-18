@@ -44,11 +44,11 @@ export function VoiceRail({ state, detail, turns, partial, starters, registry, l
   return (
     <aside className={cn("flex flex-col bg-clay px-6 pb-6 pt-7 text-on-clay", className)}>
       {settled ? (
-        <MicPill state={state} onPress={onMic} className="w-full justify-center">
+        <MicPill state={state} onPress={onMic} className="hidden w-full justify-center lg:inline-flex">
           Ask again
         </MicPill>
       ) : (
-        <div className="flex flex-col items-center gap-3">
+        <div className="hidden flex-col items-center gap-3 lg:flex">
           <MicButton state={state} onPress={onMic} />
           <Waveform active={state === "listening"} />
           <p className="font-display text-[24px] font-bold tracking-[-0.02em]">{STATUS[state]}</p>
@@ -62,7 +62,7 @@ export function VoiceRail({ state, detail, turns, partial, starters, registry, l
         </div>
       )}
 
-      <div className="mt-7 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.12em] text-on-clay-muted">
+      <div className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.12em] text-on-clay-muted lg:mt-7">
         <span className="h-px flex-1 bg-on-clay/15" />
         {turns.length ? (settled ? "Conversation" : "This call") : "Try one of these"}
         <span className="h-px flex-1 bg-on-clay/15" />

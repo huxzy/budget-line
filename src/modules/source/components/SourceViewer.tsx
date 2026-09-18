@@ -121,7 +121,7 @@ export function SourceViewer({ data }: { data: SourcePageData }) {
           </p>
         </section>
 
-        <aside className="flex flex-col gap-5 rounded-[24px] bg-clay p-5 text-on-clay lg:sticky lg:top-6 lg:self-start">
+        <aside className="order-first flex flex-col gap-5 rounded-[24px] bg-clay p-5 text-on-clay lg:order-none lg:sticky lg:top-6 lg:self-start">
           {cited ? (
             <>
               <span className="eyebrow text-on-clay-muted">The figure being checked</span>

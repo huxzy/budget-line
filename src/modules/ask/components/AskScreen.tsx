@@ -11,6 +11,7 @@ import { startersFor } from "../services/starters";
 import { toTurn } from "../services/turns";
 import type { Turn } from "../types";
 import { AnswerPane } from "./AnswerPane";
+import { MobileTalkBar } from "./MobileTalkBar";
 import { VoiceRail } from "./VoiceRail";
 
 type Props = {
@@ -62,7 +63,7 @@ export function AskScreen({ voice, registry, lgas, languageName }: Props) {
           onMic={() => (session.inCall ? session.stop() : session.start())}
           onEnd={session.stop}
           onAsk={session.ask}
-          className="order-2 lg:order-1"
+          className="order-2 pb-28 lg:order-1 lg:pb-6"
         />
         <main className="order-1 min-w-0 px-5 py-6 sm:px-8 lg:order-2 lg:px-10 lg:py-8">
           {session.status === "error" && session.detail && (
@@ -90,6 +91,7 @@ export function AskScreen({ voice, registry, lgas, languageName }: Props) {
           />
         </main>
       </div>
+      <MobileTalkBar state={micState} onMic={() => (session.inCall ? session.stop() : session.start())} onEnd={session.stop} languageName={languageName} />
     </div>
   );
 }
