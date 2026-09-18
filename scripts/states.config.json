@@ -13,7 +13,15 @@
     ],
     "reconcile_column": "amt_2026_approved",
     "official_total": 783694704491.0,
-    "notes": "Reference state, already live. Verified: 1,523 rows, reconciles to within 2 kobo."
+    "notes": "Reference state, already live. Verified: 1,523 rows, reconciles to within 2 kobo.",
+    "document_pages": 399,
+    "document": "Niger State 2026 Approved Budget",
+    "page_size": [
+      792,
+      612
+    ],
+    "csv": "niger_2026_capital_projects.csv",
+    "published": "2026-01-08"
   },
   {
     "slug": "plateau",
@@ -36,7 +44,13 @@
     "reconcile_column": "amt_2026_approved",
     "official_total": 501091599942.0,
     "cell_mode": "runs",
-    "mda_from_headings": true
+    "mda_from_headings": true,
+    "document_pages": 222,
+    "document": "Plateau State 2026 Approved Budget",
+    "page_size": [
+      792,
+      612
+    ]
   },
   {
     "slug": "bauchi",
@@ -55,7 +69,13 @@
     "reconcile_column": "amt_2026_approved",
     "official_total": 568314961119.42,
     "cell_mode": "runs",
-    "mda_from_headings": true
+    "mda_from_headings": true,
+    "document_pages": 360,
+    "document": "Bauchi State 2026 Approved Budget",
+    "page_size": [
+      842,
+      595
+    ]
   },
   {
     "slug": "bayelsa",
@@ -101,7 +121,8 @@
     "reconcile_column": "amt_2026_approved",
     "official_total": 698978771786.82,
     "cell_mode": "runs",
-    "mda_from_headings": true
+    "mda_from_headings": true,
+    "skip": "Extraction matches every printed row; sums to \u20a6698,978,771,788.86 vs official \u20a6698,978,771,786.82 (+\u20a62.04). The document's printed MDA totals were computed from unrounded values (e.g. 579 rows of \u20a614,649,084.25). Outside the \u20a61 rule; awaiting a decision."
   },
   {
     "slug": "ogun",
@@ -121,7 +142,13 @@
     "reconcile_column": "amt_2026_approved",
     "official_total": 1043234210524.78,
     "cell_mode": "runs",
-    "mda_from_headings": true
+    "mda_from_headings": true,
+    "document_pages": 567,
+    "document": "Ogun State 2026 Approved Budget",
+    "page_size": [
+      792,
+      612
+    ]
   },
   {
     "slug": "sokoto",
@@ -142,7 +169,13 @@
     "reconcile_column": "amt_2026_approved",
     "official_total": 553343592103.46,
     "cell_mode": "runs",
-    "mda_from_headings": true
+    "mda_from_headings": true,
+    "document_pages": 231,
+    "document": "Sokoto State 2026 Approved Budget",
+    "page_size": [
+      792,
+      612
+    ]
   },
   {
     "slug": "lagos",
@@ -174,7 +207,13 @@
     "reconcile_column": "amt_2026_approved",
     "official_total": 507323910000.0,
     "cell_mode": "runs",
-    "mda_from_headings": true
+    "mda_from_headings": true,
+    "document_pages": 225,
+    "document": "Borno State 2026 Approved Budget",
+    "page_size": [
+      792,
+      612
+    ]
   },
   {
     "slug": "anambra",
@@ -182,21 +221,51 @@
     "year": 2026,
     "file": "anambra-2026-approved.pdf",
     "pages": "469-484",
-    "notes": "PDFsam / SAMBox.",
-    "amount_columns": null,
+    "notes": "PDFsam / SAMBox. Official total from the summary on p61 (2026 Approved Budget, 5th column).",
+    "amount_columns": [
+      "amt_2024_actual",
+      "amt_2024_revised",
+      "amt_2025_original",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2026_tag_nutrition"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 596771685500.0,
+    "cell_mode": "runs",
+    "mda_from_headings": true,
+    "document_pages": 484,
+    "document": "Anambra State 2026 Approved Budget",
+    "page_size": [
+      792,
+      612
+    ]
   },
   {
     "slug": "imo",
     "name": "Imo",
     "year": 2026,
     "file": "imo-2026-approved.pdf",
-    "pages": "209-216,218-220",
-    "notes": "Word generated, 222pp.",
-    "amount_columns": null,
+    "pages": "209-220",
+    "notes": "Word generated, 222pp. Official total from the summary on p27 (2026 Approved Budget, 4th column).",
+    "amount_columns": [
+      "amt_2025_approved",
+      "amt_2025_final",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2026_tag_nutrition"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 1235720852203.04,
+    "cell_mode": "runs",
+    "mda_from_headings": true,
+    "document_pages": 222,
+    "document": "Imo State 2026 Approved Budget",
+    "page_size": [
+      842,
+      595
+    ],
+    "skip": "Reconciles exactly (833 rows, \u20a61,235,720,852,203.04) but the Word-generated layout wraps cells across baselines: 233 rows have no readable location and others carry fragments, so projects cannot be attributed to a local government."
   },
   {
     "slug": "yobe",
@@ -204,10 +273,19 @@
     "year": 2026,
     "file": "yobe-2026-approved.pdf",
     "pages": "246-258",
-    "notes": "Nitro Pro.",
-    "amount_columns": null,
+    "notes": "Nitro Pro. Official total from the summary on p39 (2026 Approved Budget, 4th column).",
+    "amount_columns": [
+      "amt_2025_original",
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_approved",
+      "amt_2026_tag_nutrition"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 291903650000.0,
+    "cell_mode": "runs",
+    "mda_from_headings": true,
+    "skip": "Document is internally inconsistent: its MDA total rows sum to \u20a6293,903,650,000 (extraction matches them exactly) while its summary gives \u20a6291,903,650,000. Cannot reconcile without adjusting the official total."
   },
   {
     "slug": "abia",
@@ -236,11 +314,26 @@
     "name": "Ebonyi",
     "year": 2026,
     "file": "ebonyi-2026-approved.pdf",
-    "pages": "427-433,435-442,446-451,453-454,456-459,461-463,465-477,479-481,484-486,488,490-494,496",
-    "notes": "iText body, designed image cover.",
-    "amount_columns": null,
+    "pages": "427-497",
+    "notes": "iText body, designed image cover. Official total from the summary on p46 (2026 Approved Budget, 5th column). Many continuation pages without a header row; the table runs 427-497.",
+    "amount_columns": [
+      "amt_2025_approved",
+      "amt_2025_revised",
+      "amt_2025_perf",
+      "amt_2026_proposal",
+      "amt_2026_approved",
+      "amt_2026_tag_nutrition"
+    ],
     "reconcile_column": "amt_2026_approved",
-    "official_total": null
+    "official_total": 719548322583.22,
+    "cell_mode": "runs",
+    "mda_from_headings": true,
+    "document_pages": 498,
+    "document": "Ebonyi State 2026 Approved Budget",
+    "page_size": [
+      1440,
+      810
+    ]
   },
   {
     "slug": "ondo",

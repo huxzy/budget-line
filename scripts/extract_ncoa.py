@@ -84,7 +84,7 @@ def numeric_runs(chars):
     for run in split_runs(chars):
         t = ''.join(c['text'] for c in run).replace(' ', '')
         if NUM.match(t) or t in DASH - {''}:
-            out.append({'text': t, 'x1': run[-1]['x1'], 'top': run[0]['top']})
+            out.append({'text': t, 'x1': run[-1]['x1'], 'top': run[0]['top'], 'chars': run})
     return out
 
 
@@ -332,9 +332,21 @@ def extract(pdf_path, cfg):
             lines = []
             for top, chars in groups:
                 amts = per_line.get(top, {})
-                body = [c for c in chars if c['x0'] < text_end]
+                if runs_mode:
+                    # Text is everything that is not a figure, however far it
+                    # overflows to the right; cutting at a fixed margin would
+                    # truncate long location and function names.
+                    figure_chars = {id(c) for tok in numeric_runs(chars) if tok['x1'] >= text_end for c in tok['chars']}
+                    body = [c for c in chars if id(c) not in figure_chars]
+                else:
+                    body = [c for c in chars if c['x0'] < text_end]
                 if runs_mode:
                     fields = cells_by_runs(body, text_cols)
+                    # A glyph with broken metrics (e.g. an unmapped ligature)
+                    # can leave a cell empty; fall back to the x-slice for it.
+                    for lo, hi, n in text_cols:
+                        if not fields.get(n):
+                            fields[n] = text_at(chars, lo, min(hi, text_end))
                 else:
                     fields = {n: text_at(chars, lo, min(hi, text_end))
                               for lo, hi, n in text_cols}
@@ -346,12 +358,46 @@ def extract(pdf_path, cfg):
             # above its projects rather than a column. Carry it forward and
             # keep the heading out of the wrapped-text pass.
             if heading_mda:
-                for l in lines:
-                    m = re.match(r'^(\d{12})\s*(\S.*)$', l['raw'])
-                    if not l['amts'] and m:
+                prev_heading = False
+                for k, l in enumerate(lines):
+                    m = re.match(r'^(\d{12})(?!\d)\s*(\S.*)$', l['raw'])
+                    code_only = re.match(r'^(\d{12})$', l['raw'].strip())
+                    if not l['amts'] and code_only:
+                        # the code on its own line; the name sits just above it
+                        name = ''
+                        if k > 0 and not lines[k - 1]['amts'] and lines[k - 1]['raw'] \
+                                and not re.match(r'^\d', lines[k - 1]['raw']) \
+                                and l['top'] - lines[k - 1]['top'] <= 8:
+                            name = lines[k - 1]['raw'].strip()
+                            lines[k - 1]['heading'] = True
+                        mda_current = f"{code_only.group(1)} - {name}".strip(' -')
+                        l['heading'] = True
+                        prev_heading = True
+                    elif not l['amts'] and m:
                         mda_current = f"{m.group(1)} - {m.group(2).strip()}"
                         l['heading'] = True
+                        prev_heading = True
+                    elif (prev_heading and not l['amts'] and l['raw']
+                          and not re.match(r'^\d{14}', l['raw'])
+                          and l['raw'].lower() != 'total'
+                          and 'Project' not in l['raw'] and 'Code and' not in l['raw']):
+                        # a heading that wrapped onto a second line
+                        mda_current = f"{mda_current} {l['raw'].strip()}"
+                        l['heading'] = True
+                    else:
+                        prev_heading = False if (l['amts'] or l['raw']) else prev_heading
                     l['mda_heading'] = mda_current
+                # A "Total" label and its figures can sit on different
+                # baselines. Give a nameless anchor its nearest label; if
+                # that label is "Total", the anchor is the totals row.
+                for n, l in enumerate(lines):
+                    if not l['amts'] or any(l['f'].values()):
+                        continue
+                    near = min((k for k in range(len(lines)) if k != n and not lines[k]['amts'] and lines[k]['raw']),
+                               key=lambda k: abs(lines[k]['top'] - l['top']), default=None)
+                    if near is not None and abs(lines[near]['top'] - l['top']) <= 8 and lines[near]['raw'].strip().lower() == 'total':
+                        l['is_total'] = True
+                        lines[near]['heading'] = True  # consumed; never wrapped text
 
             anchors = [n for n, l in enumerate(lines) if l['amts']]
             if not anchors:
@@ -366,11 +412,15 @@ def extract(pdf_path, cfg):
                 if any(k in txt for k in ('Project Name', 'Project Description',
                                           'Code and', 'Approved Budget')):
                     continue
+                if txt.strip().lower() in ('description', 'code', 'code and description'):
+                    continue  # residue of a wrapped header row
                 near = min(anchors, key=lambda a: abs(lines[a]['top'] - l['top']))
                 extra[near].append((l['top'], l['f']))
 
             for a in anchors:
                 l = lines[a]
+                if l.get('is_total'):
+                    continue
                 parts = sorted(extra[a] + [(l['top'], l['f'])], key=lambda t: t[0])
                 rec = {}
                 for _, _, name in text_cols:
@@ -385,8 +435,9 @@ def extract(pdf_path, cfg):
                 # governor's office"), so never match on the prefix alone.
                 low = rec['project'].lower().strip(' .')
                 cells = {rec[n].lower().strip(' .') for _, _, n in text_cols if rec.get(n)}
-                if 'total capital expenditure' in low or (cells & {
-                        'total', 'grand total', 'subtotal', 'sub total'}):
+                own = {v.lower().strip(' .') for v in l['f'].values() if v}
+                totals = {'total', 'grand total', 'subtotal', 'sub total'}
+                if 'total capital expenditure' in low or (cells & totals) or (own & totals):
                     continue
                 for k, name in enumerate(amount_names):
                     rec[name] = parse_amount(l['amts'].get(k, '-'))
