@@ -9,10 +9,12 @@ function figuresFor(total: number, projects: number): Figures {
   return { projects, total, display: f.display, plain: f.plain, compact: formatCompact(total) };
 }
 
-/** States and Niger's local governments for the entry views, from the registry. */
-export function loadAtlas(): AtlasData {
+/** States and one state's local governments for the entry views, from the registry. */
+export function loadAtlas(stateSlug = "niger"): AtlasData {
   const registry = getStates();
-  const niger = getState("niger")!;
+  const requested = getState(stateSlug);
+  const current = requested && requested.status === "live" ? requested : getState("niger")!;
+  const slug = current.slug;
 
   const states: Place[] = registry
     .filter((s) => s.slug !== "federal")
@@ -25,22 +27,22 @@ export function loadAtlas(): AtlasData {
       figures: s.status === "live" && s.total_2026 && s.projects ? figuresFor(s.total_2026, s.projects) : undefined,
     }));
 
-  const lgas: Place[] = getLgas("niger")
+  const lgas: Place[] = getLgas(slug)
     .filter((l) => l.lga !== STATE_WIDE && l.lga !== "OUTSIDE STATE")
     .map((l) => {
-      const featured = l.lga === FEATURED_LGA;
-      const summary = featured ? getLgaSummary("niger", l.lga) : null;
+      const featured = slug === "niger" && l.lga === FEATURED_LGA;
+      const summary = featured ? getLgaSummary(slug, l.lga) : null;
       return {
         kind: "lga",
         key: l.lga,
         name: l.lgaLabel.replace(/ LGA$/, ""),
-        href: `/s/niger/${l.lga.toLowerCase()}`,
+        href: `/s/${slug}/${l.lga.toLowerCase()}`,
         status: "live",
-        stateName: niger.name,
+        stateName: current.name,
         figures: summary ? figuresFor(summary.total, summary.projects) : undefined,
-        unspent: summary ? getProjects("niger", { lga: l.lga, unspentOnly: true }).length : undefined,
+        unspent: summary ? getProjects(slug, { lga: l.lga, unspentOnly: true }).length : undefined,
       };
     });
 
-  return { states, liveCount: states.filter((s) => s.status === "live").length, registry: niger, lgas };
+  return { states, liveCount: states.filter((s) => s.status === "live").length, registry: current, lgas };
 }

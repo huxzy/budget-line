@@ -16,7 +16,7 @@ type Props = {
 
 /** A state expanded: its local governments as circles (or a list), figures per area. */
 export function StateView({ data, view, micState, onMic }: Props) {
-  const niger = data.states.find((s) => s.status === "live")!;
+  const niger = data.states.find((s) => s.key === data.registry.slug) ?? data.states.find((s) => s.status === "live")!;
   const featured = data.lgas.find((l) => l.figures);
   const sorted = [...data.lgas].sort((a, b) => (a.figures ? -1 : b.figures ? 1 : a.name.localeCompare(b.name)));
 

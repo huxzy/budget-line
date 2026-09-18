@@ -16,7 +16,8 @@ type Props = {
 
 /** The Nigeria view: 37 states as a drifting cluster, Niger live in marigold. */
 export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
-  const niger = data.states.find((s) => s.status === "live")!;
+  const live = data.states.filter((s) => s.status === "live");
+  const niger = live[0];
   const pendingCount = data.states.length - data.liveCount;
 
   return (
@@ -32,7 +33,7 @@ export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
           places={data.states}
           positionFor={(p) => statePosition(p.key)}
           featuredKey={niger.key}
-          figuresFor={[niger.key]}
+          figuresFor={live.map((s) => s.key)}
           liveStateName={niger.name}
           status={`${data.liveCount} of ${data.states.length} states available`}
         />
@@ -93,22 +94,28 @@ export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
           <span className="text-center text-[13px] text-muted">&ldquo;Bida&rdquo; · &ldquo;Niger State&rdquo; · &ldquo;Health projects near me&rdquo;</span>
         </div>
         <div>
-          <span className="eyebrow">Available now</span>
-          <Link href={niger.href} className="mt-2 flex items-center justify-between rounded-[14px] bg-card px-5 py-4 no-underline shadow-card hover:bg-hairline hover:no-underline">
-            <span>
-              <span className="block font-display text-[19px] font-bold text-ink">{niger.name} State</span>
-              <span className="text-[13px] text-muted">{data.lgas.length} local governments</span>
-            </span>
-            <span className="font-display font-bold text-ink" aria-hidden>
-              →
-            </span>
-          </Link>
+          <span className="eyebrow">Available now{live.length > 1 ? ` · ${live.length}` : ""}</span>
+          <div className="mt-2 flex flex-col gap-2">
+            {live.map((st) => (
+              <Link key={st.key} href={st.href} className="flex items-center justify-between rounded-[14px] bg-card px-5 py-4 no-underline shadow-card hover:bg-hairline hover:no-underline">
+                <span>
+                  <span className="block font-display text-[19px] font-bold text-ink">{st.name} State</span>
+                  <span className="text-[13px] text-muted">
+                    {st.key === data.registry.slug ? `${data.lgas.length} local governments` : `${st.figures?.projects.toLocaleString("en-NG")} projects`}
+                  </span>
+                </span>
+                <span className="font-display font-bold text-ink" aria-hidden>
+                  →
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
         <div>
           <span className="eyebrow">Next to be read</span>
           <div className="mt-2 flex flex-col gap-2">
             <span className="flex items-center justify-between rounded-[14px] bg-card/70 px-5 py-4 text-[16px] font-bold text-muted">
-              {pendingCount} other states <PlannedTag />
+              {pendingCount} {pendingCount === 1 ? "other state" : "other states"} <PlannedTag />
             </span>
             <span className="flex items-center justify-between rounded-[14px] bg-card/70 px-5 py-4 text-[16px] font-bold text-muted">
               Federal tier <PlannedTag />

@@ -31,7 +31,8 @@ export type Place = {
 export type AtlasData = {
   states: Place[];
   liveCount: number;
+  /** The state whose local governments are loaded (Niger unless another live state is requested). */
   registry: StateSummary;
-  /** Niger's LGAs, alphabetical. */
+  /** That state's LGAs, alphabetical. */
   lgas: Place[];
 };

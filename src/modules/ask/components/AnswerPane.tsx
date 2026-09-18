@@ -58,15 +58,15 @@ export function AnswerPane({ turn, headline, speaking, summary, registry, onAsk,
         {!idle && (
           <div>
             <span className="eyebrow">{speaking ? "Budget Line is answering" : "Budget Line said"}</span>
-            <h1
+            <blockquote
               className={cn(
-                "mt-1.5 max-w-[720px] font-display text-[24px] font-bold leading-[1.18] tracking-[-0.025em] sm:text-[30px]",
+                "mt-2 max-w-[62ch] border-l-2 border-hairline-strong pl-4 text-[17px] font-medium leading-[1.5] text-label sm:text-[19px]",
                 !headline && "text-muted",
               )}
             >
               {headline?.text ?? "…"}
-              {speaking && <span className="ml-1 inline-block h-6 w-[3px] animate-caret bg-marigold align-[-4px]" aria-hidden />}
-            </h1>
+              {speaking && <span className="ml-1 inline-block h-5 w-[2px] animate-caret bg-marigold align-[-3px]" aria-hidden />}
+            </blockquote>
           </div>
         )}
 

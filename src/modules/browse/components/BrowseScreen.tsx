@@ -31,7 +31,7 @@ export function BrowseScreen({ data }: { data: BrowseData }) {
     <div className="flex min-h-dvh flex-col bg-surface">
       <AppHeader />
       <div className="grid flex-1 grid-cols-1 lg:grid-cols-[270px_minmax(0,1fr)]">
-        <aside className="flex flex-col gap-5 border-b border-hairline px-5 py-6 lg:border-b-0 lg:border-r lg:px-6">
+        <aside className="flex flex-col gap-5 border-b border-hairline px-5 py-6 lg:sticky lg:top-0 lg:max-h-dvh lg:overflow-y-auto lg:border-b-0 lg:border-r lg:px-6">
           <div>
             <h1 className="font-display text-[26px] font-bold tracking-[-0.03em]">{summary.lgaLabel}</h1>
             <p className="text-[14px] text-muted">
