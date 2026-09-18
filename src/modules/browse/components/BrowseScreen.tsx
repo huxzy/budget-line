@@ -6,6 +6,7 @@ import { MicPill, PlannedTag } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatCompact, sectorLabel } from "@/modules/budget";
 import { ResultCard } from "@/modules/results";
+import { publishedOn } from "@/modules/ask";
 import type { BrowseData } from "../types";
 
 function href(base: BrowseData["query"], patch: Partial<Record<"lga" | "sector" | "unspent" | "sort", string | undefined>>) {
@@ -56,7 +57,7 @@ export function BrowseScreen({ data }: { data: BrowseData }) {
                 </select>
               </label>
               <span className="flex items-center justify-between rounded-[12px] bg-card px-4 py-3 text-[14px] font-semibold shadow-card">
-                All 25 local governments <span data-num className="text-muted">{registry.projects?.toLocaleString("en-NG")}</span>
+                All {lgas.length} local governments <span data-num className="text-muted">{registry.projects?.toLocaleString("en-NG")}</span>
               </span>
               <span className="flex items-center justify-between rounded-[12px] bg-card/60 px-4 py-3 text-[14px] font-semibold text-muted">
                 Federal tier <PlannedTag />
@@ -142,8 +143,8 @@ export function BrowseScreen({ data }: { data: BrowseData }) {
             <div className="max-w-[560px]">
               <span className="eyebrow">Where these figures come from</span>
               <p className="mt-1 text-[14px] leading-snug text-muted">
-                {registry.document}, published 8 January. <span data-num>{registry.pages}</span> pages, read line by line, reconciling to the
-                official state total.
+                {registry.document}, published {publishedOn(registry)}. <span data-num>{registry.pages}</span> pages, read line by line,
+                reconciling to the official state total.
               </p>
             </div>
             <div className="text-right">
@@ -151,7 +152,7 @@ export function BrowseScreen({ data }: { data: BrowseData }) {
                 ₦{registry.total_2026?.toLocaleString("en-NG")}
               </p>
               <p className="text-[13px] text-muted">
-                <span data-num>{registry.projects?.toLocaleString("en-NG")}</span> projects · 25 local governments
+                <span data-num>{registry.projects?.toLocaleString("en-NG")}</span> projects · {lgas.length} local governments
               </p>
             </div>
           </section>

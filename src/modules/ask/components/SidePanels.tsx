@@ -33,13 +33,17 @@ export function LgaSummaryPanel({ summary, sector, shown }: { summary: SummaryPa
   );
 }
 
+export function publishedOn(registry: StateSummary) {
+  return registry.published ? new Date(registry.published).toLocaleDateString("en-NG", { day: "numeric", month: "long" }) : "";
+}
+
 export function ProvenancePanel({ registry }: { registry: StateSummary }) {
   return (
     <div className="flex flex-col gap-1.5 rounded-[20px] border border-hairline-strong bg-card-soft p-5">
       <span className="font-display text-[15px] font-bold">Where these figures come from</span>
       <p className="text-[13px] leading-snug text-muted">
-        {registry.document}, published 8 January. <span data-num>{registry.pages}</span> pages, read line by line, reconciling to the
-        official state total within two kobo.
+        {registry.document}, published {publishedOn(registry)}. <span data-num>{registry.pages}</span> pages, read line by line,
+        reconciling to the official state total within two kobo.
       </p>
       <Link href={`/source/${registry.slug}/69`} className="text-[13px] font-semibold">
         Open the document →
