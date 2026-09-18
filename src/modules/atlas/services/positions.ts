@@ -65,9 +65,9 @@ const NIGER_LGAS: Record<string, Row> = {
   LAVUN: [30, 48, 72, 6, 27, 2],
   MAGAMA: [48, 44, 56, 1, 24, 14],
   MARIGA: [65, 47, 64, 3, 32, 19],
-  MASHEGU: [71, 37, 56, 5, 26, 7],
+  MASHEGU: [79, 45, 56, 5, 26, 7],
   MOKOWA: [8, 64, 64, 2, 30, 12],
-  MUNYA: [25, 67, 56, 4, 22, 4],
+  MUNYA: [22, 68, 56, 4, 22, 4],
   PAIKORO: [43, 63, 72, 6, 28, 22],
   RAFI: [60, 66, 56, 1, 31, 10],
   RIJAU: [77, 62, 64, 3, 25, 17],
@@ -78,8 +78,8 @@ const NIGER_LGAS: Record<string, Row> = {
 };
 
 function toPosition([x, y, size, path, duration, delay]: Row): Position {
-  // Design timings run 22–34s; shortened by a third so the drift is visible at a glance.
-  return { x, y, size, drift: { path, duration: Math.round(duration * 0.65), delay } };
+  // Design timings run 22–34s; halved so the drift is visible at a glance.
+  return { x, y, size, drift: { path, duration: Math.round(duration * 0.5), delay } };
 }
 
 /** Fallback for a key the table does not know: a stable spot from its name. */

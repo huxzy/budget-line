@@ -16,6 +16,8 @@ type Props = {
   /** Show the place's figures in a persistent tooltip (Niger, Bida). */
   showFigures?: boolean;
   liveStateName?: string;
+  /** Slightly smaller discs for a field where every circle carries a figures card. */
+  dense?: boolean;
 };
 
 /**
@@ -25,7 +27,7 @@ type Props = {
  * the DOM at all times and referenced by aria-describedby, so screen readers
  * get the same content sighted users hover for. Size carries no data.
  */
-export function PlaceCircle({ place, position, filled = false, featured = false, showFigures = false, liveStateName = "Niger" }: Props) {
+export function PlaceCircle({ place, position, filled = false, featured = false, showFigures = false, liveStateName = "Niger", dense = false }: Props) {
   const solid = filled || featured;
   const tipId = useId();
   const live = place.status === "live";
@@ -33,12 +35,21 @@ export function PlaceCircle({ place, position, filled = false, featured = false,
   // Sizes scale with the field (container query units) so the cluster reads
   // the same on a laptop and a wide monitor; the 56/64/72 rotation becomes
   // 8/9/10% of the field width, never below the design's pixel sizes.
-  const cq = { 56: 6.5, 64: 7.5, 72: 8.5 }[size];
-  const disc = `clamp(${size}px, ${cq}cqw, ${Math.round(size * 1.6)}px)`;
+  const cq = { 56: 6.5, 64: 7.5, 72: 8.5 }[size] * (dense ? 0.8 : 1);
+  const disc = `clamp(${size}px, ${cq}cqw, ${Math.round(size * (dense ? 1.25 : 1.6))}px)`;
   const wrap = `calc(${disc} + 48px)`;
 
   const tooltip = live ? (
-    place.figures ? (
+    place.figures && place.kind === "lga" ? (
+      <>
+        <span data-num className="block text-[12px] font-bold text-ink">
+          {place.figures.projects} projects
+        </span>
+        <span data-num className="block text-[11px] font-semibold text-marigold-text">
+          {place.figures.compact}
+        </span>
+      </>
+    ) : place.figures ? (
       <>
         <span data-num className="block font-display text-[15px] font-bold text-ink">
           {place.figures.projects.toLocaleString("en-NG")} projects
@@ -85,8 +96,8 @@ export function PlaceCircle({ place, position, filled = false, featured = false,
       )}
       {solid && (
         <span
-          className="absolute inset-0 flex items-center justify-center overflow-hidden px-1 text-center font-display font-bold leading-tight text-clay"
-          style={{ fontSize: `clamp(10px, ${place.name.length > 7 ? 1.05 : 1.4}cqw, ${place.name.length > 7 ? 15 : 22}px)` }}
+          className="absolute inset-0 flex items-center justify-center overflow-hidden px-2 text-center font-display font-bold leading-tight text-clay"
+          style={{ fontSize: `clamp(10px, ${place.name.length >= 7 ? 0.95 : 1.3}cqw, ${place.name.length >= 7 ? 14 : 20}px)` }}
         >
           {place.name}
         </span>
@@ -105,7 +116,8 @@ export function PlaceCircle({ place, position, filled = false, featured = false,
       id={tipId}
       role="tooltip"
       className={cn(
-        "pointer-events-none absolute left-1/2 top-full z-20 mt-0.5 w-max max-w-[210px] -translate-x-1/2 rounded-[12px] px-3.5 py-2.5 text-left shadow-card transition-opacity delay-[350ms] duration-200",
+        "pointer-events-none absolute left-1/2 top-full z-20 mt-0.5 w-max max-w-[210px] -translate-x-1/2 rounded-[12px] text-left shadow-card transition-opacity delay-[350ms] duration-200",
+        place.kind === "lga" ? "px-2.5 py-1.5 text-center" : "px-3.5 py-2.5",
         live ? "bg-card" : "bg-clay text-on-clay",
         showFigures ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100",
       )}

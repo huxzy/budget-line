@@ -1,9 +1,6 @@
 import { formatCompact, formatNaira, getLgas, getLgaSummary, getProjects, getState, getStates, STATE_WIDE } from "@/modules/budget/server";
 import type { AtlasData, Figures, Place } from "../types";
 
-/** The one local government whose figures the atlas shows before it is opened. */
-const FEATURED_LGA = "BIDA";
-
 function figuresFor(total: number, projects: number): Figures {
   const f = formatNaira(total);
   return { projects, total, display: f.display, plain: f.plain, compact: formatCompact(total) };
@@ -30,8 +27,7 @@ export function loadAtlas(stateSlug = "niger"): AtlasData {
   const lgas: Place[] = getLgas(slug)
     .filter((l) => l.lga !== STATE_WIDE && l.lga !== "OUTSIDE STATE")
     .map((l) => {
-      const featured = slug === "niger" && l.lga === FEATURED_LGA;
-      const summary = featured ? getLgaSummary(slug, l.lga) : null;
+      const summary = getLgaSummary(slug, l.lga);
       return {
         kind: "lga",
         key: l.lga,

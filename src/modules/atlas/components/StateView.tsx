@@ -17,8 +17,7 @@ type Props = {
 /** A state expanded: its local governments as circles (or a list), figures per area. */
 export function StateView({ data, view, micState, onMic }: Props) {
   const niger = data.states.find((s) => s.key === data.registry.slug) ?? data.states.find((s) => s.status === "live")!;
-  const featured = data.lgas.find((l) => l.figures);
-  const sorted = [...data.lgas].sort((a, b) => (a.figures ? -1 : b.figures ? 1 : a.name.localeCompare(b.name)));
+  const sorted = [...data.lgas].sort((a, b) => (b.figures?.total ?? 0) - (a.figures?.total ?? 0));
 
   const rows = (
     <div className="flex flex-col gap-2.5">
@@ -26,7 +25,7 @@ export function StateView({ data, view, micState, onMic }: Props) {
         <PlaceRow
           key={l.key}
           place={l}
-          highlight={!!l.figures}
+          highlight={l.key === "BIDA"}
           detail={
             l.figures
               ? `${l.figures.projects} projects${l.unspent ? ` · ${l.unspent} with money approved last year and nothing recorded spent` : ""}`
@@ -74,18 +73,16 @@ export function StateView({ data, view, micState, onMic }: Props) {
       <main className="flex min-w-0 flex-col px-5 py-6 sm:px-8">
         <div className="flex flex-wrap items-baseline gap-3">
           <h2 className="font-display text-[24px] font-bold tracking-[-0.025em]">Choose a local government</h2>
-          <span className="text-[13px] text-muted">Figures load per area{view === "list" ? " · alphabetical" : ""}</span>
+          <span className="text-[13px] text-muted">{view === "list" ? "Largest approved total first" : "Real figures on every area"}</span>
         </div>
         <Cluster
           className={view === "map" ? "mt-4 hidden w-full lg:block" : "hidden"}
           places={data.lgas}
           positionFor={(p) => lgaPosition("niger", p.key)}
-          featuredKey={featured?.key}
-          fillLive
-          figuresFor={featured ? [featured.key] : []}
+          featureLive
           liveStateName={niger.name}
           status={`All ${data.lgas.length} have figures`}
-          height="clamp(560px, calc(100dvh - 300px), 860px)"
+          height="clamp(640px, calc(100dvh - 260px), 920px)"
         />
         <div className={view === "map" ? "mt-4 lg:hidden" : "mt-4"}>{rows}</div>
         {view === "list" && <p className="mt-3 text-[13px] text-muted">Circle size is decorative and carries no data</p>}

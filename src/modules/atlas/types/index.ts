@@ -20,7 +20,7 @@ export type Place = {
   name: string;
   href: string;
   status: "live" | "pending";
-  /** Only Niger and Bida carry figures in the atlas. */
+  /** Real figures from the dataset; pending places have none. */
   figures?: Figures;
   /** For an LGA: its state. */
   stateName?: string;
