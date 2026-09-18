@@ -51,6 +51,13 @@ export type StateSummary = {
   lgas?: number;
 };
 
+export type Language = {
+  code: string;
+  name: string;
+  native: string;
+  status: "live" | "planned";
+};
+
 export type ProjectQuery = {
   lga?: string;
   sector?: Sector;
@@ -114,6 +121,10 @@ const registry: StateSummary[] = JSON.parse(
   fs.readFileSync(path.join(DATA_DIR, "states.json"), "utf8"),
 );
 
+const languages: Language[] = JSON.parse(
+  fs.readFileSync(path.join(DATA_DIR, "languages.json"), "utf8"),
+);
+
 const cache = new Map<string, StateData>();
 
 function sectorKey(lga: string, sector: Sector) {
@@ -160,6 +171,11 @@ const SORTS: Record<NonNullable<ProjectQuery["sort"]>, (a: Project, b: Project) 
 
 export function getStates(): StateSummary[] {
   return registry;
+}
+
+/** Languages the picker offers. Only "live" ones have an assistant. */
+export function getLanguages(): Language[] {
+  return languages;
 }
 
 export function getState(slug: string): StateSummary | null {
