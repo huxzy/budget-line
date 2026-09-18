@@ -25,5 +25,5 @@ q "13. Unknown project id"                     project  '{"id":"niger-2026-p9999
 q "14. Do you cover Kaduna?"                   coverage '{"state":"Kaduna"}' '{found, covered, state: .state.name, status: .state.status, live: [.live[].name]}'
 q "15. Do you cover Niger? / what is live"     coverage '{}' '{found, live: [.live[] | {name, projects, lgas}], pendingCount}'
 q "16. Kaduna projects → not_live, never a 500" projects '{"state":"Kaduna","lga":"Zaria"}' '{found, reason, state: .state.name, covered: [.covered[].name]}'
-q "17. Vapi envelope round-trip"               projects '{"message":{"type":"tool-calls","toolCallList":[{"id":"call_1","name":"projects_by_lga","arguments":{"lga":"Bida","sector":"health","limit":1}}]}}' '{toolCallId: .results[0].toolCallId, result: (.results[0].result | fromjson | {found, lga, first: .projects[0].display, page: .projects[0].page})}'
+q "17. Vapi envelope round-trip"               projects '{"message":{"type":"tool-calls","toolCallList":[{"id":"call_1","type":"function","function":{"name":"projects_by_lga","arguments":"{\\"lga\\":\\"Bida\\",\\"sector\\":\\"health\\",\\"limit\\":1}"}}]}}' '{toolCallId: .results[0].toolCallId, result: (.results[0].result | fromjson | {found, lga, first: .projects[0].display, page: .projects[0].page})}'
 q "18. Garbage body"                           projects 'not json' '{found, reason}'

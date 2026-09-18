@@ -2,8 +2,11 @@
  * Shared plumbing for the four Vapi tool endpoints.
  *
  * Each route accepts two body shapes:
- *   1. Vapi's tool-calls envelope: { message: { type: "tool-calls",
- *      toolCallList: [{ id, name, arguments }] } } → { results: [{ toolCallId, result }] }
+ *   1. Vapi's tool-calls envelope:
+ *        { message: { type: "tool-calls", toolCallList: [
+ *            { id, type: "function", function: { name, arguments: "<json string>" } } ] } }
+ *      → { results: [{ toolCallId, name, result: "<json string>" }] }
+ *      (Some docs show a flat { id, name, arguments }; both are accepted.)
  *   2. Plain JSON arguments (for curl and the UI) → the payload itself.
  *
  * Handlers never throw for bad input; they return a structured `found: false`
@@ -16,11 +19,15 @@ import { resolveState } from "./resolve";
 type Args = Record<string, unknown>;
 type Handler = (args: Args) => unknown;
 
+type VapiToolCall = {
+  id: string;
+  name?: string;
+  arguments?: Args | string;
+  function?: { name: string; arguments: Args | string };
+};
+
 type VapiEnvelope = {
-  message?: {
-    type?: string;
-    toolCallList?: { id: string; name: string; arguments: Args | string }[];
-  };
+  message?: { type?: string; toolCallList?: VapiToolCall[] };
 };
 
 function parseArgs(a: Args | string): Args {
@@ -45,10 +52,12 @@ export function toolRoute(handler: Handler) {
 
     const calls = body.message?.toolCallList;
     if (body.message?.type === "tool-calls" && Array.isArray(calls)) {
-      const results = calls.map((call) => ({
-        toolCallId: call.id,
-        result: JSON.stringify(handler(parseArgs(call.arguments))),
-      }));
+      const results = calls.map((call) => {
+        const name = call.function?.name ?? call.name ?? "";
+        const args = parseArgs(call.function?.arguments ?? call.arguments ?? {});
+        if (process.env.NODE_ENV !== "production") console.log(`[tool] ${name}`, JSON.stringify(args));
+        return { toolCallId: call.id, name, result: JSON.stringify(handler(args)) };
+      });
       return NextResponse.json({ results });
     }
 

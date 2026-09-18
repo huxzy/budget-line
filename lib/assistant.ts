@@ -14,6 +14,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { CreateAssistantDTO, CreateFunctionToolDTO, JsonSchema } from "@vapi-ai/web/dist/api";
+import { getLgas, STATE_WIDE } from "./data";
 
 const PROMPTS_DIR = path.join(process.cwd(), "prompts");
 
@@ -33,6 +34,15 @@ export function publicBaseUrl(): string {
   if (explicit) return explicit;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   return "";
+}
+
+/** LGA names plus the towns the resolver knows, title-cased for the transcriber. */
+function placeNames(): string[] {
+  const lgas = getLgas("niger")
+    .map((l) => l.lga)
+    .filter((l) => l !== STATE_WIDE && l !== "OUTSIDE STATE")
+    .map((l) => l.charAt(0) + l.slice(1).toLowerCase());
+  return [...lgas, "Minna", "Niger State"];
 }
 
 function readPrompt(file: string): string {
@@ -119,8 +129,8 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
     firstMessage: "This is Budget Line. Which local government do you want to ask about?",
     firstMessageMode: "assistant-speaks-first",
     model: {
-      provider: "anthropic",
-      model: "claude-sonnet-5",
+      provider: "openai",
+      model: "gpt-4.1",
       temperature: 0.2,
       maxTokens: 300,
       messages: [{ role: "system", content: systemPromptFor(lang) }],
@@ -130,6 +140,9 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
       provider: "deepgram",
       model: "nova-3",
       language: "en",
+      // Bias recognition toward the place names people will actually say;
+      // without this "Bida" comes back as "Beta".
+      keyterm: placeNames(),
       // A provider blip must not kill the demo.
       fallbackPlan: { transcribers: [{ provider: "openai", model: "gpt-4o-transcribe", language: "en" }] },
     },
