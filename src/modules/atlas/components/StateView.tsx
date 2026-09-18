@@ -70,7 +70,7 @@ export function StateView({ data, saved, view, micState, onMic }: Props) {
             Continue with {saved.lgaLabel?.replace(/ LGA$/, "")} <span aria-hidden>→</span>
           </Link>
         )}
-        <div className="hidden flex-col items-center gap-1.5 lg:flex">
+        <div className="mt-4 hidden flex-col items-center gap-1.5 lg:flex">
           <MicButton state={micState} onPress={onMic} size={140} />
           <span className="font-display text-[20px] font-bold">Say a local government</span>
           <span className="text-[13px] text-muted">{view === "map" ? "Or pick one from the cluster" : "Or pick one from the list"}</span>
@@ -87,14 +87,14 @@ export function StateView({ data, saved, view, micState, onMic }: Props) {
           <span className="text-[13px] text-muted">Figures load per area{view === "list" ? " · alphabetical" : ""}</span>
         </div>
         <Cluster
-          className={view === "map" ? "mt-4 hidden w-full max-w-[860px] lg:block" : "hidden"}
+          className={view === "map" ? "mt-4 hidden w-full lg:block" : "hidden"}
           places={data.lgas}
           positionFor={(p) => lgaPosition("niger", p.key)}
           featuredKey={featured?.key}
           figuresFor={featured ? [featured.key] : []}
           liveStateName={niger.name}
           status={`All ${data.lgas.length} have figures`}
-          aspect="16 / 11"
+          height="clamp(560px, calc(100dvh - 300px), 860px)"
         />
         <div className={view === "map" ? "mt-4 lg:hidden" : "mt-4"}>{rows}</div>
         {view === "list" && <p className="mt-3 text-[13px] text-muted">Circle size is decorative and carries no data</p>}

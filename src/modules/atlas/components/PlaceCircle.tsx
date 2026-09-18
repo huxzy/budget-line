@@ -27,7 +27,12 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
   const tipId = useId();
   const live = place.status === "live";
   const { x, y, size, drift } = position;
-  const wrap = size + 40;
+  // Sizes scale with the field (container query units) so the cluster reads
+  // the same on a laptop and a wide monitor; the 56/64/72 rotation becomes
+  // 8/9/10% of the field width, never below the design's pixel sizes.
+  const cq = { 56: 6.5, 64: 7.5, 72: 8.5 }[size];
+  const disc = `clamp(${size}px, ${cq}cqw, ${Math.round(size * 1.6)}px)`;
+  const wrap = `calc(${disc} + 48px)`;
 
   const tooltip = live ? (
     place.figures ? (
@@ -52,7 +57,7 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
     </>
   );
 
-  const disc = (
+  const discEl = (
     <span
       className={cn(
         "relative block rounded-full transition-[transform,background-color,box-shadow] duration-160 ease-out",
@@ -65,7 +70,7 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
         featured && "group-hover:bg-marigold-deep motion-safe:animate-breathe",
         !live && "group-hover:outline group-hover:outline-2 group-hover:outline-dashed group-hover:outline-marigold-text/60 group-focus-visible:outline group-focus-visible:outline-2 group-focus-visible:outline-dashed group-focus-visible:outline-marigold-text/60",
       )}
-      style={{ width: size, height: size }}
+      style={{ width: disc, height: disc }}
       aria-hidden
     >
       {featured && (
@@ -74,12 +79,16 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
           <span className="absolute inset-0 rounded-full bg-marigold/30 motion-safe:animate-ring motion-safe:[animation-delay:1.4s]" />
         </>
       )}
-      {featured && <span className="absolute inset-0 flex items-center justify-center font-display text-[15px] font-bold text-clay">{place.name}</span>}
+      {featured && (
+        <span className="absolute inset-0 flex items-center justify-center font-display font-bold text-clay" style={{ fontSize: "clamp(15px, 1.4cqw, 22px)" }}>
+          {place.name}
+        </span>
+      )}
     </span>
   );
 
   const label = (
-    <span className={cn("relative z-[5] mt-1.5 block text-[11px] font-semibold", live ? "text-label" : "text-label/80")}>
+    <span className={cn("relative z-[5] mt-1.5 block font-semibold", live ? "text-label" : "text-label/80")} style={{ fontSize: "clamp(11px, 1cqw, 14px)" }}>
       {featured ? "" : place.name}
     </span>
   );
@@ -111,7 +120,7 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
       !live && "cursor-not-allowed",
     ),
     style: {
-      left: `calc(${x}% - ${wrap / 2}px)`,
+      left: `calc(${x}% - ${wrap} / 2)`,
       top: `${y}%`,
       width: wrap,
       ["--drift" as string]: `bl-d${drift.path} ${drift.duration}s ease-in-out -${drift.delay}s infinite alternate`,
@@ -122,7 +131,7 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
   if (live) {
     return (
       <Link href={place.href} aria-label={`Open ${place.name}${place.kind === "state" ? " State" : ""}`} {...common}>
-        {disc}
+        {discEl}
         {label}
         {tip}
       </Link>
@@ -136,7 +145,7 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
       onClick={(e) => e.preventDefault()}
       {...common}
     >
-      {disc}
+      {discEl}
       {label}
       {tip}
     </button>

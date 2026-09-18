@@ -11,8 +11,8 @@ type Props = {
   className?: string;
   /** Left-hand footer line, e.g. "1 of 37 states available". */
   status: string;
-  /** Field ratio; taller fields when labels sit near the bottom edge. */
-  aspect?: string;
+  /** Field height. The field fills its column's width; positions are percentages. */
+  height?: string;
 };
 
 /**
@@ -20,10 +20,10 @@ type Props = {
  * only, and off under prefers-reduced-motion. The correctness line under the
  * field is always visible: circle size carries no data.
  */
-export function Cluster({ places, positionFor, featuredKey, figuresFor = [], liveStateName, className, status, aspect = "16 / 10" }: Props) {
+export function Cluster({ places, positionFor, featuredKey, figuresFor = [], liveStateName, className, status, height = "clamp(520px, calc(100dvh - 360px), 820px)" }: Props) {
   return (
     <div className={className}>
-      <div className="relative w-full" style={{ aspectRatio: aspect }} role="group" aria-label="Places">
+      <div className="relative w-full [container-type:inline-size]" style={{ height }} role="group" aria-label="Places">
         {places.map((p) => (
           <PlaceCircle
             key={p.key}

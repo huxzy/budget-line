@@ -37,7 +37,7 @@ export function NigeriaView({ data, saved, micState, onMic, onSearch }: Props) {
 
         {/* Desktop: the cluster. */}
         <Cluster
-          className="mt-4 hidden w-full max-w-[860px] lg:block"
+          className="mt-4 hidden w-full lg:block"
           places={data.states}
           positionFor={(p) => statePosition(p.key)}
           featuredKey={niger.key}

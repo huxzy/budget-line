@@ -89,9 +89,14 @@ function fallback(key: string): Position {
 }
 type Drift = Position["drift"];
 
+/** The design's state layout spans x = 5–74%; stretch it to use the whole field. */
+function stretchX(p: Position): Position {
+  return { ...p, x: Math.round(4 + ((p.x - 5) * 90) / 69) };
+}
+
 export function statePosition(slug: string): Position {
   const row = STATES[slug];
-  return row ? toPosition(row) : fallback(slug);
+  return row ? stretchX(toPosition(row)) : fallback(slug);
 }
 
 export function lgaPosition(state: string, key: string): Position {
