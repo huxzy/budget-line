@@ -148,6 +148,13 @@ export function getStateWide(slug: string, sector?: Sector, place = "it"): State
   };
 }
 
+/** Every row on one page of the source document, top to bottom. */
+export function getPageRows(slug: string, page: number): Project[] {
+  const data = loadState(slug);
+  if (!data) return [];
+  return data.projects.filter((p) => p.page === page).sort((a, b) => a.rowTop - b.rowTop);
+}
+
 export function getProject(slug: string, id: string): Project | null {
   return loadState(slug)?.byId.get(id) ?? null;
 }

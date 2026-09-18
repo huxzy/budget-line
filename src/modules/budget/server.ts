@@ -7,6 +7,7 @@ export {
   getLanguages,
   getLgas,
   getLgaSummary,
+  getPageRows,
   getProject,
   getProjects,
   getState,

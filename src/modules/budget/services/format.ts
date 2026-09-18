@@ -81,3 +81,13 @@ export function formatNaira(amount: number, lang: Lang = "en") {
     spoken: formatSpoken(amount, lang),
   };
 }
+
+/** "₦37.2bn", "₦783.7bn", "₦75m" — for rail summaries and chips, never for a headline figure. */
+export function formatCompact(amount: number): string {
+  const n = Math.round(amount);
+  const scale = SCALES.find((s) => n >= s.value);
+  if (!scale) return `₦${n}`;
+  const v = Math.round((n / scale.value) * 10) / 10;
+  const suffix = scale.en === "billion" ? "bn" : scale.en === "million" ? "m" : "k";
+  return `₦${v}${suffix}`;
+}

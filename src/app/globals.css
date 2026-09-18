@@ -1,1 +1,130 @@
 @import "tailwindcss";
+
+/*
+  Design tokens from design/Budget Line v4. Cream base, deep clay for the
+  voice rail and headers, marigold as the single accent. Marigold means
+  "verifiable": source lines, the cited-row highlight, the primary action.
+*/
+:root {
+  --canvas: #e9dccd;
+  --surface: #fff4e8;
+  --card: #ffffff;
+  --card-soft: #fbf2e8;
+  --hairline: #f1e2d3;
+  --hairline-strong: #e3cdb8;
+  --inset: #ffe9cf;
+  --track: #f3d3ac;
+  --clay: #3a1f17;
+  --clay-deep: #33241e;
+  --clay-raised: #4a2d24;
+  --ink: #241611;
+  --text-muted: #6b564d;
+  --text-soft: #7a6355;
+  --text-label: #5c4237;
+  --on-clay: #fff4e8;
+  --on-clay-muted: #c9a98c;
+  --marigold: #f2911f;
+  --marigold-soft: #ffd9a8;
+  --marigold-text: #a5520b;
+  --marigold-deep: #b4590c;
+  --shadow-card: 0 16px 34px -28px rgba(58, 31, 23, 0.6);
+  --shadow-hero: 0 22px 44px -26px rgba(58, 31, 23, 0.6);
+  --shadow-rail: 0 18px 30px -18px rgba(36, 22, 17, 0.55);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #16100d;
+    --surface: #1f1613;
+    --card: #2a1e19;
+    --card-soft: #32251f;
+    --hairline: #3b2b24;
+    --hairline-strong: #4c3a31;
+    --inset: #3a2818;
+    --track: #4a3320;
+    --clay: #110b09;
+    --clay-deep: #0d0806;
+    --clay-raised: #24170f;
+    --ink: #fff1e2;
+    --text-muted: #c4ae9f;
+    --text-soft: #a8917f;
+    --text-label: #d9c3b1;
+    --on-clay: #fff4e8;
+    --on-clay-muted: #b39c90;
+    --marigold: #f2911f;
+    --marigold-soft: #5a3a12;
+    --marigold-text: #ffb45c;
+    --marigold-deep: #f2911f;
+    --shadow-card: 0 16px 34px -28px rgba(0, 0, 0, 0.8);
+    --shadow-hero: 0 22px 44px -26px rgba(0, 0, 0, 0.8);
+    --shadow-rail: 0 18px 30px -18px rgba(0, 0, 0, 0.7);
+  }
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-card-soft: var(--card-soft);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-inset: var(--inset);
+  --color-track: var(--track);
+  --color-clay: var(--clay);
+  --color-clay-deep: var(--clay-deep);
+  --color-clay-raised: var(--clay-raised);
+  --color-ink: var(--ink);
+  --color-muted: var(--text-muted);
+  --color-soft: var(--text-soft);
+  --color-label: var(--text-label);
+  --color-on-clay: var(--on-clay);
+  --color-on-clay-muted: var(--on-clay-muted);
+  --color-marigold: var(--marigold);
+  --color-marigold-soft: var(--marigold-soft);
+  --color-marigold-text: var(--marigold-text);
+  --color-marigold-deep: var(--marigold-deep);
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  --font-sans: var(--font-figtree), "Figtree", sans-serif;
+  --shadow-card: var(--shadow-card);
+  --shadow-hero: var(--shadow-hero);
+  --shadow-rail: var(--shadow-rail);
+  --animate-ring: bl-ring 2.6s cubic-bezier(0.2, 0.6, 0.2, 1) infinite;
+  --animate-breathe: bl-breathe 3.4s ease-in-out infinite;
+  --animate-wave: bl-wave 0.9s ease-in-out infinite;
+  --animate-caret: bl-caret 1.1s steps(1) infinite;
+  --animate-cardin: bl-cardin 460ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-shimmer: bl-shimmer 1.3s linear infinite;
+}
+
+@keyframes bl-ring { 0% { transform: scale(1); opacity: 0.5; } 70% { transform: scale(1.55); opacity: 0; } 100% { transform: scale(1.55); opacity: 0; } }
+@keyframes bl-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@keyframes bl-wave { 0%, 100% { transform: scaleY(0.28); } 50% { transform: scaleY(1); } }
+@keyframes bl-caret { 0%, 45% { opacity: 1; } 55%, 100% { opacity: 0; } }
+@keyframes bl-cardin { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes bl-shimmer { 0% { background-position: -240px 0; } 100% { background-position: 240px 0; } }
+
+@layer base {
+  html { background: var(--canvas); }
+  body {
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-optical-sizing: none;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--marigold-text); }
+  a:hover { color: var(--ink); }
+  /* Every figure locks its digits. */
+  .num, [data-num] { font-variant-numeric: tabular-nums; }
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+}
+
+@utility eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
