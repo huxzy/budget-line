@@ -30,6 +30,6 @@ export const POST = toolRoute((args) => {
     total: all.length,
     returned: Math.min(limit, all.length),
     projects: all.slice(0, limit),
-    stateWide: getStateWide(slug, sector),
+    stateWide: getStateWide(slug, sector, lga.match.lgaLabel.replace(/ LGA$/, "")),
   };
 });

@@ -208,8 +208,11 @@ export function getProjects(slug: string, q: ProjectQuery = {}): Project[] {
   return q.limit ? rows.slice(0, q.limit) : rows;
 }
 
-/** Count and total of state-wide rows, optionally within one sector. */
-export function getStateWide(slug: string, sector?: Sector): StateWideBand {
+/**
+ * Count and total of state-wide rows, optionally within one sector. The note
+ * names the place so the assistant can read it verbatim.
+ */
+export function getStateWide(slug: string, sector?: Sector, place = "it"): StateWideBand {
   const data = loadState(slug);
   const rows = data
     ? (sector ? data.byLgaSector.get(sectorKey(STATE_WIDE, sector)) : data.byLga.get(STATE_WIDE)) ?? []
@@ -220,7 +223,7 @@ export function getStateWide(slug: string, sector?: Sector): StateWideBand {
     projects: rows.length,
     total,
     ...formatNaira(total),
-    note: `plus ${rows.length} ${what} that are not assigned to any one LGA and may include it`,
+    note: `plus ${rows.length} ${what} that are not assigned to any one local government and may include ${place}`,
   };
 }
 
@@ -260,6 +263,6 @@ export function getLgaSummary(slug: string, lgaInput: string): LgaSummary | null
     total,
     ...formatNaira(total),
     bySector,
-    stateWide: getStateWide(slug),
+    stateWide: getStateWide(slug, undefined, rows[0].lgaLabel.replace(/ LGA$/, "")),
   };
 }
