@@ -5,6 +5,13 @@
  * Cards render from `toolResult` events — the structured payload our /api
  * routes returned — never from the transcript. The transcript is captions.
  *
+ * How a tool result reaches the browser: Vapi tells the client which tool it
+ * is calling and with what arguments (`tool-calls`), but does not reliably
+ * deliver the result (`tool-calls-result` never arrived in testing). So the
+ * client makes the identical request to our own /api route. The routes are
+ * pure functions of the dataset, so the payload is exactly what the assistant
+ * received — and the UI still never depends on parsed speech.
+ *
  * Assistant captions come from `model-output` (the model's actual text), not
  * from Vapi's assistant transcript, which is speech-to-text of the TTS audio
  * and mangles names and numbers ("Maitumbi" → "my Tumby").
@@ -27,6 +34,13 @@ export type VoiceStatus =
   | "error";
 
 export type ToolName = "projects_by_lga" | "lga_summary" | "project_detail" | "state_coverage";
+
+const TOOL_ROUTES: Record<ToolName, string> = {
+  projects_by_lga: "/api/projects",
+  lga_summary: "/api/summary",
+  project_detail: "/api/project",
+  state_coverage: "/api/coverage",
+};
 
 export type ToolResult = {
   name: ToolName | string;
@@ -125,13 +139,11 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
         case "tool-calls": {
           emit("status", "thinking");
           for (const call of m.toolCallList ?? []) {
-            emit("toolCall", call.function?.name ?? "", parseResult(call.function?.arguments));
+            const name: string = call.function?.name ?? call.name ?? "";
+            const args = parseResult(call.function?.arguments ?? call.arguments);
+            emit("toolCall", name, args);
+            void fetchToolResult(name, args).then((r) => r && emit("toolResult", r));
           }
-          break;
-        }
-        case "tool-calls-result": {
-          const r = m.toolCallResult ?? {};
-          emit("toolResult", { name: r.name ?? r.toolName ?? "", payload: parseResult(r.result) });
           break;
         }
       }
@@ -156,6 +168,21 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
       vapi?.stop();
     },
   };
+}
+
+async function fetchToolResult(name: string, args: Record<string, unknown>): Promise<ToolResult | null> {
+  const route = TOOL_ROUTES[name as ToolName];
+  if (!route) return null;
+  try {
+    const res = await fetch(route, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(args),
+    });
+    return { name, payload: await res.json() };
+  } catch {
+    return null;
+  }
 }
 
 function isMicDenied(e: unknown): boolean {

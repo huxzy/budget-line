@@ -151,13 +151,11 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
       fallbackPlan: { transcribers: [{ provider: "openai", model: "gpt-4o-transcribe", language: "en" }] },
     },
     voice: { provider: "vapi", voiceId: "Paige" },
-    // The SDK types this as a single value; Vapi accepts an array. The default
-    // set omits tool-calls-result, which the UI needs to render cards.
+    // The SDK types this as a single value; Vapi accepts an array.
     clientMessages: [
       "transcript",
       "model-output",
       "tool-calls",
-      "tool-calls-result",
       "speech-update",
       "status-update",
     ] as unknown as CreateAssistantDTO["clientMessages"],
