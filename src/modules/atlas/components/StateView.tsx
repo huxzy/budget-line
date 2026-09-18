@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { MicButton, type MicState } from "@/components/ui";
-import type { Preferences } from "@/modules/prefs";
 import { lgaPosition } from "../services/positions";
 import type { AtlasData } from "../types";
 import { Cluster } from "./Cluster";
@@ -10,17 +9,15 @@ import { PlaceRow } from "./PlaceRow";
 
 type Props = {
   data: AtlasData;
-  saved: Preferences;
   view: "map" | "list";
   micState: MicState;
   onMic: () => void;
 };
 
 /** A state expanded: its local governments as circles (or a list), figures per area. */
-export function StateView({ data, saved, view, micState, onMic }: Props) {
+export function StateView({ data, view, micState, onMic }: Props) {
   const niger = data.states.find((s) => s.status === "live")!;
   const featured = data.lgas.find((l) => l.figures);
-  const savedKey = saved.lga;
   const sorted = [...data.lgas].sort((a, b) => (a.figures ? -1 : b.figures ? 1 : a.name.localeCompare(b.name)));
 
   const rows = (
@@ -33,9 +30,7 @@ export function StateView({ data, saved, view, micState, onMic }: Props) {
           detail={
             l.figures
               ? `${l.figures.projects} projects${l.unspent ? ` · ${l.unspent} with money approved last year and nothing recorded spent` : ""}`
-              : l.key === savedKey
-                ? "Your saved area"
-                : undefined
+              : undefined
           }
         />
       ))}
@@ -65,11 +60,6 @@ export function StateView({ data, saved, view, micState, onMic }: Props) {
             </span>
           </p>
         </div>
-        {savedKey && data.lgas.some((l) => l.key === savedKey) && (
-          <Link href={`/s/niger/${savedKey.toLowerCase()}`} className="inline-flex items-center justify-between rounded-full bg-card px-5 py-3 text-[14px] font-semibold text-ink no-underline shadow-card hover:bg-hairline hover:no-underline">
-            Continue with {saved.lgaLabel?.replace(/ LGA$/, "")} <span aria-hidden>→</span>
-          </Link>
-        )}
         <div className="mt-4 hidden flex-col items-center gap-1.5 lg:flex">
           <MicButton state={micState} onPress={onMic} size={140} />
           <span className="font-display text-[20px] font-bold">Say a local government</span>

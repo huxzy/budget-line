@@ -78,7 +78,8 @@ const NIGER_LGAS: Record<string, Row> = {
 };
 
 function toPosition([x, y, size, path, duration, delay]: Row): Position {
-  return { x, y, size, drift: { path, duration, delay } };
+  // Design timings run 22–34s; shortened by a third so the drift is visible at a glance.
+  return { x, y, size, drift: { path, duration: Math.round(duration * 0.65), delay } };
 }
 
 /** Fallback for a key the table does not know: a stable spot from its name. */

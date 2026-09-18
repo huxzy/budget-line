@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button, type MicState, PlannedTag } from "@/components/ui";
 import { MobileTalkBar } from "@/modules/ask";
-import { usePreferences } from "@/modules/prefs";
 import { useVoiceSession, type VoiceConfig } from "@/modules/voice";
 import { useAtlasView } from "../hooks/useMotion";
 import type { AtlasData } from "../types";
@@ -22,7 +21,6 @@ type Props = { data: AtlasData; voice: VoiceConfig; level: "nigeria" | "state"; 
  * reduced motion or by choice; search and voice available on every level.
  */
 export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
-  const { prefs } = usePreferences();
   const { view, reduced, ready, set } = useAtlasView();
   const [searchOpen, setSearchOpen] = useState(false);
   const [overlay, setOverlay] = useState(false);
@@ -92,9 +90,9 @@ export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
       ) : listMode ? (
         <ListView data={data} reduced={reduced} onShowMap={() => set("map")} micState={micState} onMic={mic} />
       ) : level === "nigeria" ? (
-        <NigeriaView data={data} saved={prefs} micState={micState} onMic={mic} onSearch={() => setSearchOpen(true)} />
+        <NigeriaView data={data} micState={micState} onMic={mic} onSearch={() => setSearchOpen(true)} />
       ) : (
-        <StateView data={data} saved={prefs} view={view} micState={micState} onMic={mic} />
+        <StateView data={data} view={view} micState={micState} onMic={mic} />
       )}
 
       <SearchPanel data={data} open={searchOpen} onClose={() => setSearchOpen(false)} onMic={mic} />

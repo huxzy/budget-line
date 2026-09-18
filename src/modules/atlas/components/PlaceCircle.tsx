@@ -64,8 +64,8 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
         live
           ? featured
             ? "bg-marigold shadow-[0_12px_26px_-14px_rgba(58,31,23,0.6)]"
-            : "bg-card shadow-[inset_0_0_0_1px_var(--hairline),0_8px_18px_-15px_rgba(58,31,23,0.55)]"
-          : "bg-card-soft shadow-[inset_0_0_0_1px_var(--hairline)]",
+            : "bg-[#FCF5EC] shadow-[inset_0_0_0_1px_var(--hairline-strong),0_8px_18px_-15px_rgba(58,31,23,0.55)] dark:bg-card"
+          : "bg-white/60 shadow-[inset_0_0_0_1px_var(--hairline)] dark:bg-card/60",
         live && "group-hover:-translate-y-[3px] group-hover:bg-marigold-soft group-focus-visible:-translate-y-[3px] group-active:scale-[0.96] group-active:translate-y-0",
         featured && "group-hover:bg-marigold-deep motion-safe:animate-breathe",
         !live && "group-hover:outline group-hover:outline-2 group-hover:outline-dashed group-hover:outline-marigold-text/60 group-focus-visible:outline group-focus-visible:outline-2 group-focus-visible:outline-dashed group-focus-visible:outline-marigold-text/60",

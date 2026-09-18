@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 import type { StateSummary } from "@/modules/budget";
 import { ResultList } from "@/modules/results";
@@ -36,22 +37,21 @@ export function AnswerPane({ turn, headline, speaking, summary, registry, onAsk,
         {idle && summary && (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {summary.bySector.map((s) => (
-              <button
+              <Link
                 key={s.sector}
-                type="button"
-                onClick={() => onAsk(`${sectorLabel(s.sector)} projects in ${summary.lgaLabel}`)}
-                className="flex items-center justify-between rounded-[16px] bg-card px-5 py-4 text-left shadow-card hover:bg-hairline"
+                href={`/browse?lga=${encodeURIComponent(summary.lga)}&sector=${encodeURIComponent(s.sector)}`}
+                className="flex items-center justify-between rounded-[16px] bg-card px-5 py-4 text-left no-underline shadow-card hover:bg-hairline hover:no-underline"
               >
                 <span>
-                  <span className="block font-display text-[17px] font-bold">{sectorLabel(s.sector)}</span>
+                  <span className="block font-display text-[17px] font-bold text-ink">{sectorLabel(s.sector)}</span>
                   <span className="text-[13px] text-muted">
-                    <span data-num>{s.projects}</span> project{s.projects === 1 ? "" : "s"} · ask about them
+                    <span data-num>{s.projects}</span> project{s.projects === 1 ? "" : "s"} · see the list
                   </span>
                 </span>
-                <span data-num className="font-display text-[19px] font-bold">
+                <span data-num className="font-display text-[19px] font-bold text-ink">
                   {s.display}
                 </span>
-              </button>
+              </Link>
             ))}
           </div>
         )}
@@ -92,22 +92,21 @@ export function AnswerPane({ turn, headline, speaking, summary, registry, onAsk,
         {isSummary(payload) && (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {payload.bySector.map((s) => (
-              <button
+              <Link
                 key={s.sector}
-                type="button"
-                onClick={() => onAsk(`${sectorLabel(s.sector)} projects in ${payload.lgaLabel}`)}
-                className="flex items-center justify-between rounded-[16px] bg-card px-5 py-4 text-left shadow-card hover:bg-hairline"
+                href={`/browse?lga=${encodeURIComponent(payload.lga)}&sector=${encodeURIComponent(s.sector)}`}
+                className="flex items-center justify-between rounded-[16px] bg-card px-5 py-4 text-left no-underline shadow-card hover:bg-hairline hover:no-underline"
               >
                 <span>
-                  <span className="block font-display text-[17px] font-bold">{sectorLabel(s.sector)}</span>
+                  <span className="block font-display text-[17px] font-bold text-ink">{sectorLabel(s.sector)}</span>
                   <span className="text-[13px] text-muted">
-                    <span data-num>{s.projects}</span> project{s.projects === 1 ? "" : "s"}
+                    <span data-num>{s.projects}</span> project{s.projects === 1 ? "" : "s"} · see the list
                   </span>
                 </span>
-                <span data-num className="font-display text-[19px] font-bold">
+                <span data-num className="font-display text-[19px] font-bold text-ink">
                   {s.display}
                 </span>
-              </button>
+              </Link>
             ))}
           </div>
         )}

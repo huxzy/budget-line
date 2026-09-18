@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { MicButton, type MicState, PlannedTag } from "@/components/ui";
-import type { Preferences } from "@/modules/prefs";
 import { statePosition } from "../services/positions";
 import type { AtlasData } from "../types";
 import { Cluster } from "./Cluster";
@@ -10,30 +9,22 @@ import { MiniConstellation } from "./MiniConstellation";
 
 type Props = {
   data: AtlasData;
-  saved: Preferences;
   micState: MicState;
   onMic: () => void;
   onSearch: () => void;
 };
 
 /** The Nigeria view: 37 states as a drifting cluster, Niger live in marigold. */
-export function NigeriaView({ data, saved, micState, onMic, onSearch }: Props) {
+export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
   const niger = data.states.find((s) => s.status === "live")!;
   const pendingCount = data.states.length - data.liveCount;
-  const continueHref = saved.lga ? `/s/niger/${saved.lga.toLowerCase()}` : null;
-  const continueLabel = saved.lgaLabel?.replace(/ LGA$/, "");
 
   return (
     <div className="grid flex-1 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px]">
       <main className="flex min-w-0 flex-col px-5 py-6 sm:px-9 sm:py-8">
-        <h1 className="max-w-[420px] font-display text-[32px] font-bold leading-[1.08] tracking-[-0.03em] sm:text-[38px]">Where do you want to look?</h1>
-        <p className="mt-2 max-w-[420px] text-[15px] text-muted">Choose a state, then a local government. Or say the name out loud.</p>
+        <h1 className="font-display text-[32px] font-bold leading-[1.08] tracking-[-0.03em] sm:text-[38px]">Where do you want to look?</h1>
+        <p className="mt-2 text-[15px] text-muted">Choose a state, then a local government. Or say the name out loud.</p>
 
-        {continueHref && (
-          <Link href={continueHref} className="mt-4 inline-flex w-fit items-center gap-3 rounded-full bg-card px-4 py-2.5 text-[14px] font-semibold text-ink no-underline shadow-card hover:bg-hairline hover:no-underline">
-            Continue with {continueLabel} <span aria-hidden>→</span>
-          </Link>
-        )}
 
         {/* Desktop: the cluster. */}
         <Cluster
