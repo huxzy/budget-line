@@ -137,6 +137,9 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
     }
   }
 
+  // Load the SDK and build the client now, so pressing the mic only has to open the call.
+  void client();
+
   return {
     available: true,
     on,

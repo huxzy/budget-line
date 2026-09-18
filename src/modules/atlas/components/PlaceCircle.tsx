@@ -9,7 +9,9 @@ import type { Place, Position } from "../types";
 type Props = {
   place: Place;
   position: Position;
-  /** The one live place drawn in marigold with the breathe and rings. */
+  /** Marigold fill with the name inside — every live local government. */
+  filled?: boolean;
+  /** Filled, plus the breathe and two rings — the place with figures on show. */
   featured?: boolean;
   /** Show the place's figures in a persistent tooltip (Niger, Bida). */
   showFigures?: boolean;
@@ -23,7 +25,8 @@ type Props = {
  * the DOM at all times and referenced by aria-describedby, so screen readers
  * get the same content sighted users hover for. Size carries no data.
  */
-export function PlaceCircle({ place, position, featured = false, showFigures = false, liveStateName = "Niger" }: Props) {
+export function PlaceCircle({ place, position, filled = false, featured = false, showFigures = false, liveStateName = "Niger" }: Props) {
+  const solid = filled || featured;
   const tipId = useId();
   const live = place.status === "live";
   const { x, y, size, drift } = position;
@@ -62,12 +65,13 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
       className={cn(
         "relative block rounded-full transition-[transform,background-color,box-shadow] duration-160 ease-out",
         live
-          ? featured
+          ? solid
             ? "bg-marigold shadow-[0_12px_26px_-14px_rgba(58,31,23,0.6)]"
             : "bg-white/60 shadow-[inset_0_0_0_1px_var(--hairline),0_8px_18px_-15px_rgba(58,31,23,0.55)] dark:bg-card/60"
           : "bg-white/60 shadow-[inset_0_0_0_1px_var(--hairline)] dark:bg-card/60",
         live && "group-hover:-translate-y-[3px] group-hover:bg-marigold-soft group-focus-visible:-translate-y-[3px] group-active:scale-[0.96] group-active:translate-y-0",
-        featured && "group-hover:bg-marigold-deep motion-safe:animate-breathe",
+        solid && "group-hover:bg-marigold-deep",
+        featured && "motion-safe:animate-breathe",
         !live && "group-hover:outline group-hover:outline-2 group-hover:outline-dashed group-hover:outline-marigold-text/60 group-focus-visible:outline group-focus-visible:outline-2 group-focus-visible:outline-dashed group-focus-visible:outline-marigold-text/60",
       )}
       style={{ width: disc, height: disc }}
@@ -79,8 +83,11 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
           <span className="absolute inset-0 rounded-full bg-marigold/30 motion-safe:animate-ring motion-safe:[animation-delay:1.4s]" />
         </>
       )}
-      {featured && (
-        <span className="absolute inset-0 flex items-center justify-center font-display font-bold text-clay" style={{ fontSize: "clamp(15px, 1.4cqw, 22px)" }}>
+      {solid && (
+        <span
+          className="absolute inset-0 flex items-center justify-center overflow-hidden px-1 text-center font-display font-bold leading-tight text-clay"
+          style={{ fontSize: `clamp(10px, ${place.name.length > 7 ? 1.05 : 1.4}cqw, ${place.name.length > 7 ? 15 : 22}px)` }}
+        >
           {place.name}
         </span>
       )}
@@ -89,7 +96,7 @@ export function PlaceCircle({ place, position, featured = false, showFigures = f
 
   const label = (
     <span className={cn("relative z-[5] mt-1.5 block font-semibold", live ? "text-label" : "text-label/80")} style={{ fontSize: "clamp(11px, 1cqw, 14px)" }}>
-      {featured ? "" : place.name}
+      {solid ? "" : place.name}
     </span>
   );
 

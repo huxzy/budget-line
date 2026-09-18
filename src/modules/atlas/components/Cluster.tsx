@@ -5,6 +5,8 @@ type Props = {
   places: Place[];
   positionFor: (p: Place) => Position;
   featuredKey?: string;
+  /** Fill every live circle in marigold (the local-government view). */
+  fillLive?: boolean;
   /** Keys whose figures show in a persistent tooltip. */
   figuresFor?: string[];
   liveStateName?: string;
@@ -20,7 +22,7 @@ type Props = {
  * only, and off under prefers-reduced-motion. The correctness line under the
  * field is always visible: circle size carries no data.
  */
-export function Cluster({ places, positionFor, featuredKey, figuresFor = [], liveStateName, className, status, height = "clamp(520px, calc(100dvh - 360px), 820px)" }: Props) {
+export function Cluster({ places, positionFor, featuredKey, fillLive = false, figuresFor = [], liveStateName, className, status, height = "clamp(520px, calc(100dvh - 360px), 820px)" }: Props) {
   return (
     <div className={className}>
       <div className="relative w-full [container-type:inline-size]" style={{ height }} role="group" aria-label="Places">
@@ -29,6 +31,7 @@ export function Cluster({ places, positionFor, featuredKey, figuresFor = [], liv
             key={p.key}
             place={p}
             position={positionFor(p)}
+            filled={fillLive && p.status === "live"}
             featured={p.key === featuredKey}
             showFigures={figuresFor.includes(p.key)}
             liveStateName={liveStateName}

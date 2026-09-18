@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { Button, PlannedTag } from "@/components/ui";
+import type { Project } from "@/modules/budget";
+import { ResultCard } from "@/modules/results";
 import type { VoiceSession } from "@/modules/voice";
 import type { AtlasData, Place } from "../types";
 
@@ -18,8 +20,12 @@ export function VoiceOverlay({ session, data, onClose }: { session: VoiceSession
 
   let match: Place | null = null;
   let pending: { name: string } | null = null;
+  let cited: Project[] = [];
+  let total = 0;
   if (last?.found === true && typeof last.lga === "string") {
     match = data.lgas.find((l) => l.key === last.lga) ?? null;
+    if (Array.isArray(last.projects)) cited = (last.projects as Project[]).slice(0, 2);
+    if (typeof last.total === "number") total = last.total;
   } else if (last?.found === false && last.reason === "not_live") {
     const st = last.state as { name?: string } | string | undefined;
     pending = { name: typeof st === "string" ? st : (st?.name ?? "That state") };
@@ -41,7 +47,24 @@ export function VoiceOverlay({ session, data, onClose }: { session: VoiceSession
         <span className="ml-1 inline-block h-9 w-[3px] bg-marigold align-[-4px] motion-safe:animate-caret" aria-hidden />
       </p>
 
-      {match && (
+      {match && cited.length > 0 && (
+        <div className="flex w-full max-w-[560px] flex-col gap-3 motion-safe:animate-rise">
+          <div className="flex items-center gap-3">
+            <span className="text-[12px] font-bold uppercase tracking-[0.1em] text-marigold">Just cited</span>
+            <span className="h-px flex-1 bg-on-clay/25" />
+            <span data-num className="text-[13px] font-semibold text-on-clay/85">
+              {cited.length} of {total} · {match.name}
+            </span>
+          </div>
+          {cited.map((p, i) => (
+            <ResultCard key={p.id} project={p} variant="compact" cited={i === 0} index={i} countUp={false} />
+          ))}
+          <Button variant="marigold" size="lg" onClick={() => router.push(match!.href)} className="self-center">
+            Open {match.name} · all {total}
+          </Button>
+        </div>
+      )}
+      {match && cited.length === 0 && (
         <div className="flex w-full max-w-[440px] items-center gap-4 rounded-[18px] bg-surface p-5 shadow-hero motion-safe:animate-rise">
           <div className="min-w-0 flex-1">
             <span className="eyebrow">

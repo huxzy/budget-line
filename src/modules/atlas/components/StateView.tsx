@@ -81,6 +81,7 @@ export function StateView({ data, view, micState, onMic }: Props) {
           places={data.lgas}
           positionFor={(p) => lgaPosition("niger", p.key)}
           featuredKey={featured?.key}
+          fillLive
           figuresFor={featured ? [featured.key] : []}
           liveStateName={niger.name}
           status={`All ${data.lgas.length} have figures`}

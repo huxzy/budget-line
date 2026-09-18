@@ -43,7 +43,7 @@ function placeNames(): string[] {
     .map((l) => l.lga)
     .filter((l) => l !== STATE_WIDE && l !== "OUTSIDE STATE")
     .map((l) => l.charAt(0) + l.slice(1).toLowerCase());
-  return [...lgas, "Minna", "Niger State"];
+  return [...lgas, "Minna", "Niger State", "local government", "health", "roads", "water", "education", "agriculture", "projects", "budget", "spent", "unspent"];
 }
 
 function readPrompt(file: string): string {
@@ -162,7 +162,9 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
       "status-update",
     ] as unknown as CreateAssistantDTO["clientMessages"],
     // Give the caller room to finish a sentence before the assistant replies.
-    startSpeakingPlan: { waitSeconds: 0.8, smartEndpointingEnabled: "livekit" },
+    startSpeakingPlan: { waitSeconds: 0.6, smartEndpointingEnabled: "livekit" },
+    // Two words before the assistant yields, so a cough or "mm" does not cut it off mid-figure.
+    stopSpeakingPlan: { numWords: 2, backoffSeconds: 1 },
     maxDurationSeconds: 600,
   };
 }
