@@ -5,6 +5,10 @@
  * Cards render from `toolResult` events — the structured payload our /api
  * routes returned — never from the transcript. The transcript is captions.
  *
+ * Assistant captions come from `model-output` (the model's actual text), not
+ * from Vapi's assistant transcript, which is speech-to-text of the TTS audio
+ * and mangles names and numbers ("Maitumbi" → "my Tumby").
+ *
  * With no public key the client reports "unavailable" and does nothing else,
  * so the app still renders and browses without Vapi.
  */
@@ -96,10 +100,27 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
     vapi.on("speech-end", () => emit("status", "listening"));
     vapi.on("error", (e) => emit("status", "error", describe(e)));
 
+    let assistantLine = "";
     vapi.on("message", (m) => {
+      if (process.env.NODE_ENV !== "production" && m?.type !== "speech-update") console.debug("[vapi]", m?.type, m);
       switch (m?.type) {
         case "transcript":
-          emit("transcript", { role: m.role, text: m.transcript, final: m.transcriptType === "final" });
+          if (m.role === "user") {
+            emit("transcript", { role: "user", text: m.transcript, final: m.transcriptType === "final" });
+          }
+          break;
+        case "model-output": {
+          const chunk = typeof m.output === "string" ? m.output : "";
+          if (!chunk) break;
+          assistantLine += chunk;
+          emit("transcript", { role: "assistant", text: assistantLine, final: false });
+          break;
+        }
+        case "speech-update":
+          if (m.role === "assistant" && m.status === "stopped" && assistantLine.trim()) {
+            emit("transcript", { role: "assistant", text: assistantLine.trim(), final: true });
+            assistantLine = "";
+          }
           break;
         case "tool-calls": {
           emit("status", "thinking");

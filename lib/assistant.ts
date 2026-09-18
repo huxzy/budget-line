@@ -72,7 +72,11 @@ function tool(
     async: false,
     function: { name, description, parameters: { type: "object", properties, required } },
     server: { url: `${base}/api/${route}`, timeoutSeconds: 20 },
-    messages: [{ type: "request-failed", content: "I could not reach the budget records just now. Please ask again." }],
+    messages: [
+      // One fixed phrase instead of Vapi's rotating "just a sec" fillers.
+      { type: "request-start", content: "Let me check.", blocking: false },
+      { type: "request-failed", content: "I could not reach the budget records just now. Please ask again." },
+    ],
   };
 }
 
@@ -151,11 +155,14 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
     // set omits tool-calls-result, which the UI needs to render cards.
     clientMessages: [
       "transcript",
+      "model-output",
       "tool-calls",
       "tool-calls-result",
       "speech-update",
       "status-update",
     ] as unknown as CreateAssistantDTO["clientMessages"],
+    // Give the caller room to finish a sentence before the assistant replies.
+    startSpeakingPlan: { waitSeconds: 0.8, smartEndpointingEnabled: "livekit" },
     maxDurationSeconds: 600,
   };
 }
