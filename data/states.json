@@ -1,0 +1,231 @@
+[
+  {
+    "code": "NG-NI",
+    "slug": "niger",
+    "name": "Niger",
+    "status": "live",
+    "year": 2026,
+    "projects": 1523,
+    "total_2026": 783694704491,
+    "document": "Niger State 2026 Approved Budget",
+    "pages": 399,
+    "published": "2026-01-08",
+    "lgas": 25
+  },
+  {
+    "code": "NG-AB",
+    "slug": "abia",
+    "name": "Abia",
+    "status": "pending"
+  },
+  {
+    "code": "NG-AD",
+    "slug": "adamawa",
+    "name": "Adamawa",
+    "status": "pending"
+  },
+  {
+    "code": "NG-AK",
+    "slug": "akwa-ibom",
+    "name": "Akwa Ibom",
+    "status": "pending"
+  },
+  {
+    "code": "NG-AN",
+    "slug": "anambra",
+    "name": "Anambra",
+    "status": "pending"
+  },
+  {
+    "code": "NG-BA",
+    "slug": "bauchi",
+    "name": "Bauchi",
+    "status": "pending"
+  },
+  {
+    "code": "NG-BY",
+    "slug": "bayelsa",
+    "name": "Bayelsa",
+    "status": "pending"
+  },
+  {
+    "code": "NG-BE",
+    "slug": "benue",
+    "name": "Benue",
+    "status": "pending"
+  },
+  {
+    "code": "NG-BO",
+    "slug": "borno",
+    "name": "Borno",
+    "status": "pending"
+  },
+  {
+    "code": "NG-CR",
+    "slug": "cross-river",
+    "name": "Cross River",
+    "status": "pending"
+  },
+  {
+    "code": "NG-DE",
+    "slug": "delta",
+    "name": "Delta",
+    "status": "pending"
+  },
+  {
+    "code": "NG-EB",
+    "slug": "ebonyi",
+    "name": "Ebonyi",
+    "status": "pending"
+  },
+  {
+    "code": "NG-ED",
+    "slug": "edo",
+    "name": "Edo",
+    "status": "pending"
+  },
+  {
+    "code": "NG-EK",
+    "slug": "ekiti",
+    "name": "Ekiti",
+    "status": "pending"
+  },
+  {
+    "code": "NG-EN",
+    "slug": "enugu",
+    "name": "Enugu",
+    "status": "pending"
+  },
+  {
+    "code": "NG-GO",
+    "slug": "gombe",
+    "name": "Gombe",
+    "status": "pending"
+  },
+  {
+    "code": "NG-IM",
+    "slug": "imo",
+    "name": "Imo",
+    "status": "pending"
+  },
+  {
+    "code": "NG-JI",
+    "slug": "jigawa",
+    "name": "Jigawa",
+    "status": "pending"
+  },
+  {
+    "code": "NG-KD",
+    "slug": "kaduna",
+    "name": "Kaduna",
+    "status": "pending"
+  },
+  {
+    "code": "NG-KN",
+    "slug": "kano",
+    "name": "Kano",
+    "status": "pending"
+  },
+  {
+    "code": "NG-KT",
+    "slug": "katsina",
+    "name": "Katsina",
+    "status": "pending"
+  },
+  {
+    "code": "NG-KE",
+    "slug": "kebbi",
+    "name": "Kebbi",
+    "status": "pending"
+  },
+  {
+    "code": "NG-KO",
+    "slug": "kogi",
+    "name": "Kogi",
+    "status": "pending"
+  },
+  {
+    "code": "NG-KW",
+    "slug": "kwara",
+    "name": "Kwara",
+    "status": "pending"
+  },
+  {
+    "code": "NG-LA",
+    "slug": "lagos",
+    "name": "Lagos",
+    "status": "pending"
+  },
+  {
+    "code": "NG-NA",
+    "slug": "nasarawa",
+    "name": "Nasarawa",
+    "status": "pending"
+  },
+  {
+    "code": "NG-OG",
+    "slug": "ogun",
+    "name": "Ogun",
+    "status": "pending"
+  },
+  {
+    "code": "NG-ON",
+    "slug": "ondo",
+    "name": "Ondo",
+    "status": "pending"
+  },
+  {
+    "code": "NG-OS",
+    "slug": "osun",
+    "name": "Osun",
+    "status": "pending"
+  },
+  {
+    "code": "NG-OY",
+    "slug": "oyo",
+    "name": "Oyo",
+    "status": "pending"
+  },
+  {
+    "code": "NG-PL",
+    "slug": "plateau",
+    "name": "Plateau",
+    "status": "pending"
+  },
+  {
+    "code": "NG-RI",
+    "slug": "rivers",
+    "name": "Rivers",
+    "status": "pending"
+  },
+  {
+    "code": "NG-SO",
+    "slug": "sokoto",
+    "name": "Sokoto",
+    "status": "pending"
+  },
+  {
+    "code": "NG-TA",
+    "slug": "taraba",
+    "name": "Taraba",
+    "status": "pending"
+  },
+  {
+    "code": "NG-YO",
+    "slug": "yobe",
+    "name": "Yobe",
+    "status": "pending"
+  },
+  {
+    "code": "NG-ZA",
+    "slug": "zamfara",
+    "name": "Zamfara",
+    "status": "pending"
+  },
+  {
+    "code": "NG",
+    "slug": "federal",
+    "name": "Federal",
+    "status": "pending"
+  }
+]
