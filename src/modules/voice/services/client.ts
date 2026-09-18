@@ -24,7 +24,7 @@
 import type Vapi from "@vapi-ai/web";
 
 import { TOOL_ROUTES, type ToolName } from "@/modules/tools";
-import type { ToolResult, VoiceClient, VoiceEvents, VoiceTarget } from "../types";
+import type { CallContext, ToolResult, VoiceClient, VoiceEvents, VoiceTarget } from "../types";
 
 function parseResult(raw: unknown): Record<string, unknown> {
   if (typeof raw === "string") {
@@ -58,18 +58,26 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
       on,
       start: async () => emit("status", "unavailable", "Voice is not configured on this deployment."),
       stop: () => {},
+      say: async () => emit("status", "unavailable", "Voice is not configured on this deployment."),
     };
   }
 
   let vapi: Vapi | null = null;
+  let inCall = false;
 
   async function client(): Promise<Vapi> {
     if (vapi) return vapi;
     const { default: VapiCtor } = await import("@vapi-ai/web");
     vapi = new VapiCtor(publicKey!);
 
-    vapi.on("call-start", () => emit("status", "listening"));
-    vapi.on("call-end", () => emit("status", "idle"));
+    vapi.on("call-start", () => {
+      inCall = true;
+      emit("status", "listening");
+    });
+    vapi.on("call-end", () => {
+      inCall = false;
+      emit("status", "idle");
+    });
     vapi.on("speech-start", () => emit("status", "speaking"));
     vapi.on("speech-end", () => emit("status", "listening"));
     vapi.on("error", (e) => emit("status", "error", describe(e)));
@@ -111,21 +119,50 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
     return vapi;
   }
 
+  async function start(ctx: CallContext = {}) {
+    emit("status", "connecting");
+    const place = ctx.lgaLabel?.replace(/ LGA$/, "");
+    const overrides = {
+      variableValues: { lga: ctx.lga ?? "none", lgaLabel: place ?? "none" },
+      firstMessage: place
+        ? `This is Budget Line. Ask me what has been budgeted in ${place}.`
+        : "This is Budget Line. Which local government do you want to ask about?",
+    };
+    try {
+      const v = await client();
+      if ("assistantId" in target) await v.start(target.assistantId, overrides);
+      else await v.start(target.assistant, overrides);
+    } catch (e) {
+      emit("status", isMicDenied(e) ? "unavailable" : "error", describe(e));
+    }
+  }
+
   return {
     available: true,
     on,
-    async start() {
-      emit("status", "connecting");
-      try {
-        const v = await client();
-        if ("assistantId" in target) await v.start(target.assistantId);
-        else await v.start(target.assistant);
-      } catch (e) {
-        emit("status", isMicDenied(e) ? "unavailable" : "error", describe(e));
-      }
-    },
+    start,
     stop() {
       vapi?.stop();
+    },
+    async say(text, ctx) {
+      if (!inCall) {
+        await start(ctx);
+        // Let the greeting finish before the question lands.
+        await new Promise<void>((resolve) => {
+          const off = on("status", (s) => {
+            if (s === "listening") {
+              off();
+              resolve();
+            }
+          });
+          setTimeout(() => {
+            off();
+            resolve();
+          }, 6000);
+        });
+      }
+      emit("transcript", { role: "user", text, final: true });
+      vapi?.send({ type: "add-message", message: { role: "user", content: text }, triggerResponseEnabled: true });
     },
   };
 }

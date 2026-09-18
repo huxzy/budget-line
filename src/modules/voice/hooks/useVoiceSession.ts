@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createVoiceClient } from "../services/client";
-import type { ToolResult, Transcript, VoiceConfig, VoiceStatus } from "../types";
+import type { CallContext, ToolResult, Transcript, VoiceConfig, VoiceStatus } from "../types";
 
 export type VoiceSession = {
   status: VoiceStatus;
@@ -17,10 +17,12 @@ export type VoiceSession = {
   results: ToolResult[];
   start: () => void;
   stop: () => void;
+  /** Ask a question by text (starter chips, typed fallback). */
+  ask: (text: string) => void;
 };
 
 /** One voice call's state, driven by the client's events. */
-export function useVoiceSession(config: VoiceConfig): VoiceSession {
+export function useVoiceSession(config: VoiceConfig, ctx: CallContext = {}): VoiceSession {
   const [status, setStatus] = useState<VoiceStatus>(config.publicKey ? "idle" : "unavailable");
   const [detail, setDetail] = useState<string>();
   const [lines, setLines] = useState<Transcript[]>([]);
@@ -62,7 +64,8 @@ export function useVoiceSession(config: VoiceConfig): VoiceSession {
     partial,
     calls,
     results,
-    start: () => void client.start(),
+    start: () => void client.start(ctx),
     stop: client.stop,
+    ask: (text) => void client.say(text, ctx),
   };
 }

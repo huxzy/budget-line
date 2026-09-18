@@ -27,9 +27,17 @@ export type VoiceEvents = {
 /** A saved Vapi assistant by id, or an inline config built by the server. */
 export type VoiceTarget = { assistantId: string } | { assistant: CreateAssistantDTO };
 
+/** What the client already knows when the call starts. */
+export type CallContext = {
+  lga?: string | null;
+  lgaLabel?: string | null;
+};
+
 export type VoiceClient = {
-  start: () => Promise<void>;
+  start: (ctx?: CallContext) => Promise<void>;
   stop: () => void;
+  /** Send a typed or chosen question into the call as if spoken. Starts a call if needed. */
+  say: (text: string, ctx?: CallContext) => Promise<void>;
   on: <E extends keyof VoiceEvents>(event: E, fn: VoiceEvents[E]) => () => void;
   available: boolean;
 };

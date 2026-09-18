@@ -3,4 +3,3 @@ export * from "./types";
 export { createVoiceClient } from "./services/client";
 export { useVoiceSession } from "./hooks/useVoiceSession";
 export type { VoiceSession } from "./hooks/useVoiceSession";
-export { VoiceHarness } from "./components/VoiceHarness";

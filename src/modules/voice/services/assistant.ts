@@ -50,9 +50,9 @@ function readPrompt(file: string): string {
   return fs.readFileSync(path.join(PROMPTS_DIR, file), "utf8").trim();
 }
 
-/** system.md + language.<code>.md */
+/** system.md + context.md + language.<code>.md */
 export function systemPromptFor(lang: string): string {
-  return `${readPrompt("system.md")}\n\n---\n\n${readPrompt(`language.${lang}.md`)}`;
+  return `${readPrompt("system.md")}\n\n${readPrompt("context.md")}\n\n---\n\n${readPrompt(`language.${lang}.md`)}`;
 }
 
 const STATE_PARAM = {
@@ -132,6 +132,7 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
   return {
     name: `Budget Line (${lang})`,
     firstMessage: "This is Budget Line. Which local government do you want to ask about?",
+    // Overridden per call with the remembered LGA; see CallContext in the client.
     firstMessageMode: "assistant-speaks-first",
     model: {
       provider: "openai",
