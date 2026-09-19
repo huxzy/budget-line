@@ -22,6 +22,8 @@ export type VoiceEvents = {
   transcript: (t: Transcript) => void;
   toolCall: (name: string, args: Record<string, unknown>) => void;
   toolResult: (r: ToolResult) => void;
+  /** Every message from Vapi, unprocessed — for the troubleshooting page. */
+  raw: (message: Record<string, unknown>) => void;
 };
 
 /** A saved Vapi assistant by id, or an inline config built by the server. */

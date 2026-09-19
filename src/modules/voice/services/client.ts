@@ -44,6 +44,7 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
     transcript: new Set(),
     toolCall: new Set(),
     toolResult: new Set(),
+    raw: new Set(),
   };
   const emit = <E extends keyof VoiceEvents>(event: E, ...args: Parameters<VoiceEvents[E]>) => {
     for (const fn of listeners[event]) (fn as (...a: Parameters<VoiceEvents[E]>) => void)(...args);
@@ -85,6 +86,7 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
 
     let assistantLine = "";
     vapi.on("message", (m) => {
+      emit("raw", m);
       if (process.env.NODE_ENV !== "production" && m?.type !== "speech-update") console.debug("[vapi]", m?.type, m);
       switch (m?.type) {
         case "transcript":
