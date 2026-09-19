@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MicButton, type MicState } from "@/components/ui";
+import { FitText, MicButton, type MicState } from "@/components/ui";
 import { lgaPosition } from "../services/positions";
 import type { AtlasData } from "../types";
 import { Cluster } from "./Cluster";
@@ -48,9 +48,7 @@ export function StateView({ data, view, micState, onMic }: Props) {
         </div>
         <div className="rounded-[18px] bg-card p-5 shadow-card">
           <span className="eyebrow">Approved for 2026</span>
-          <p data-num className="mt-1 break-all font-display font-extrabold leading-none tracking-[-0.04em]" style={{ fontSize: "clamp(18px, 1.55vw, 24px)" }}>
-            {niger.figures?.display}
-          </p>
+          <FitText data-num text={niger.figures?.display ?? ""} max={26} min={16} className="mt-1 font-display font-extrabold tracking-[-0.04em]" />
           <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-marigold-text">{niger.figures?.plain}</p>
           <p className="mt-3 flex items-center justify-between border-t border-hairline pt-3 text-[13px] text-muted">
             Capital projects{" "}

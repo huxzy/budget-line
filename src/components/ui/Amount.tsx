@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
+import { FitText } from "./FitText";
 
 const SIZES = {
-  hero: "text-[44px] leading-[1.02] tracking-[-0.045em] font-extrabold sm:text-[50px]",
-  lg: "text-[32px] leading-[1.05] tracking-[-0.04em] font-extrabold",
-  md: "text-[26px] leading-[1.1] tracking-[-0.035em] font-bold",
-  sm: "text-[19px] leading-[1.15] tracking-[-0.02em] font-bold",
+  hero: "tracking-[-0.045em] font-extrabold",
+  lg: "tracking-[-0.04em] font-extrabold",
+  md: "tracking-[-0.035em] font-bold",
+  sm: "tracking-[-0.02em] font-bold",
 } as const;
+
+/** Design sizes in px; a long figure shrinks below these rather than wrapping. */
+const MAX = { hero: 50, lg: 32, md: 26, sm: 19 } as const;
 
 type Props = {
   /** Exact figure string from the dataset, e.g. "₦75,000,000". */
@@ -62,13 +66,14 @@ export function Amount({ display, plain, value, size = "md", countUp = false, ac
 
   return (
     <div className={cn("flex flex-col gap-0.5", align === "right" && "items-end text-right", className)}>
-      <span
+      <FitText
         data-num
-        className={cn("font-display text-ink", SIZES[size], accent && "text-marigold-text")}
+        text={text}
+        max={MAX[size]}
+        min={size === "hero" ? 22 : 14}
+        className={cn("font-display text-ink", SIZES[size], accent && "text-marigold-text", align === "right" && "text-right")}
         aria-label={display}
-      >
-        {text}
-      </span>
+      />
       {plain && (
         <span data-num className={cn("font-semibold text-soft", size === "hero" ? "text-[15px]" : "text-[13px]")}>
           {plain}

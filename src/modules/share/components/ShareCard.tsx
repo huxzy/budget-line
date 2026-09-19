@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { MicGlyph, SpendBar } from "@/components/ui";
+import { FitText, MicGlyph, SpendBar } from "@/components/ui";
 import { formatNaira, type Project, type StateSummary } from "@/modules/budget";
 import { spendStatus } from "@/modules/results";
 
@@ -35,9 +35,7 @@ export const ShareCard = forwardRef<HTMLDivElement, { project: Project; registry
       <h1 className="mt-4 font-display text-[64px] font-bold leading-[1.08] tracking-[-0.03em]">{project.project}</h1>
 
       <p className="mt-9 text-[26px] font-bold uppercase tracking-[0.1em] text-[#7A6355]">Approved 2026</p>
-      <p data-num className="font-display text-[132px] font-extrabold leading-[1] tracking-[-0.05em]">
-        {project.display}
-      </p>
+      <FitText data-num text={project.display} max={132} min={56} className="font-display font-extrabold tracking-[-0.05em]" />
       <p className="mt-2 text-[40px] font-bold uppercase tracking-[0.02em] text-[#7A6355]">{project.plain}</p>
 
       <div className="mt-10 flex flex-col gap-5 bg-[#FFE9CF] p-9">
@@ -47,14 +45,14 @@ export const ShareCard = forwardRef<HTMLDivElement, { project: Project; registry
           <>
             <div className="flex items-baseline justify-between">
               <span className="text-[32px] font-semibold text-[#5C4237]">2025 approved</span>
-              <span data-num className="font-display text-[40px] font-bold">
-                {a25.display}
+              <span data-num className="w-[58%] text-right font-display font-bold">
+                <FitText text={a25.display} max={40} min={22} className="text-right" />
               </span>
             </div>
             <div className="flex items-baseline justify-between">
               <span className="text-[34px] font-bold">2025 spent</span>
-              <span data-num className="font-display text-[72px] font-extrabold tracking-[-0.03em] text-[#A5520B]">
-                {s25.display}
+              <span data-num className="w-[62%] text-right font-display font-extrabold tracking-[-0.03em] text-[#A5520B]">
+                <FitText text={s25.display} max={72} min={28} className="text-right" />
               </span>
             </div>
             <SpendBar ratio={s.ratio} className="h-4 [&>span]:h-4" />

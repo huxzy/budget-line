@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AppHeader } from "@/components/shell";
 import { ChatBubble, useChat } from "@/modules/chat";
-import { MicPill, PlannedTag } from "@/components/ui";
+import { FitText, MicPill, PlannedTag } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatCompact, lgaSlug, sectorLabel } from "@/modules/budget";
 import { ResultCard } from "@/modules/results";
@@ -152,10 +152,8 @@ export function BrowseScreen({ data, chatAvailable }: { data: BrowseData; chatAv
                 line by line, reconciling to the official state total.
               </p>
             </div>
-            <div className="text-right">
-              <p data-num className="font-display text-[26px] font-bold tracking-[-0.03em]">
-                ₦{registry.total_2026?.toLocaleString("en-NG")}
-              </p>
+            <div className="w-full max-w-[320px] text-right">
+              <FitText data-num text={`₦${registry.total_2026?.toLocaleString("en-NG") ?? ""}`} max={26} min={16} className="font-display font-bold tracking-[-0.03em]" />
               <p className="text-[13px] text-muted">
                 <span data-num>{registry.projects?.toLocaleString("en-NG")}</span> projects · {lgas.length} local governments
               </p>
