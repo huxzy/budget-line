@@ -12,10 +12,12 @@ type Props = {
   view: "map" | "list";
   micState: MicState;
   onMic: () => void;
+  /** Type instead of talking. */
+  composer?: React.ReactNode;
 };
 
 /** A state expanded: its local governments as circles (or a list), figures per area. */
-export function StateView({ data, view, micState, onMic }: Props) {
+export function StateView({ data, view, micState, onMic, composer }: Props) {
   const niger = data.states.find((s) => s.key === data.registry.slug) ?? data.states.find((s) => s.status === "live")!;
   const sorted = [...data.lgas].sort((a, b) => (b.figures?.total ?? 0) - (a.figures?.total ?? 0));
 
@@ -65,6 +67,7 @@ export function StateView({ data, view, micState, onMic }: Props) {
           <span className="max-w-[230px] text-center text-[13px] leading-snug text-muted">
             Ask out loud about any local government in {niger.name} State. {view === "map" ? "Or pick one from the cluster." : "Or pick one from the list."}
           </span>
+          {composer && <div className="mt-2 w-full">{composer}</div>}
         </div>
         <p className="mt-auto hidden border-t border-hairline pt-4 text-[12px] leading-snug text-muted lg:block">
           <span className="block font-semibold text-ink">{data.registry.document}</span>

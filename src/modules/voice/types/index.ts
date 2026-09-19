@@ -59,6 +59,8 @@ export type VoiceConfig = {
   publicKey?: string;
   target: VoiceTarget;
   coverage: Coverage;
+  /** Text chat needs the private key on the server. */
+  chatAvailable: boolean;
   /** Empty when the app is not reachable by Vapi (tools will fail). */
   publicUrl: string;
 };

@@ -20,6 +20,10 @@ type Props = {
   languageName: string;
   onMic: () => void;
   onEnd: () => void;
+  /** The text alternative to the mic. */
+  composer?: React.ReactNode;
+  typing?: boolean;
+  typedError?: string | null;
   className?: string;
 };
 
@@ -36,7 +40,22 @@ const STATUS: Record<MicState, string> = {
  * The clay rail: the call itself. Mic disc with rings, waveform, the caller's
  * words typing in, the turns so far, and the document footer.
  */
-export function VoiceRail({ state, detail, turns, partial, starters, registry, lgas, languageName, onMic, onEnd, className }: Props) {
+export function VoiceRail({
+  state,
+  detail,
+  turns,
+  partial,
+  starters,
+  registry,
+  lgas,
+  languageName,
+  onMic,
+  onEnd,
+  composer,
+  typing,
+  typedError,
+  className,
+}: Props) {
   const inCall = state === "listening" || state === "speaking" || state === "thinking" || state === "connecting";
   const settled = !inCall && turns.length > 0;
 
@@ -61,9 +80,17 @@ export function VoiceRail({ state, detail, turns, partial, starters, registry, l
         </div>
       )}
 
+      {composer && (
+        <div className="mt-5 hidden flex-col gap-1.5 lg:flex">
+          {composer}
+          {typing && <span className="text-[12px] text-on-clay-muted">Budget Line is checking…</span>}
+          {typedError && <span className="text-[12px] text-marigold">{typedError}</span>}
+        </div>
+      )}
+
       <div className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.12em] text-on-clay-muted lg:mt-7">
         <span className="h-px flex-1 bg-on-clay/15" />
-        {turns.length ? (settled ? "Conversation" : "This call") : "Try one of these"}
+        {turns.length ? (settled ? "Conversation" : "This call") : "Things you can ask"}
         <span className="h-px flex-1 bg-on-clay/15" />
       </div>
 
@@ -95,9 +122,7 @@ export function VoiceRail({ state, detail, turns, partial, starters, registry, l
 
       {!inCall && starters.length > 0 && (
         <div className="mt-5 flex flex-col gap-1.5">
-          <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-on-clay-muted">
-            {settled ? "Things to ask next" : "Things you can ask"}
-          </span>
+          {settled && <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-on-clay-muted">Things to ask next</span>}
           <ul className="flex flex-col gap-1.5">
             {starters.map((q) => (
               <li key={q.text} className="rounded-[12px] bg-clay-raised px-3.5 py-2.5 text-[14px] font-medium text-on-clay/90">

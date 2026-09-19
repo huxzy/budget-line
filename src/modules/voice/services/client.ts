@@ -24,6 +24,7 @@
 import type Vapi from "@vapi-ai/web";
 
 import { TOOL_ROUTES, type ToolName } from "@/modules/tools";
+import { firstMessageFor, variablesFor } from "./variables";
 import type { CallContext, Coverage, ToolResult, VoiceClient, VoiceEvents, VoiceTarget } from "../types";
 
 function parseResult(raw: unknown): Record<string, unknown> {
@@ -121,25 +122,7 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
 
   async function start(ctx: CallContext = {}) {
     emit("status", "connecting");
-    const place = ctx.lgaLabel?.replace(/ LGA$/, "");
-    const st = ctx.state;
-    const overrides = {
-      variableValues: {
-        lga: ctx.lga ?? "none",
-        lgaLabel: place ?? "none",
-        stateName: st?.name ?? "any",
-        stateScope: st ? `${st.name} State` : `${coverage.stateCount} states: ${coverage.coveredStates}`,
-        coveredStates: coverage.coveredStates,
-        documentName: st?.document ?? coverage.documentName,
-        documentPages: String(st?.pages ?? coverage.documentPages),
-        projectCount: (st?.projects ?? coverage.projectCount).toLocaleString("en-NG"),
-      },
-      firstMessage: place
-        ? `This is Budget Line. Ask me what has been budgeted in ${place}.`
-        : st
-          ? `This is Budget Line. Which local government in ${st.name} State do you want to ask about?`
-          : "This is Budget Line. Which state or local government do you want to ask about?",
-    };
+    const overrides = { variableValues: variablesFor(ctx, coverage, "voice"), firstMessage: firstMessageFor(ctx) };
     try {
       const v = await client();
       if ("assistantId" in target) await v.start(target.assistantId, overrides);

@@ -5,7 +5,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AppHeader } from "@/components/shell";
 import type { StateSummary } from "@/modules/budget";
 import { usePreferences } from "@/modules/prefs";
-import { useVoiceSession, type Transcript, type VoiceConfig } from "@/modules/voice";
+import { ChatComposer, useChat } from "@/modules/chat";
+import { useVoiceSession, type ToolResult, type Transcript, type VoiceConfig } from "@/modules/voice";
 import { useLgaSummary } from "../hooks/useLgaSummary";
 import { startersFor } from "../services/starters";
 import { toTurn } from "../services/turns";
@@ -41,10 +42,26 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
   const handed = useSearchParams().get("ask");
   const starters = useMemo(() => (handed ? [{ text: handed }, ...startersFor(place)] : startersFor(place)), [handed, place]);
 
-  const turns: Turn[] = useMemo(() => session.results.map((r, i) => toTurn(r, i)), [session.results]);
+  // Typed questions go to the same assistant through Vapi's Chat API.
+  const chat = useChat({ state: registry.slug, lga: area.lga });
+
+  // Spoken and typed turns share one stream, in the order they arrived.
+  const [results, setResults] = useState<ToolResult[]>([]);
+  const seen = useRef({ voice: 0, chat: 0 });
+  useEffect(() => {
+    const fresh = session.results.slice(seen.current.voice);
+    seen.current.voice = session.results.length;
+    if (fresh.length) setResults((r) => [...r, ...fresh]);
+  }, [session.results]);
+  useEffect(() => {
+    const fresh = chat.results.slice(seen.current.chat);
+    seen.current.chat = chat.results.length;
+    if (fresh.length) setResults((r) => [...r, ...fresh]);
+  }, [chat.results]);
+  const turns: Turn[] = useMemo(() => results.map((r, i) => toTurn(r, i)), [results]);
   const turn = turns.length ? turns[turns.length - 1] : null;
 
-  // Headline: the assistant's latest line — live while speaking, then the last final one.
+  // Headline: the assistant's latest line, spoken or typed — live while speaking, then the last final one.
   const lastAssistant = useRef<Transcript | null>(null);
   const [headline, setHeadline] = useState<Transcript | null>(null);
   useEffect(() => {
@@ -53,6 +70,13 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
     if (final) lastAssistant.current = final;
     setHeadline(live ?? lastAssistant.current);
   }, [session.partial, session.lines]);
+  useEffect(() => {
+    const last = [...chat.messages].reverse().find((m) => m.role === "assistant" && !m.pending);
+    if (last) {
+      lastAssistant.current = { role: "assistant", text: last.text, final: true };
+      setHeadline(lastAssistant.current);
+    }
+  }, [chat.messages]);
 
   const micState = session.status === "error" ? "idle" : session.status;
 
@@ -71,7 +95,12 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
           languageName={languageName}
           onMic={() => (session.inCall ? session.stop() : session.start())}
           onEnd={session.stop}
-          className="order-2 pb-28 lg:order-1 lg:pb-6"
+          composer={
+            <ChatComposer onClay onSend={chat.send} pending={chat.pending} disabled={!voice.chatAvailable} placeholder="Or type your question" />
+          }
+          typing={chat.pending}
+          typedError={chat.error}
+          className="order-2 pb-44 lg:order-1 lg:pb-6"
         />
         <main className="order-1 min-w-0 px-5 py-6 sm:px-8 lg:order-2 lg:px-10 lg:py-8">
           {session.status === "error" && session.detail && (
@@ -98,7 +127,13 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
           />
         </main>
       </div>
-      <MobileTalkBar state={micState} onMic={() => (session.inCall ? session.stop() : session.start())} onEnd={session.stop} languageName={languageName} />
+      <MobileTalkBar
+        state={micState}
+        onMic={() => (session.inCall ? session.stop() : session.start())}
+        onEnd={session.stop}
+        languageName={languageName}
+        composer={<ChatComposer onClay onSend={chat.send} pending={chat.pending} disabled={!voice.chatAvailable} placeholder="Or type here" />}
+      />
     </div>
   );
 }

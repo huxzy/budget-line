@@ -10,3 +10,5 @@ The caller's state is {{stateName}}. If that is a state name, pass it as
 "any", the caller has not chosen a state: leave `state` out of the lookup and
 the tools will find the local government in whichever covered state has it —
 but if the caller names a state, pass that.
+
+{{channelNote}}

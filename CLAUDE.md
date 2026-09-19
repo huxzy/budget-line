@@ -108,7 +108,8 @@ data/, prompts/, scripts/, public/   # stay at the repo root
 
 Modules: `budget` (dataset access, formatting, LGA/sector resolution),
 `tools` (the four Vapi tool handlers and the request envelope), `voice`
-(assistant config, browser client, session hook), `prefs` (remembered area),
+(assistant config, browser client, session hook), `chat` (the same assistant
+over Vapi's Chat API, for typed questions), `prefs` (remembered area),
 `atlas` (the entry experience: Nigeria and state clusters, list view, search,
 voice-from-map), `ask`, `results`, `source`, `browse`, `project`, `share`.
 
@@ -182,8 +183,8 @@ layout there until a row is added. Nothing else changes.
 ## Environment
 
 ```
-NEXT_PUBLIC_VAPI_PUBLIC_KEY=
-VAPI_PRIVATE_KEY=
+NEXT_PUBLIC_VAPI_PUBLIC_KEY=     # browser calls
+VAPI_PRIVATE_KEY=                # server-side text chat (/api/chat); without it the composer is disabled
 NEXT_PUBLIC_VAPI_ASSISTANT_EN=
 NEXT_PUBLIC_VAPI_ASSISTANT_HA=
 ```

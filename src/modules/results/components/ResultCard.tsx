@@ -105,20 +105,26 @@ export function ResultCard({ project, variant = "compact", cited = false, index 
     );
   }
 
+  // The whole card is clickable through the stretched title link; the source
+  // link sits above it, so no <a> is nested inside another <a>.
   return (
-    <Link
-      href={href}
+    <article
       style={entrance}
       className={cn(
-        "flex animate-cardin flex-col gap-2.5 rounded-[22px] bg-card px-5.5 py-5 no-underline shadow-card transition-transform active:scale-[0.985] hover:no-underline",
+        "relative flex animate-cardin flex-col gap-2.5 rounded-[22px] bg-card px-5.5 py-5 shadow-card transition-transform active:scale-[0.985]",
         cited && "outline outline-2 -outline-offset-2 outline-marigold",
         className,
       )}
     >
       <Meta project={project} small />
-      <span className="font-display text-[21px] font-bold leading-[1.2] tracking-[-0.025em] text-ink">{project.project}</span>
+      <Link
+        href={href}
+        className="font-display text-[21px] font-bold leading-[1.2] tracking-[-0.025em] text-ink no-underline after:absolute after:inset-0 after:content-[''] hover:no-underline"
+      >
+        {project.project}
+      </Link>
       <Amount display={project.display} plain={project.plain} value={project.approved2026} size="lg" countUp={countUp} />
-      <SourceLine state={project.state} page={project.page} rowId={project.id} variant="short" />
-    </Link>
+      <SourceLine state={project.state} page={project.page} rowId={project.id} variant="short" className="relative z-10 w-fit" />
+    </article>
   );
 }

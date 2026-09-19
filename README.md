@@ -17,6 +17,10 @@ track. A proof of concept, not a production launch.
 - **Voice** in English, in the browser, via Vapi. The assistant can only speak
   figures returned by four tools over the dataset; it never formats or
   computes a number itself.
+- **Text** as well: every mic has a composer beside it. Typed questions go to
+  the same assistant, prompt and tools through Vapi's Chat API, so the answer
+  and the cards are identical to a spoken turn — with no microphone,
+  connection wait or accent recognition in the way.
 - **Every amount carries its page.** Cards, the ledger, project detail and the
   share card all cite the page of the PDF; the source screen shows that page
   with a band over the cited row, plus a text-only fallback.
@@ -78,7 +82,8 @@ Voice needs a Vapi public key and, because Vapi's servers call this app's
 
 ```bash
 cp .env.example .env.local
-# NEXT_PUBLIC_VAPI_PUBLIC_KEY=...
+# NEXT_PUBLIC_VAPI_PUBLIC_KEY=...   browser calls
+# VAPI_PRIVATE_KEY=...              text chat (server-side)
 # NEXT_PUBLIC_APP_URL=https://<your deployment or tunnel>
 ```
 

@@ -192,6 +192,7 @@ export function voiceConfigFor(lang: string): VoiceConfig {
     publicKey: process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY || undefined,
     target: assistantId ? { assistantId } : { assistant: buildAssistant(lang) },
     coverage: coverage(),
+    chatAvailable: Boolean(process.env.VAPI_PRIVATE_KEY),
     publicUrl: publicBaseUrl(),
   };
 }
