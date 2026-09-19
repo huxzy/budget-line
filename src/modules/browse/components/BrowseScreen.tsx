@@ -32,7 +32,7 @@ export function BrowseScreen({ data, chatAvailable }: { data: BrowseData; chatAv
 
   return (
     <div className="flex min-h-dvh flex-col bg-surface">
-      <ChatBubble chat={chat} disabled={!chatAvailable} />
+      <ChatBubble chat={chat} disabled={!chatAvailable} place={`${place} in ${registry.name} State`} />
       <AppHeader places={lgas} state={{ slug: registry.slug, name: registry.name }} current={query.lga} />
       <div className="grid flex-1 grid-cols-1 lg:grid-cols-[270px_minmax(0,1fr)]">
         <aside className="flex flex-col gap-5 border-b border-hairline px-5 py-6 lg:sticky lg:top-0 lg:h-[calc(100dvh-57px)] lg:overflow-y-auto lg:border-b-0 lg:border-r lg:px-6">

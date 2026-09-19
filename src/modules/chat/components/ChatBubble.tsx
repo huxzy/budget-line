@@ -15,6 +15,10 @@ type Props = {
   offset?: "normal" | "raised";
   title?: string;
   hint?: string;
+  /** What the welcome should say the reader is looking at, e.g. "Bida in Niger State". */
+  place?: string;
+  /** How many states are covered, for the welcome. */
+  states?: number;
 };
 
 function citedProjects(m: ChatMessage): Project[] {
@@ -39,7 +43,7 @@ function ChatIcon() {
  * conversation. Typed questions go to the same assistant as the call, and
  * each reply shows the cards it cited.
  */
-export function ChatBubble({ chat, disabled = false, offset = "normal", title = "Ask by text", hint = "Same answers as the call, with the page for every figure." }: Props) {
+export function ChatBubble({ chat, disabled = false, offset = "normal", title = "Ask by text", hint = "Same answers as the call, with the page for every figure.", place, states }: Props) {
   const [open, setOpen] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -75,10 +79,10 @@ export function ChatBubble({ chat, disabled = false, offset = "normal", title = 
           role="dialog"
           aria-label={title}
           className={cn(
-            "fixed right-5 z-40 flex w-[min(400px,calc(100vw-40px))] flex-col overflow-hidden rounded-[22px] bg-surface shadow-hero motion-safe:animate-rise",
+            "fixed inset-x-3 z-40 flex flex-col overflow-hidden rounded-[22px] bg-surface shadow-hero motion-safe:animate-rise sm:inset-x-auto sm:right-5 sm:w-[400px]",
             offset === "raised" ? "bottom-[calc(13.5rem+env(safe-area-inset-bottom))] lg:bottom-24" : "bottom-24",
           )}
-          style={{ maxHeight: "min(70vh, 640px)" }}
+          style={{ maxHeight: "min(72dvh, 640px)" }}
         >
           <header className="bg-clay px-5 py-3.5 text-on-clay">
             <p className="font-display text-[17px] font-bold">{title}</p>
@@ -87,9 +91,18 @@ export function ChatBubble({ chat, disabled = false, offset = "normal", title = 
 
           <div className="flex min-h-[160px] flex-1 flex-col gap-3 overflow-y-auto px-4 py-4">
             {chat.messages.length === 0 && (
-              <p className="rounded-[14px] rounded-tl-[4px] bg-card px-3.5 py-2.5 text-[14px] leading-snug text-muted shadow-card">
-                Type a place or a question — “health projects in Bida”, “what wasn&apos;t spent in Jos North”, “do you cover Kaduna?”
-              </p>
+              <div className="mr-6 flex flex-col gap-2 rounded-[14px] rounded-tl-[4px] bg-card px-3.5 py-3 text-[14px] leading-snug text-ink shadow-card">
+                <p className="font-display text-[15px] font-bold">Welcome to Budget Line.</p>
+                <p className="text-muted">
+                  I read the approved 2026 capital budgets of {states ? `${states} states` : "the covered states"}, line by line, and every figure I give
+                  you comes with the page it was read from.
+                  {place ? ` You are looking at ${place}.` : ""}
+                </p>
+                <p className="text-muted">
+                  Ask about a local government, a sector such as health or roads, or what was approved last year with nothing spent. If the
+                  document does not record something, I will say so rather than guess.
+                </p>
+              </div>
             )}
             {chat.messages.map((m, i) =>
               m.role === "user" ? (
@@ -106,7 +119,7 @@ export function ChatBubble({ chat, disabled = false, offset = "normal", title = 
                 <div key={i} className="mr-8 flex flex-col gap-2 self-start">
                   <p className="rounded-[14px] rounded-tl-[4px] bg-card px-3.5 py-2.5 text-[14px] leading-snug text-ink shadow-card">{m.text}</p>
                   {citedProjects(m).map((p) => (
-                    <ResultCard key={p.id} project={p} variant="compact" countUp={false} className="!rounded-[16px] !px-4 !py-3.5" />
+                    <ResultCard key={p.id} project={p} variant="mini" />
                   ))}
                 </div>
               ),

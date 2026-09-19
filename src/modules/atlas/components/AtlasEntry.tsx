@@ -100,7 +100,14 @@ export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
       <SearchPanel data={data} open={searchOpen} onClose={() => setSearchOpen(false)} onMic={mic} />
       {overlay && <VoiceOverlay session={session} data={data} onClose={closeOverlay} />}
 
-      <ChatBubble chat={chat} disabled={!voice.chatAvailable} offset="raised" hint="Type a state or a local government and ask." />
+      <ChatBubble
+        chat={chat}
+        disabled={!voice.chatAvailable}
+        offset="raised"
+        hint="Type a state or a local government and ask."
+        place={state?.status === "live" ? `${state.name} State` : undefined}
+        states={voice.coverage.stateCount}
+      />
       <div className="lg:hidden">
         <MobileTalkBar state={micState} onMic={mic} onEnd={closeOverlay} languageName="English" />
       </div>

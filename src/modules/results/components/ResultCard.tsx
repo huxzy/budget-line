@@ -7,8 +7,8 @@ import { HistoryPanel } from "./HistoryPanel";
 
 type Props = {
   project: Project;
-  /** hero: the just-cited card. compact: grid card. ledger: browse row. */
-  variant?: "hero" | "compact" | "ledger";
+  /** hero: the just-cited card. compact: grid card. ledger: browse row. mini: one row for tight spaces. */
+  variant?: "hero" | "compact" | "ledger" | "mini";
   /** Marigold hairline — the card the agent just cited. */
   cited?: boolean;
   /** Stagger index for the rise-and-fade entrance. */
@@ -36,6 +36,25 @@ function Meta({ project, small }: { project: Project; small?: boolean }) {
 export function ResultCard({ project, variant = "compact", cited = false, index = 0, countUp = false, className }: Props) {
   const href = `/project/${project.id}`;
   const entrance = { animationDelay: `${index * 90}ms` };
+
+  if (variant === "mini") {
+    return (
+      <Link
+        href={href}
+        className={cn("flex items-center gap-3 rounded-[12px] bg-card-soft px-3 py-2.5 no-underline shadow-card hover:bg-hairline hover:no-underline", className)}
+      >
+        <span className="min-w-0 flex-1">
+          <span className="line-clamp-2 text-[13px] font-semibold leading-snug text-ink">{project.project}</span>
+          <span className="block text-[11px] text-muted">
+            {project.lgaLabel} · page <span data-num>{project.page}</span>
+          </span>
+        </span>
+        <span data-num className="shrink-0 font-display text-[15px] font-bold text-ink">
+          {project.display}
+        </span>
+      </Link>
+    );
+  }
 
   if (variant === "ledger") {
     const s = spendStatus(project);

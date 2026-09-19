@@ -18,7 +18,7 @@ export function ProjectDetail({ project, registry, chatAvailable }: { project: P
 
   return (
     <div className="min-h-dvh bg-surface">
-      <ChatBubble chat={chat} disabled={!chatAvailable} />
+      <ChatBubble chat={chat} disabled={!chatAvailable} place={isPlace(project.lga) ? `${place} in ${registry.name} State` : `${registry.name} State`} />
       <header className="bg-clay px-5 pb-8 pt-5 text-on-clay sm:px-10">
         <div className="mx-auto flex max-w-[960px] flex-wrap items-center gap-3">
           <button
