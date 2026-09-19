@@ -21,6 +21,17 @@ function stamp(t0: number, t: number) {
 const TRANSCRIBERS: Record<string, Record<string, unknown> | null> = {
   "assistant (current)": null,
   "speechmatics enhanced": { provider: "speechmatics", language: "en", operatingPoint: "enhanced" },
+  "speechmatics + vocabulary": { provider: "speechmatics", language: "en", operatingPoint: "enhanced", customVocabulary: 40 },
+  "soniox v5 + vocabulary": {
+    provider: "soniox",
+    model: "stt-rt-v5",
+    language: "en",
+    customVocabulary: 40,
+    contextGeneral: [
+      { key: "domain", value: "Nigerian state government capital budgets" },
+      { key: "topic", value: "A caller names a Nigerian state and a local government area, then asks about projects" },
+    ],
+  },
   "azure en-NG": { provider: "azure", language: "en-NG" },
   "assembly-ai": { provider: "assembly-ai", language: "en" },
   "gladia solaria-1": { provider: "gladia", model: "solaria-1", language: "en" },
@@ -179,6 +190,11 @@ export function VoiceDebug({ config, places }: { config: VoiceConfig; places: st
       let t = TRANSCRIBERS[transcriber];
       // a number is how many of `places` to send as keyterms (0 = all); more than ~40 makes it worse
       if (t && typeof t.keyterm === "number") t = { ...t, keyterm: t.keyterm ? places.slice(0, t.keyterm) : places };
+      if (t && typeof t.customVocabulary === "number") {
+        const names = places.slice(0, t.customVocabulary);
+        // speechmatics takes {content, soundsLike}; soniox a plain list
+        t = { ...t, customVocabulary: t.provider === "speechmatics" ? names.map((content) => ({ content })) : names };
+      }
       // the keyterm list (every live place name) lives on the assistant's deepgram fallback
 
       push("status", `transcriber for this call: ${t ? JSON.stringify(t) : transcriberName(config)}`);
