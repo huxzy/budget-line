@@ -1,4 +1,4 @@
-import type { Project } from "@/modules/budget";
+import { stateName, type Project } from "@/modules/budget";
 import { Amount, Tag } from "@/components/ui";
 import { HistoryPanel } from "@/modules/results";
 
@@ -7,7 +7,7 @@ export function ClaimCard({ project }: { project: Project }) {
   return (
     <div className="flex flex-col gap-3.5 rounded-[20px] bg-clay-raised p-5 text-on-clay">
       <div className="flex items-center gap-2">
-        <Tag className="bg-clay text-on-clay-muted">{project.tier}</Tag>
+        <Tag className="bg-clay text-on-clay-muted">{stateName(project.state)}</Tag>
         <span className="text-[13px] font-semibold text-on-clay-muted">
           {project.lgaLabel} · {project.mda}
         </span>

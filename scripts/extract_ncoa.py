@@ -350,8 +350,10 @@ def extract(pdf_path, cfg):
                 else:
                     fields = {n: text_at(chars, lo, min(hi, text_end))
                               for lo, hi, n in text_cols}
+                # raw: the line's text left of the amount grid, for heading
+                # detection (column headers share a baseline with headings).
                 lines.append({'top': top, 'amts': amts, 'f': fields,
-                              'raw': text_at(body, -1e9, 1e9)})
+                              'raw': text_at([c for c in body if c['x0'] < text_end], -1e9, 1e9)})
 
             # Per-state option mda_from_headings: the administrative unit is a
             # heading line ("011100100100 OFFICE OF THE EXECUTIVE GOVERNOR")

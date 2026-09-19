@@ -17,7 +17,7 @@ export default async function AreaPage({ params }: { params: Promise<{ state: st
   const language = getLanguages().find((l) => l.status === "live")!;
   return (
     <Suspense>
-      <AskScreen voice={voiceConfigFor(language.code)} registry={registry} lgas={lgas.length} languageName={language.name} area={{ lga: area.lga, lgaLabel: area.lgaLabel }} />
+      <AskScreen voice={voiceConfigFor(language.code)} registry={registry} places={lgas.map((l) => ({ lga: l.lga, lgaLabel: l.lgaLabel }))} languageName={language.name} area={{ lga: area.lga, lgaLabel: area.lgaLabel }} />
     </Suspense>
   );
 }

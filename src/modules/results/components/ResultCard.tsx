@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Project } from "@/modules/budget";
+import { stateName, type Project } from "@/modules/budget";
 import { Amount, PlannedTag, SourceLine, SpendBar, Tag } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { spendStatus } from "../services/status";
@@ -20,7 +20,7 @@ type Props = {
 function Meta({ project, small }: { project: Project; small?: boolean }) {
   return (
     <div className="flex items-center gap-2">
-      <Tag>{project.tier}</Tag>
+      <Tag>{stateName(project.state)}</Tag>
       <span className={cn("font-semibold text-muted", small ? "text-[13px]" : "text-[14px]")}>
         {project.lgaLabel} · {project.mda}
       </span>
@@ -50,7 +50,7 @@ export function ResultCard({ project, variant = "compact", cited = false, index 
         <div className="min-w-0">
           <p className="text-[16px] font-bold leading-snug text-ink">{project.project}</p>
           <p className="mt-0.5 text-[13px] font-medium text-muted">
-            {project.mda} · {project.tier} · page <span data-num>{project.page}</span>
+            {project.mda} · {stateName(project.state)} State · page <span data-num>{project.page}</span>
           </p>
         </div>
         <div className="flex items-center gap-2.5 text-[13px] font-semibold text-muted">

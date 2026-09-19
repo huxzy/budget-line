@@ -17,14 +17,15 @@ import { VoiceRail } from "./VoiceRail";
 type Props = {
   voice: VoiceConfig;
   registry: StateSummary;
-  lgas: number;
+  /** The state's local governments, for the header dropdown and the rail count. */
+  places: { lga: string; lgaLabel: string }[];
   languageName: string;
   /** The area this page is for. Remembered as the saved area on arrival. */
   area: { lga: string; lgaLabel: string };
 };
 
 /** Listening + answer: the rail is the call, the cream side is what it found. */
-export function AskScreen({ voice, registry, lgas, languageName, area }: Props) {
+export function AskScreen({ voice, registry, places, languageName, area }: Props) {
   const { prefs, ready, update } = usePreferences();
   useEffect(() => {
     if (ready && (prefs.lga !== area.lga || prefs.state !== registry.slug)) update({ lga: area.lga, lgaLabel: area.lgaLabel, state: registry.slug });
@@ -57,7 +58,7 @@ export function AskScreen({ voice, registry, lgas, languageName, area }: Props) 
 
   return (
     <div className="flex min-h-dvh flex-col bg-surface">
-      <AppHeader />
+      <AppHeader places={places} state={{ slug: registry.slug, name: registry.name }} current={area.lga} />
       <div className="grid flex-1 grid-cols-1 lg:grid-cols-[380px_minmax(0,1fr)]">
         <VoiceRail
           state={micState}
@@ -66,7 +67,7 @@ export function AskScreen({ voice, registry, lgas, languageName, area }: Props) 
           partial={session.partial}
           starters={starters}
           registry={registry}
-          lgas={lgas}
+          lgas={places.length}
           languageName={languageName}
           onMic={() => (session.inCall ? session.stop() : session.start())}
           onEnd={session.stop}

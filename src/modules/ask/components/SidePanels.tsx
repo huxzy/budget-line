@@ -46,7 +46,7 @@ export function ProvenancePanel({ registry }: { registry: StateSummary }) {
         {registry.published ? `, published ${publishedOn(registry)}` : ""}. <span data-num>{registry.pages}</span> pages, read line by
         line, reconciling to the official state total within ₦1.
       </p>
-      <Link href={`/source/${registry.slug}/69`} className="text-[13px] font-semibold">
+      <Link href={`/source/${registry.slug}/${registry.sourcePages?.[0] ?? 1}`} className="text-[13px] font-semibold">
         Open the document →
       </Link>
     </div>

@@ -26,7 +26,7 @@ export const ShareCard = forwardRef<HTMLDivElement, { project: Project; registry
           <span className="h-7 w-7 rounded-[9px] bg-[#F2911F]" />
           <span className="font-display text-[44px] font-bold tracking-[-0.02em]">Budget Line</span>
         </span>
-        <span className="rounded-[10px] bg-[#F1E2D3] px-5 py-2 text-[24px] font-bold uppercase tracking-[0.12em] text-[#5C4237]">{project.tier}</span>
+        <span className="rounded-[10px] bg-[#F1E2D3] px-5 py-2 text-[24px] font-bold uppercase tracking-[0.12em] text-[#5C4237]">{registry.name} State</span>
       </div>
 
       <p className="mt-9 text-[26px] font-bold uppercase tracking-[0.08em] text-[#6B564D]">

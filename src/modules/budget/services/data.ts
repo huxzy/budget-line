@@ -28,15 +28,8 @@ export { lgaSlug } from "./keys";
  * always reported alongside it, so a third of the dataset is never silently
  * dropped.
  */
-export const STATE_WIDE = "STATE WIDE";
-export const OUTSIDE_STATE = "OUTSIDE STATE";
-/** Rows whose location the extractor could not read; kept in every total, never shown as a place. */
-export const LOCATION_NOT_READ = "LOCATION NOT READ";
-
-/** True for a real local government key, false for the three buckets. */
-export function isPlace(lga: string): boolean {
-  return lga !== STATE_WIDE && lga !== OUTSIDE_STATE && lga !== LOCATION_NOT_READ;
-}
+import { isPlace, LOCATION_NOT_READ, OUTSIDE_STATE, STATE_WIDE } from "./keys";
+export { isPlace, LOCATION_NOT_READ, OUTSIDE_STATE, STATE_WIDE };
 
 type StateData = {
   projects: Project[];

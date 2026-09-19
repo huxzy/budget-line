@@ -7,7 +7,7 @@ export function Tag({ children, className }: Props) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md bg-hairline px-2 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-label",
+        "inline-flex shrink-0 items-center whitespace-nowrap rounded-md bg-hairline px-2 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-label",
         className,
       )}
     >
