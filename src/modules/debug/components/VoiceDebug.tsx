@@ -25,6 +25,7 @@ const TRANSCRIBERS: Record<string, Record<string, unknown> | null> = {
   "assembly-ai": { provider: "assembly-ai", language: "en" },
   "gladia solaria-1": { provider: "gladia", model: "solaria-1", language: "en" },
   "11labs scribe realtime": { provider: "11labs", model: "scribe_v2_realtime", language: "en" },
+  "deepgram nova-3 + place keyterms": { provider: "deepgram", model: "nova-3", language: "en", keyterm: [] },
   "deepgram nova-3 multi": { provider: "deepgram", model: "nova-3", language: "multi" },
   "openai gpt-4o-transcribe": { provider: "openai", model: "gpt-4o-transcribe", language: "en" },
 };
@@ -151,7 +152,9 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
       setClips([]);
       t0.current = performance.now();
       await startLocalCapture();
-      const t = TRANSCRIBERS[transcriber];
+      let t = TRANSCRIBERS[transcriber];
+      // the keyterm list (every live place name) lives on the assistant's deepgram fallback
+      if (t && "keyterm" in t) t = { ...t, keyterm: fallbackKeyterms(config) };
       push("status", `transcriber for this call: ${t ? JSON.stringify(t) : transcriberName(config)}`);
       await clientRef.current?.start(t ? { transcriber: t } : {});
     }
@@ -246,6 +249,12 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
       )}
     </div>
   );
+}
+
+function fallbackKeyterms(config: VoiceConfig): string[] {
+  if (!("assistant" in config.target)) return [];
+  const t = config.target.assistant.transcriber as { fallbackPlan?: { transcribers?: { keyterm?: string[] }[] } } | undefined;
+  return t?.fallbackPlan?.transcribers?.find((x) => x.keyterm)?.keyterm ?? [];
 }
 
 function transcriberName(config: VoiceConfig): string {
