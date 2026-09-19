@@ -60,8 +60,10 @@ export function ListView({ data, reduced, onShowMap, micState, onMic }: Props) {
       <aside className="flex flex-col gap-5 border-t border-hairline px-6 py-6 lg:border-l lg:border-t-0">
         <div className="flex flex-col items-center gap-2">
           <MicButton state={micState} onPress={onMic} size={112} />
-          <span className="font-display text-[20px] font-bold">Say a place</span>
-          <span className="text-center text-[13px] text-muted">Voice works the same with motion off.</span>
+          <span className="font-display text-[20px] font-bold">Tap to talk</span>
+          <span className="max-w-[230px] text-center text-[13px] leading-snug text-muted">
+            Budget Line greets you, then you name a place and ask. Voice works the same with motion off.
+          </span>
         </div>
         <div>
           <span className="font-display text-[15px] font-bold">Why this view</span>

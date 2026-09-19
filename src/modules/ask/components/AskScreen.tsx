@@ -36,8 +36,7 @@ export function AskScreen({ voice, registry, lgas, languageName, area }: Props) 
   });
   const summary = useLgaSummary(area.lga);
   const place = area.lgaLabel.replace(/ LGA$/, "");
-  // A question handed over from another screen ("Ask about this") leads the starters;
-  // it still needs a tap, since a call cannot start without one.
+  // A question handed over from another screen ("Ask about this") leads the suggestions.
   const handed = useSearchParams().get("ask");
   const starters = useMemo(() => (handed ? [{ text: handed }, ...startersFor(place)] : startersFor(place)), [handed, place]);
 
@@ -71,7 +70,6 @@ export function AskScreen({ voice, registry, lgas, languageName, area }: Props) 
           languageName={languageName}
           onMic={() => (session.inCall ? session.stop() : session.start())}
           onEnd={session.stop}
-          onAsk={session.ask}
           className="order-2 pb-28 lg:order-1 lg:pb-6"
         />
         <main className="order-1 min-w-0 px-5 py-6 sm:px-8 lg:order-2 lg:px-10 lg:py-8">
@@ -84,7 +82,6 @@ export function AskScreen({ voice, registry, lgas, languageName, area }: Props) 
             speaking={session.status === "speaking"}
             summary={summary}
             registry={registry}
-            onAsk={session.ask}
             placeholder={
               <div className="max-w-[640px]">
                 <span className="eyebrow">Ask out loud</span>

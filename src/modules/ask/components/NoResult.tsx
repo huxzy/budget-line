@@ -1,22 +1,17 @@
 "use client";
 
-import { PlannedTag, ResultCardLike } from "./NoResult.parts";
-import type { MissPayload, ProjectsPayload } from "../types";
+import Link from "next/link";
+import { PlannedTag } from "@/components/ui";
 import type { StateSummary } from "@/modules/budget";
+import type { MissPayload, ProjectsPayload } from "../types";
+import { ResultCardLike } from "./NoResult.parts";
 
 /**
  * Honest, not an error. The place exists and was searched; nothing matched —
  * or the place is not one we have. Never speculates about where money went.
+ * Suggestions are things to say next, not buttons: the call is the way in.
  */
-export function NoResult({
-  payload,
-  registry,
-  onAsk,
-}: {
-  payload: ProjectsPayload | MissPayload;
-  registry: StateSummary;
-  onAsk: (text: string) => void;
-}) {
+export function NoResult({ payload, registry }: { payload: ProjectsPayload | MissPayload; registry: StateSummary }) {
   const miss = payload.found === false ? payload : null;
   const empty = payload.found === true ? payload : null;
 
@@ -38,21 +33,10 @@ export function NoResult({
       </div>
 
       {miss?.reason === "unknown_lga" && miss.nearest && miss.nearest.length > 0 && (
-        <div>
-          <span className="eyebrow">Did you mean</span>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {miss.nearest.map((n) => (
-              <button
-                key={n.lga}
-                type="button"
-                onClick={() => onAsk(`Projects in ${n.lgaLabel}`)}
-                className="rounded-full bg-card px-4 py-2 text-[14px] font-semibold shadow-card hover:bg-hairline"
-              >
-                {n.lgaLabel} · <span data-num>{n.projects}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+        <p className="text-[15px] text-muted">
+          <span className="eyebrow mr-2">Did you mean</span>
+          {miss.nearest.map((n) => n.lgaLabel.replace(/ LGA$/, "")).join(", ")}? Say the name again.
+        </p>
       )}
 
       {miss?.reason === "not_live" && (
@@ -62,17 +46,14 @@ export function NoResult({
         </p>
       )}
 
-      {empty && <ResultCardLike empty={empty} onAsk={onAsk} />}
+      {empty && <ResultCardLike empty={empty} />}
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {empty && (
-          <button type="button" onClick={() => onAsk(`All projects in ${empty.lgaLabel}`)} className="rounded-full bg-card px-4 py-2.5 text-[14px] font-semibold shadow-card hover:bg-hairline">
-            Try another sector
-          </button>
+          <Link href={`/browse?state=${empty.state}&lga=${encodeURIComponent(empty.lga)}`} className="rounded-full bg-card px-4 py-2.5 text-[14px] font-semibold no-underline shadow-card hover:bg-hairline hover:no-underline">
+            See every sector in {empty.lgaLabel.replace(/ LGA$/, "")}
+          </Link>
         )}
-        <button type="button" onClick={() => onAsk("Which local governments do you cover?")} className="rounded-full bg-card px-4 py-2.5 text-[14px] font-semibold shadow-card hover:bg-hairline">
-          Ask about a nearby local government
-        </button>
         <span className="inline-flex items-center gap-2 rounded-full bg-card/60 px-4 py-2.5 text-[14px] font-semibold text-muted">
           Report a missing project <PlannedTag />
         </span>

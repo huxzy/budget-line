@@ -20,7 +20,6 @@ type Props = {
   languageName: string;
   onMic: () => void;
   onEnd: () => void;
-  onAsk: (text: string) => void;
   className?: string;
 };
 
@@ -37,7 +36,7 @@ const STATUS: Record<MicState, string> = {
  * The clay rail: the call itself. Mic disc with rings, waveform, the caller's
  * words typing in, the turns so far, and the document footer.
  */
-export function VoiceRail({ state, detail, turns, partial, starters, registry, lgas, languageName, onMic, onEnd, onAsk, className }: Props) {
+export function VoiceRail({ state, detail, turns, partial, starters, registry, lgas, languageName, onMic, onEnd, className }: Props) {
   const inCall = state === "listening" || state === "speaking" || state === "thinking" || state === "connecting";
   const settled = !inCall && turns.length > 0;
 
@@ -95,19 +94,17 @@ export function VoiceRail({ state, detail, turns, partial, starters, registry, l
       )}
 
       {!inCall && starters.length > 0 && (
-        <div className="mt-5 flex flex-col gap-2">
-          {settled && <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-on-clay-muted">Try next</span>}
-          {starters.map((q) => (
-            <button
-              key={q.text}
-              type="button"
-              disabled={state === "unavailable"}
-              onClick={() => onAsk(q.text)}
-              className="rounded-[12px] bg-clay-raised px-3.5 py-3 text-left text-[14px] font-semibold text-on-clay transition-colors hover:bg-clay-deep disabled:opacity-50"
-            >
-              {q.text}
-            </button>
-          ))}
+        <div className="mt-5 flex flex-col gap-1.5">
+          <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-on-clay-muted">
+            {settled ? "Things to ask next" : "Things you can ask"}
+          </span>
+          <ul className="flex flex-col gap-1.5">
+            {starters.map((q) => (
+              <li key={q.text} className="rounded-[12px] bg-clay-raised px-3.5 py-2.5 text-[14px] font-medium text-on-clay/90">
+                &ldquo;{q.text}&rdquo;
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

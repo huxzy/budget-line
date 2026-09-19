@@ -41,7 +41,7 @@ export function publicBaseUrl(): string {
 function placeNames(): string[] {
   const live = getStates().filter((s) => s.status === "live");
   const lgas = live.flatMap((s) => getPlaces(s.slug).map((l) => l.lgaLabel.replace(/ LGA$/, "")));
-  const states = live.map((s) => `${s.name} State`);
+  const states = live.flatMap((s) => [s.name, `${s.name} State`]);
   return [...new Set([...lgas, ...states, "Minna", "local government", "health", "roads", "water", "education", "agriculture", "projects", "budget", "spent", "unspent"])];
 }
 
@@ -141,15 +141,17 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
       messages: [{ role: "system", content: systemPromptFor(lang) }],
       tools: toolsFor(base),
     },
+    // OpenAI's transcriber holds up better on Nigerian-accented English and on
+    // short place names ("Borno" was coming back as "no" from Deepgram).
+    // Deepgram nova-3, biased toward every live place name, is the fallback.
+    // To revert, swap the two blocks.
     transcriber: {
-      provider: "deepgram",
-      model: "nova-3",
+      provider: "openai",
+      model: "gpt-4o-transcribe",
       language: "en",
-      // Bias recognition toward the place names people will actually say;
-      // without this "Bida" comes back as "Beta".
-      keyterm: placeNames(),
-      // A provider blip must not kill the demo.
-      fallbackPlan: { transcribers: [{ provider: "openai", model: "gpt-4o-transcribe", language: "en" }] },
+      fallbackPlan: {
+        transcribers: [{ provider: "deepgram", model: "nova-3", language: "en", keyterm: placeNames() }],
+      },
     },
     voice: { provider: "vapi", voiceId: "Paige" },
     // The SDK types this as a single value; Vapi accepts an array.

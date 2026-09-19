@@ -17,13 +17,12 @@ type Props = {
   speaking: boolean;
   summary: SummaryPayload | null;
   registry: StateSummary;
-  onAsk: (text: string) => void;
   /** Empty, idle state before the first answer. */
   placeholder?: React.ReactNode;
 };
 
 /** The cream side: what Budget Line said, then the cards it said it from. */
-export function AnswerPane({ turn, headline, speaking, summary, registry, onAsk, placeholder }: Props) {
+export function AnswerPane({ turn, headline, speaking, summary, registry, placeholder }: Props) {
   const payload = turn?.payload;
   const projects = isProjects(payload) ? payload : null;
   const sectorText = projects ? sectorLabel(projects.sector) : null;
@@ -86,8 +85,8 @@ export function AnswerPane({ turn, headline, speaking, summary, registry, onAsk,
           </>
         )}
 
-        {projects && projects.total === 0 && <NoResult payload={projects} registry={registry} onAsk={onAsk} />}
-        {isMiss(payload) && <NoResult payload={payload} registry={registry} onAsk={onAsk} />}
+        {projects && projects.total === 0 && <NoResult payload={projects} registry={registry} />}
+        {isMiss(payload) && <NoResult payload={payload} registry={registry} />}
 
         {isSummary(payload) && (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">

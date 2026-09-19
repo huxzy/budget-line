@@ -84,24 +84,26 @@ export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
         </div>
       </main>
 
-      <aside className="hidden flex-col gap-5 border-l border-hairline px-6 py-6 lg:flex">
+      <aside className="hidden flex-col gap-5 border-l border-hairline px-6 py-6 lg:sticky lg:top-0 lg:flex lg:max-h-dvh lg:overflow-y-auto">
         <button type="button" onClick={onSearch} className="flex items-center gap-3 rounded-[14px] bg-card px-4 py-3.5 text-left text-[14px] text-soft shadow-card hover:bg-hairline">
           <span className="h-3.5 w-3.5 rounded-full border-2 border-hairline-strong" aria-hidden /> Search states and local governments
         </button>
         <div className="flex flex-col items-center gap-1.5">
-          <MicButton state={micState} onPress={onMic} size={152} />
-          <span className="font-display text-[22px] font-bold">Say a place</span>
-          <span className="text-center text-[13px] text-muted">&ldquo;Bida&rdquo; · &ldquo;Niger State&rdquo; · &ldquo;Health projects near me&rdquo;</span>
+          <MicButton state={micState} onPress={onMic} size={140} />
+          <span className="font-display text-[22px] font-bold">Tap to talk</span>
+          <span className="max-w-[240px] text-center text-[13px] leading-snug text-muted">
+            Budget Line greets you, then you name a state or a local government and ask what you want to know.
+          </span>
         </div>
         <div>
           <span className="eyebrow">Available now{live.length > 1 ? ` · ${live.length}` : ""}</span>
-          <div className="mt-2 flex flex-col gap-2">
+          <div className="mt-2 flex flex-col gap-1.5">
             {live.map((st) => (
-              <Link key={st.key} href={st.href} className="flex items-center justify-between rounded-[14px] bg-card px-5 py-4 no-underline shadow-card hover:bg-hairline hover:no-underline">
-                <span>
-                  <span className="block font-display text-[19px] font-bold text-ink">{st.name} State</span>
-                  <span className="text-[13px] text-muted">
-                    {st.key === data.registry.slug ? `${data.lgas.length} local governments` : `${st.figures?.projects.toLocaleString("en-NG")} projects`}
+              <Link key={st.key} href={st.href} className="flex items-center justify-between gap-3 rounded-[12px] bg-card px-4 py-2.5 no-underline shadow-card hover:bg-hairline hover:no-underline">
+                <span className="min-w-0">
+                  <span className="block font-display text-[15px] font-bold leading-tight text-ink">{st.name}</span>
+                  <span data-num className="block text-[12px] text-muted">
+                    {st.figures?.projects.toLocaleString("en-NG")} projects · {st.figures?.compact}
                   </span>
                 </span>
                 <span className="font-display font-bold text-ink" aria-hidden>
