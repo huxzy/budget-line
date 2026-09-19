@@ -114,7 +114,7 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
                   {place ? `What has been budgeted in ${place}?` : "What has government budgeted where you live?"}
                 </h1>
                 <p className="mt-3 text-[16px] leading-relaxed text-muted">
-                  Press the microphone and ask in your own words. Every figure comes back with the page of the approved budget it was
+                  Press the microphone and ask a full question, such as “What is budgeted for health in {place}?” — a whole sentence is heard far better than a name on its own. Every figure comes back with the page of the approved budget it was
                   read from.
                 </p>
               </div>

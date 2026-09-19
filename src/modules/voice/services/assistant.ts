@@ -40,15 +40,18 @@ export function publicBaseUrl(): string {
 /** Every live state's local governments, plus the towns the resolver knows, for the transcriber. */
 /**
  * Keyterms for Deepgram. Vapi's Deepgram path fails outright with all ~180
- * live place names, so this is capped: every state name first, then local
- * governments until the cap. Lists of 40 are known to work.
+ * live place names, so this is capped: every state name first, then the local
+ * governments of the state the caller is looking at (or the first live state
+ * on the Nigeria view). Lists of 40 are known to work; no state has more
+ * than 27 local governments in the data.
  */
 const KEYTERM_CAP = 40;
 
-function placeNames(): string[] {
+function placeNames(stateSlug?: string): string[] {
   const live = getStates().filter((s) => s.status === "live");
   const states = live.map((s) => s.name);
-  const lgas = live.flatMap((s) => getPlaces(s.slug).map((l) => l.lgaLabel.replace(/ LGA$/, "")));
+  const focus = live.find((s) => s.slug === stateSlug) ?? live[0];
+  const lgas = focus ? getPlaces(focus.slug).map((l) => l.lgaLabel.replace(/ LGA$/, "")) : [];
   return [...new Set([...states, "Minna", ...lgas])].slice(0, KEYTERM_CAP);
 }
 
@@ -133,7 +136,7 @@ export function toolsFor(base: string): CreateFunctionToolDTO[] {
   ];
 }
 
-export function buildAssistant(lang: string): CreateAssistantDTO {
+export function buildAssistant(lang: string, stateSlug?: string): CreateAssistantDTO {
   const base = publicBaseUrl();
   return {
     name: `Budget Line (${lang})`,
@@ -148,16 +151,18 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
       messages: [{ role: "system", content: systemPromptFor(lang) }],
       tools: toolsFor(base),
     },
-    // OpenAI's transcriber holds up better on Nigerian-accented English and on
-    // short place names ("Borno" was coming back as "no" from Deepgram).
-    // Deepgram nova-3, biased toward every live place name, is the fallback.
-    // To revert, swap the two blocks.
+    // Deepgram nova-3 with the place names as keyterms is the only transcriber
+    // that heard "Bosso" in a sentence during testing (OpenAI realtime gave
+    // "Wushu"; Azure, 11labs and Speechmatics were no better). OpenAI is the
+    // fallback. Bare one-word utterances lose their first consonant on every
+    // provider, so the UI asks for a full question.
     transcriber: {
-      provider: "openai",
-      model: "gpt-4o-transcribe",
+      provider: "deepgram",
+      model: "nova-3",
       language: "en",
+      keyterm: placeNames(stateSlug),
       fallbackPlan: {
-        transcribers: [{ provider: "deepgram", model: "nova-3", language: "en", keyterm: placeNames() }],
+        transcribers: [{ provider: "openai", model: "gpt-4o-transcribe", language: "en" }],
       },
     },
     // "Paige" was retired by Vapi; Clara is a current warm, professional voice.
@@ -193,11 +198,11 @@ export function coverage(): Coverage {
 }
 
 /** Everything the voice UI needs for one language, resolved on the server. */
-export function voiceConfigFor(lang: string): VoiceConfig {
+export function voiceConfigFor(lang: string, stateSlug?: string): VoiceConfig {
   const assistantId = assistantIdFor(lang);
   return {
     publicKey: process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY || undefined,
-    target: assistantId ? { assistantId } : { assistant: buildAssistant(lang) },
+    target: assistantId ? { assistantId } : { assistant: buildAssistant(lang, stateSlug) },
     coverage: coverage(),
     chatAvailable: Boolean(process.env.VAPI_PRIVATE_KEY),
     publicUrl: publicBaseUrl(),

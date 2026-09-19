@@ -48,7 +48,7 @@ export function VoiceOverlay({ session, data, onClose }: { session: VoiceSession
         ))}
       </div>
       <p className="max-w-[720px] text-center font-display text-[36px] font-extrabold leading-tight tracking-[-0.03em] text-on-clay sm:text-[44px]">
-        {heard || (session.status === "connecting" ? "Connecting…" : session.status === "speaking" ? "Budget Line is speaking…" : "Your turn — name a place")}
+        {heard || (session.status === "connecting" ? "Connecting…" : session.status === "speaking" ? "Budget Line is speaking…" : "Your turn — ask about a place in a full sentence")}
         <span className="ml-1 inline-block h-9 w-[3px] bg-marigold align-[-4px] motion-safe:animate-caret" aria-hidden />
       </p>
 

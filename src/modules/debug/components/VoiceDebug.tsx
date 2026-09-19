@@ -26,8 +26,6 @@ const TRANSCRIBERS: Record<string, Record<string, unknown> | null> = {
   "gladia solaria-1": { provider: "gladia", model: "solaria-1", language: "en" },
   "11labs scribe realtime": { provider: "11labs", model: "scribe_v2_realtime", language: "en" },
   "deepgram nova-3 en": { provider: "deepgram", model: "nova-3", language: "en" },
-  "deepgram nova-3 + 40 keyterms": { provider: "deepgram", model: "nova-3", language: "en", keyterm: 40 },
-  "deepgram nova-3 + all keyterms": { provider: "deepgram", model: "nova-3", language: "en", keyterm: 0 },
   "deepgram nova-3 multi": { provider: "deepgram", model: "nova-3", language: "multi" },
   "openai gpt-4o-transcribe": { provider: "openai", model: "gpt-4o-transcribe", language: "en" },
 };
@@ -42,6 +40,7 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
   const clientRef = useRef<ReturnType<typeof createVoiceClient> | null>(null);
   const recRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const meterRef = useRef<(() => void) | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
   const push = (kind: Line["kind"], text: string) =>
@@ -91,6 +90,21 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
+      // Peak level per clip: silent clips are not sent, since a transcriber
+      // given silence makes words up (in any language it likes).
+      const ac = new AudioContext();
+      const analyser = ac.createAnalyser();
+      ac.createMediaStreamSource(stream).connect(analyser);
+      const buf = new Float32Array(analyser.fftSize);
+      let peak = 0;
+      const meter = setInterval(() => {
+        analyser.getFloatTimeDomainData(buf);
+        for (const v of buf) if (Math.abs(v) > peak) peak = Math.abs(v);
+      }, 100);
+      meterRef.current = () => {
+        clearInterval(meter);
+        void ac.close();
+      };
       // One recorder per clip: a fresh file each time so every clip is playable
       // and transcribable on its own (a single stream's chunks are not).
       const cut = () => {
@@ -98,7 +112,9 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
         const rec = new MediaRecorder(streamRef.current);
         const started = performance.now();
         rec.ondataavailable = (e) => {
-          if (e.data.size < 2000) return; // silence-sized
+          const loud = peak > 0.05;
+          peak = 0;
+          if (e.data.size < 2000 || !loud) return; // nothing said
           const url = URL.createObjectURL(e.data);
           setClips((c) => [...c, { url, at: started }]);
           void transcribeClip(e.data, started);
@@ -141,6 +157,8 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
     recRef.current = null;
     streamRef.current?.getTracks().forEach((t) => t.stop());
     streamRef.current = null;
+    meterRef.current?.();
+    meterRef.current = null;
   }
 
   const inCall = status === "listening" || status === "speaking" || status === "thinking" || status === "connecting";
@@ -154,13 +172,9 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
       setClips([]);
       t0.current = performance.now();
       await startLocalCapture();
-      let t = TRANSCRIBERS[transcriber];
+      const t = TRANSCRIBERS[transcriber];
       // the keyterm list (every live place name) lives on the assistant's deepgram fallback
-      // Vapi's deepgram path fails with the full list; the number is how many to send (0 = all).
-      if (t && typeof t.keyterm === "number") {
-        const all = fallbackKeyterms(config);
-        t = { ...t, keyterm: t.keyterm ? all.slice(0, t.keyterm) : all };
-      }
+
       push("status", `transcriber for this call: ${t ? JSON.stringify(t) : transcriberName(config)}`);
       await clientRef.current?.start(t ? { transcriber: t } : {});
     }
@@ -255,12 +269,6 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
       )}
     </div>
   );
-}
-
-function fallbackKeyterms(config: VoiceConfig): string[] {
-  if (!("assistant" in config.target)) return [];
-  const t = config.target.assistant.transcriber as { fallbackPlan?: { transcribers?: { keyterm?: string[] }[] } } | undefined;
-  return t?.fallbackPlan?.transcribers?.find((x) => x.keyterm)?.keyterm ?? [];
 }
 
 function transcriberName(config: VoiceConfig): string {
