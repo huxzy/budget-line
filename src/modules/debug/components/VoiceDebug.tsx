@@ -25,7 +25,9 @@ const TRANSCRIBERS: Record<string, Record<string, unknown> | null> = {
   "assembly-ai": { provider: "assembly-ai", language: "en" },
   "gladia solaria-1": { provider: "gladia", model: "solaria-1", language: "en" },
   "11labs scribe realtime": { provider: "11labs", model: "scribe_v2_realtime", language: "en" },
-  "deepgram nova-3 + place keyterms": { provider: "deepgram", model: "nova-3", language: "en", keyterm: [] },
+  "deepgram nova-3 en": { provider: "deepgram", model: "nova-3", language: "en" },
+  "deepgram nova-3 + 40 keyterms": { provider: "deepgram", model: "nova-3", language: "en", keyterm: 40 },
+  "deepgram nova-3 + all keyterms": { provider: "deepgram", model: "nova-3", language: "en", keyterm: 0 },
   "deepgram nova-3 multi": { provider: "deepgram", model: "nova-3", language: "multi" },
   "openai gpt-4o-transcribe": { provider: "openai", model: "gpt-4o-transcribe", language: "en" },
 };
@@ -154,7 +156,11 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
       await startLocalCapture();
       let t = TRANSCRIBERS[transcriber];
       // the keyterm list (every live place name) lives on the assistant's deepgram fallback
-      if (t && "keyterm" in t) t = { ...t, keyterm: fallbackKeyterms(config) };
+      // Vapi's deepgram path fails with the full list; the number is how many to send (0 = all).
+      if (t && typeof t.keyterm === "number") {
+        const all = fallbackKeyterms(config);
+        t = { ...t, keyterm: t.keyterm ? all.slice(0, t.keyterm) : all };
+      }
       push("status", `transcriber for this call: ${t ? JSON.stringify(t) : transcriberName(config)}`);
       await clientRef.current?.start(t ? { transcriber: t } : {});
     }

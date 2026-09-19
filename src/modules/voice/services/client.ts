@@ -191,6 +191,7 @@ function isMicDenied(e: unknown): boolean {
 function describe(e: unknown): string {
   if (!e) return "Unknown error";
   if (typeof e === "string") return e;
-  const o = e as { message?: string; error?: { message?: string }; errorMsg?: string };
-  return o.error?.message ?? o.message ?? o.errorMsg ?? JSON.stringify(e).slice(0, 200);
+  const o = e as { message?: unknown; error?: { message?: unknown }; errorMsg?: unknown };
+  const m = o.error?.message ?? o.message ?? o.errorMsg ?? e;
+  return (typeof m === "string" ? m : JSON.stringify(m)).slice(0, 300);
 }
