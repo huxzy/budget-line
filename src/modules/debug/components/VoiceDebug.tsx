@@ -9,7 +9,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createVoiceClient, type VoiceConfig, type VoiceStatus } from "@/modules/voice";
 
-type Line = { t: number; kind: "you-browser" | "you-vapi" | "you-vapi-partial" | "agent" | "tool-call" | "tool-result" | "status" | "raw"; text: string };
+type Line = { t: number; kind: "you-browser" | "you-browser-partial" | "you-vapi" | "you-vapi-partial" | "agent" | "tool-call" | "tool-result" | "status" | "raw"; text: string };
 
 type SR = { start(): void; stop(): void; continuous: boolean; interimResults: boolean; lang: string; onresult: ((e: SpeechRecognitionEventLike) => void) | null; onerror: ((e: unknown) => void) | null; onend: (() => void) | null };
 type SpeechRecognitionEventLike = { resultIndex: number; results: ArrayLike<{ isFinal: boolean; 0: { transcript: string; confidence: number } }> };
@@ -31,7 +31,14 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
   const streamRef = useRef<MediaStream | null>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
-  const push = (kind: Line["kind"], text: string) => setLines((l) => [...l, { t: performance.now(), kind, text }]);
+  const push = (kind: Line["kind"], text: string) =>
+    setLines((l) => {
+      const next = { t: performance.now(), kind, text };
+      const last = l[l.length - 1];
+      // a growing partial replaces the previous partial from the same source
+      if (last && last.kind === kind && kind.endsWith("-partial")) return [...l.slice(0, -1), next];
+      return [...l, next];
+    });
 
   useEffect(() => {
     const client = createVoiceClient(config.publicKey, config.target, config.coverage);
@@ -66,26 +73,34 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
     if (Ctor) {
       const sr = new Ctor();
       sr.continuous = true;
-      sr.interimResults = false;
-      sr.lang = "en-NG";
+      sr.interimResults = true;
+      // Chrome's recogniser has no en-NG; en-US returns results for Nigerian English too.
+      sr.lang = "en-US";
       sr.onresult = (e) => {
         for (let i = e.resultIndex; i < e.results.length; i++) {
           const r = e.results[i];
-          if (r.isFinal) push("you-browser", `${r[0].transcript.trim()} (confidence ${Math.round(r[0].confidence * 100)}%)`);
+          if (r.isFinal) push("you-browser", `${r[0].transcript.trim()} (confidence ${Math.round((r[0].confidence || 0) * 100)}%)`);
+          else push("you-browser-partial", r[0].transcript.trim());
         }
       };
       sr.onerror = (e) => push("status", `browser recogniser error: ${(e as { error?: string }).error ?? "unknown"}`);
       sr.onend = () => {
+        push("status", "browser recogniser stopped" + (srRef.current === sr ? "; restarting" : ""));
         if (srRef.current === sr) {
-          try {
-            sr.start();
-          } catch {
-            /* ended */
-          }
+          setTimeout(() => {
+            if (srRef.current === sr) {
+              try {
+                sr.start();
+              } catch {
+                /* ended */
+              }
+            }
+          }, 250);
         }
       };
       srRef.current = sr;
       sr.start();
+      push("status", "browser recogniser started (Chrome, en-US)");
       setBrowserSr("on");
     } else {
       setBrowserSr("unsupported");
@@ -134,6 +149,7 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
 
   const colour: Record<Line["kind"], string> = {
     "you-browser": "#1d4ed8",
+    "you-browser-partial": "#60a5fa",
     "you-vapi": "#b45309",
     "you-vapi-partial": "#d97706",
     agent: "#065f46",
@@ -187,7 +203,7 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
         {lines
           .filter((l) => showRaw || l.kind !== "raw")
           .map((l, i) => (
-            <div key={i} style={{ display: "flex", gap: 10, padding: "2px 0", color: colour[l.kind], opacity: l.kind === "you-vapi-partial" ? 0.6 : 1 }}>
+            <div key={i} style={{ display: "flex", gap: 10, padding: "2px 0", color: colour[l.kind], opacity: l.kind === "you-vapi-partial" || l.kind === "you-browser-partial" ? 0.6 : 1 }}>
               <span style={{ color: "#999", flexShrink: 0 }}>{stamp(t0.current, l.t)}</span>
               <span style={{ width: 130, flexShrink: 0, fontWeight: 700 }}>{l.kind}</span>
               <span style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{l.text}</span>
