@@ -35,6 +35,7 @@ const TRANSCRIBERS: Record<string, Record<string, unknown> | null> = {
 /** `places`: every live state and local government name, for sizing the keyterm list. */
 export function VoiceDebug({ config, places }: { config: VoiceConfig; places: string[] }) {
   const [transcriber, setTranscriber] = useState<string>("assistant (current)");
+  const [rawMic, setRawMic] = useState(false);
   const [status, setStatus] = useState<VoiceStatus>(config.publicKey ? "idle" : "unavailable");
   const [lines, setLines] = useState<Line[]>([]);
   const [showRaw, setShowRaw] = useState(false);
@@ -181,7 +182,8 @@ export function VoiceDebug({ config, places }: { config: VoiceConfig; places: st
       // the keyterm list (every live place name) lives on the assistant's deepgram fallback
 
       push("status", `transcriber for this call: ${t ? JSON.stringify(t) : transcriberName(config)}`);
-      await clientRef.current?.start(t ? { transcriber: t } : {});
+      if (rawMic) push("status", "microphone: raw track, browser echo cancellation / noise suppression / gain control off");
+      await clientRef.current?.start({ ...(t ? { transcriber: t } : {}), rawMic });
     }
   }
 
@@ -236,6 +238,9 @@ export function VoiceDebug({ config, places }: { config: VoiceConfig; places: st
               </option>
             ))}
           </select>
+        </label>
+        <label title="Applies to the first call after the page loads; reload to switch back.">
+          <input type="checkbox" checked={rawMic} onChange={(e) => setRawMic(e.target.checked)} disabled={inCall} /> raw mic (no browser processing)
         </label>
         <label style={{ marginLeft: "auto" }}>
           <input type="checkbox" checked={showRaw} onChange={(e) => setShowRaw(e.target.checked)} /> show raw Vapi messages

@@ -41,6 +41,12 @@ export type CallContext = {
   sectors?: string[];
   /** Troubleshooting only: replace the assistant's transcriber for this call. */
   transcriber?: Record<string, unknown>;
+  /**
+   * Troubleshooting only: hand Vapi a microphone track with the browser's
+   * echo cancellation, noise suppression and gain control switched off, to
+   * see whether that processing is what eats the first sound of a word.
+   */
+  rawMic?: boolean;
 };
 
 /** What the prompt's variables are filled from when no state is chosen. */

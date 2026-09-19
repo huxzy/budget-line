@@ -67,10 +67,17 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
   let vapi: Vapi | null = null;
   let inCall = false;
 
-  async function client(): Promise<Vapi> {
+  async function client(rawMic = false): Promise<Vapi> {
     if (vapi) return vapi;
     const { default: VapiCtor } = await import("@vapi-ai/web");
-    vapi = new VapiCtor(publicKey!);
+    if (rawMic) {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
+      });
+      vapi = new VapiCtor(publicKey!, undefined, undefined, { audioSource: stream.getAudioTracks()[0] });
+    } else {
+      vapi = new VapiCtor(publicKey!);
+    }
 
     vapi.on("call-start", () => {
       inCall = true;
@@ -127,7 +134,7 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
     const overrides: Record<string, unknown> = { variableValues: variablesFor(ctx, coverage, "voice"), firstMessage: firstMessageFor(ctx, coverage) };
     if (ctx.transcriber) overrides.transcriber = ctx.transcriber;
     try {
-      const v = await client();
+      const v = await client(ctx.rawMic);
       if ("assistantId" in target) await v.start(target.assistantId, overrides);
       else await v.start(target.assistant, overrides);
     } catch (e) {
