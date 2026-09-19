@@ -7,6 +7,8 @@ type Props = {
   featuredKey?: string;
   /** Every live circle gets the full treatment: fill, rings, breathe, figures. */
   featureLive?: boolean;
+  /** Smaller discs, for a field where every circle carries a figures card. */
+  dense?: boolean;
   /** Keys whose figures show in a persistent tooltip. */
   figuresFor?: string[];
   liveStateName?: string;
@@ -22,7 +24,7 @@ type Props = {
  * only, and off under prefers-reduced-motion. The correctness line under the
  * field is always visible: circle size carries no data.
  */
-export function Cluster({ places, positionFor, featuredKey, featureLive = false, figuresFor = [], liveStateName, className, status, height = "clamp(520px, calc(100dvh - 360px), 820px)" }: Props) {
+export function Cluster({ places, positionFor, featuredKey, featureLive = false, dense = false, figuresFor = [], liveStateName, className, status, height = "clamp(520px, calc(100dvh - 360px), 820px)" }: Props) {
   return (
     <div className={className}>
       <div className="relative w-full [container-type:inline-size]" style={{ height }} role="group" aria-label="Places">
@@ -34,7 +36,8 @@ export function Cluster({ places, positionFor, featuredKey, featureLive = false,
             featured={p.key === featuredKey || (featureLive && p.status === "live")}
             showFigures={figuresFor.includes(p.key) || (featureLive && p.status === "live")}
             liveStateName={liveStateName}
-            dense={featureLive}
+            dense={dense}
+            compactFigures={featureLive}
           />
         ))}
       </div>

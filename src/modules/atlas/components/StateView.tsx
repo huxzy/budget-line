@@ -80,6 +80,7 @@ export function StateView({ data, view, micState, onMic }: Props) {
           places={data.lgas}
           positionFor={(p, i, n) => lgaPosition(data.registry.slug, p.key, i, n)}
           featureLive
+          dense
           liveStateName={niger.name}
           status={`All ${data.lgas.length} have figures`}
           height="clamp(640px, calc(100dvh - 260px), 920px)"

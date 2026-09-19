@@ -32,8 +32,8 @@ export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
           className="mt-4 hidden w-full lg:block"
           places={data.states}
           positionFor={(p) => statePosition(p.key)}
-          featuredKey={niger.key}
-          figuresFor={live.map((s) => s.key)}
+          featureLive
+          dense
           liveStateName={niger.name}
           status={`${data.liveCount} of ${data.states.length} states available`}
         />

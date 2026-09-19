@@ -18,6 +18,8 @@ type Props = {
   liveStateName?: string;
   /** Slightly smaller discs for a field where every circle carries a figures card. */
   dense?: boolean;
+  /** Two-line figures card (count and compact total) instead of the full one. */
+  compactFigures?: boolean;
 };
 
 /**
@@ -27,7 +29,7 @@ type Props = {
  * the DOM at all times and referenced by aria-describedby, so screen readers
  * get the same content sighted users hover for. Size carries no data.
  */
-export function PlaceCircle({ place, position, filled = false, featured = false, showFigures = false, liveStateName = "Niger", dense = false }: Props) {
+export function PlaceCircle({ place, position, filled = false, featured = false, showFigures = false, liveStateName = "Niger", dense = false, compactFigures = false }: Props) {
   const solid = filled || featured;
   const tipId = useId();
   const live = place.status === "live";
@@ -40,10 +42,10 @@ export function PlaceCircle({ place, position, filled = false, featured = false,
   const wrap = `calc(${disc} + 48px)`;
 
   const tooltip = live ? (
-    place.figures && place.kind === "lga" ? (
+    place.figures && (place.kind === "lga" || compactFigures) ? (
       <>
         <span data-num className="block text-[12px] font-bold text-ink">
-          {place.figures.projects} projects
+          {place.figures.projects.toLocaleString("en-NG")} projects
         </span>
         <span data-num className="block text-[11px] font-semibold text-marigold-text">
           {place.figures.compact}
@@ -118,7 +120,7 @@ export function PlaceCircle({ place, position, filled = false, featured = false,
       role="tooltip"
       className={cn(
         "pointer-events-none absolute left-1/2 top-full z-20 mt-0.5 w-max max-w-[210px] -translate-x-1/2 rounded-[12px] text-left shadow-card transition-opacity delay-[350ms] duration-200",
-        place.kind === "lga" ? "px-2.5 py-1.5 text-center" : "px-3.5 py-2.5",
+        place.kind === "lga" || compactFigures ? "px-2.5 py-1.5 text-center" : "px-3.5 py-2.5",
         live ? "bg-card" : "bg-clay text-on-clay",
         showFigures ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100",
       )}
