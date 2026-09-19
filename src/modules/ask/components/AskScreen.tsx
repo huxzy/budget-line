@@ -31,13 +31,15 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
   useEffect(() => {
     if (ready && (prefs.lga !== area.lga || prefs.state !== registry.slug)) update({ lga: area.lga, lgaLabel: area.lgaLabel, state: registry.slug });
   }, [ready, prefs.lga, prefs.state, area.lga, area.lgaLabel, registry.slug, update]);
+  const summary = useLgaSummary(area.lga, registry.slug);
   const session = useVoiceSession(voice, {
     lga: area.lga,
     lgaLabel: area.lgaLabel,
     state: { slug: registry.slug, name: registry.name, document: registry.document ?? "", pages: registry.pages, projects: registry.projects },
     examples: voice.examples,
+    // the opener offers the sectors this area actually has, largest first
+    sectors: summary?.bySector.slice(0, 3).map((b) => b.sector),
   });
-  const summary = useLgaSummary(area.lga);
   const place = area.lgaLabel.replace(/ LGA$/, "");
   // A question handed over from another screen ("Ask about this") leads the suggestions.
   const handed = useSearchParams().get("ask");

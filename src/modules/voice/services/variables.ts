@@ -28,7 +28,10 @@ export function variablesFor(ctx: CallContext, coverage: Coverage, channel: "voi
  */
 export function firstMessageFor(ctx: CallContext, coverage: Coverage): string {
   const place = ctx.lgaLabel?.replace(/ LGA$/, "");
-  if (place) return `This is Budget Line. For ${place}, do you want health, roads, education, or the biggest projects overall?`;
+  if (place) {
+    const sectors = ctx.sectors?.length ? listOf(ctx.sectors) : "health, roads, or education";
+    return `This is Budget Line. For ${place}, do you want ${sectors} — or the biggest projects overall?`;
+  }
   if (ctx.state) {
     const eg = ctx.examples?.length ? ` — ${listOf(ctx.examples)}, for example` : "";
     return `This is Budget Line. Which local government in ${ctx.state.name} State do you want to ask about${eg}?`;

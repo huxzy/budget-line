@@ -37,6 +37,8 @@ export type CallContext = {
   state?: { slug: string; name: string; document: string; pages?: number; projects?: number } | null;
   /** Three local governments of that state to offer as examples, most projects first. */
   examples?: string[];
+  /** On an area page: the sectors that have projects there, largest first, for the opener. */
+  sectors?: string[];
   /** Troubleshooting only: replace the assistant's transcriber for this call. */
   transcriber?: Record<string, unknown>;
 };
