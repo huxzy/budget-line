@@ -153,7 +153,8 @@ export function buildAssistant(lang: string): CreateAssistantDTO {
         transcribers: [{ provider: "deepgram", model: "nova-3", language: "en", keyterm: placeNames() }],
       },
     },
-    voice: { provider: "vapi", voiceId: "Paige" },
+    // "Paige" was retired by Vapi; Clara is a current warm, professional voice.
+    voice: { provider: "vapi", voiceId: "Clara" },
     // The SDK types this as a single value; Vapi accepts an array.
     clientMessages: [
       "transcript",
