@@ -106,7 +106,7 @@ export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
         offset="raised"
         hint="Type a state or a local government and ask."
         place={state?.status === "live" ? `${state.name} State` : undefined}
-        states={voice.coverage.stateCount}
+       
       />
       <div className="lg:hidden">
         <MobileTalkBar state={micState} onMic={mic} onEnd={closeOverlay} languageName="English" />

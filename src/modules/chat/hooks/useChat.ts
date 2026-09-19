@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ToolResult } from "@/modules/voice";
 import type { ChatMessage, ChatReply } from "../types";
 
@@ -13,13 +13,51 @@ export type Chat = {
   send: (text: string) => Promise<ChatReply | null>;
 };
 
-/** A text conversation with the same assistant the call uses; one Vapi chat, continued turn by turn. */
+const STORE = "budgetline.chat";
+
+type Stored = { chatId?: string; messages: ChatMessage[] };
+
+function load(): Stored | null {
+  try {
+    const raw = window.sessionStorage.getItem(STORE);
+    return raw ? (JSON.parse(raw) as Stored) : null;
+  } catch {
+    return null;
+  }
+}
+
+function save(v: Stored) {
+  try {
+    window.sessionStorage.setItem(STORE, JSON.stringify(v));
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * A text conversation with the same assistant the call uses; one Vapi chat,
+ * continued turn by turn. The thread survives moving between pages (kept in
+ * sessionStorage for this tab), so a question on the map can be followed up
+ * on an area page. `results` carries only this page's turns, so a page never
+ * renders cards from a conversation that happened somewhere else.
+ */
 export function useChat(ctx: { state?: string; lga?: string | null }): Chat {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [results, setResults] = useState<ToolResult[]>([]);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const chatId = useRef<string | undefined>(undefined);
+
+  useEffect(() => {
+    const stored = load();
+    if (stored) {
+      chatId.current = stored.chatId;
+      setMessages(stored.messages.filter((m) => !m.pending));
+    }
+  }, []);
+  useEffect(() => {
+    if (messages.length) save({ chatId: chatId.current, messages: messages.filter((m) => !m.pending) });
+  }, [messages]);
 
   const send = useCallback(
     async (text: string) => {

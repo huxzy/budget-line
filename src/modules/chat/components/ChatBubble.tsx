@@ -17,8 +17,6 @@ type Props = {
   hint?: string;
   /** What the welcome should say the reader is looking at, e.g. "Bida in Niger State". */
   place?: string;
-  /** How many states are covered, for the welcome. */
-  states?: number;
 };
 
 function citedProjects(m: ChatMessage): Project[] {
@@ -43,7 +41,7 @@ function ChatIcon() {
  * conversation. Typed questions go to the same assistant as the call, and
  * each reply shows the cards it cited.
  */
-export function ChatBubble({ chat, disabled = false, offset = "normal", title = "Ask by text", hint = "Same answers as the call, with the page for every figure.", place, states }: Props) {
+export function ChatBubble({ chat, disabled = false, offset = "normal", title = "Ask by text", hint = "Same answers as the call, with the page for every figure.", place }: Props) {
   const [open, setOpen] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -91,18 +89,11 @@ export function ChatBubble({ chat, disabled = false, offset = "normal", title = 
 
           <div className="flex min-h-[160px] flex-1 flex-col gap-3 overflow-y-auto px-4 py-4">
             {chat.messages.length === 0 && (
-              <div className="mr-6 flex flex-col gap-2 rounded-[14px] rounded-tl-[4px] bg-card px-3.5 py-3 text-[14px] leading-snug text-ink shadow-card">
-                <p className="font-display text-[15px] font-bold">Welcome to Budget Line.</p>
-                <p className="text-muted">
-                  I read the approved 2026 capital budgets of {states ? `${states} states` : "the covered states"}, line by line, and every figure I give
-                  you comes with the page it was read from.
-                  {place ? ` You are looking at ${place}.` : ""}
-                </p>
-                <p className="text-muted">
-                  Ask about a local government, a sector such as health or roads, or what was approved last year with nothing spent. If the
-                  document does not record something, I will say so rather than guess.
-                </p>
-              </div>
+              <p className="mr-6 rounded-[14px] rounded-tl-[4px] bg-card px-3.5 py-3 text-[14px] leading-snug text-ink shadow-card">
+                Ask me about a local government, a sector such as health or roads, or what was approved last year with nothing spent.
+                {place ? ` You are looking at ${place}.` : ""} If the document does not record something, I will say so rather than
+                guess.
+              </p>
             )}
             {chat.messages.map((m, i) =>
               m.role === "user" ? (

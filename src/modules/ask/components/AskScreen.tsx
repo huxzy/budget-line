@@ -122,7 +122,7 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
           />
         </main>
       </div>
-      <ChatBubble chat={chat} disabled={!voice.chatAvailable} offset="raised" place={`${place} in ${registry.name} State`} states={voice.coverage.stateCount} />
+      <ChatBubble chat={chat} disabled={!voice.chatAvailable} offset="raised" place={`${place} in ${registry.name} State`} />
       <MobileTalkBar
         state={micState}
         onMic={() => (session.inCall ? session.stop() : session.start())}
