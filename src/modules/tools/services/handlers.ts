@@ -25,16 +25,28 @@ function placeName(lgaLabel: string) {
  * state, the best match across every covered state. "Bida" must not land on
  * Borno's "Abadam" just because Borno comes first.
  */
+/** Every live state's best match for a name, closest first. Ties go to the closer length ("Boso": BOSSO before BOGORO). */
+function lgaEverywhere(lgaInput: string) {
+  const tries = liveStates().map((st) => ({ state: st, lga: resolveLga(st.slug, lgaInput) }));
+  const fit = (t: (typeof tries)[number]) => (t.lga.found ? Math.abs(t.lga.match.lga.length - lgaInput.trim().length) : 0);
+  const hits = tries.filter((t) => t.lga.found).sort((a, b) => (a.lga.found && b.lga.found ? a.lga.score - b.lga.score || fit(a) - fit(b) : 0));
+  return { tries, hits };
+}
+
 function findLga(stateInput: unknown, lgaInput: string) {
   if (stateQuery(stateInput)) {
     const st = requireLiveState(stateInput);
     if (!st.ok) return st;
-    return { ok: true as const, state: st.state, lga: resolveLga(st.state.slug, lgaInput) };
+    const lga = resolveLga(st.state.slug, lgaInput);
+    if (lga.found) return { ok: true as const, state: st.state, lga };
+    // Not in the state the caller named — but perhaps in another one we have ("Bosso" said with "Sokoto").
+    const other = lgaEverywhere(lgaInput).hits.find((h) => h.state.slug !== st.state.slug);
+    const elsewhere = other?.lga.found ? { state: other.state.slug, stateName: other.state.name, lga: other.lga.match.lga, lgaLabel: other.lga.match.lgaLabel } : undefined;
+    return { ok: true as const, state: st.state, lga: elsewhere ? { ...lga, elsewhere } : lga };
   }
-  const states = liveStates();
-  const tries = states.map((st) => ({ state: st, lga: resolveLga(st.slug, lgaInput) }));
-  const hits = tries.filter((t) => t.lga.found).sort((a, b) => (a.lga.found && b.lga.found ? a.lga.score - b.lga.score : 0));
+  const { tries, hits } = lgaEverywhere(lgaInput);
   if (hits.length) return { ok: true as const, ...hits[0] };
+  const states = liveStates();
   // No state has it: report the miss against the first state, with the nearest names from all of them.
   const nearest = tries
     .flatMap((t) => (t.lga.found ? [] : t.lga.nearest))

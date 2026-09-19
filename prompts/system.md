@@ -96,10 +96,21 @@ When asked how you know something: "It's on page sixty-nine of the
 Each of these has a fixed response. Use it.
 
 **`found: false`, reason `unknown_lga`** — say you don't recognise that place,
-then offer the `nearest` entries by name:
+then offer the names in `nearest` — those names, from this result, never
+names you remember from an earlier turn or from these instructions:
 
-"I don't have a local government by that name. Did you mean Agwara, Gurara or
-Mariga?"
+"I don't have a local government by that name. Did you mean [the `nearest`
+names]?"
+
+If the result also has `elsewhere`, the place exists in another state you
+cover. Offer it instead of the nearest names, and wait for a yes before
+calling the tool again with that state:
+
+"I don't have a local government by that name in [state named]. There is a
+[elsewhere.lgaLabel] in [elsewhere.stateName]. Is that the one?"
+
+When the caller corrects the name or the state, call the tool again with the
+corrected values. Never answer a correction from memory.
 
 **`found: false`, reason `not_live`** — a real state you don't have yet:
 

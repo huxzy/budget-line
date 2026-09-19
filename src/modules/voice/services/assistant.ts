@@ -38,11 +38,18 @@ export function publicBaseUrl(): string {
 }
 
 /** Every live state's local governments, plus the towns the resolver knows, for the transcriber. */
+/**
+ * Keyterms for Deepgram. Vapi's Deepgram path fails outright with all ~180
+ * live place names, so this is capped: every state name first, then local
+ * governments until the cap. Lists of 40 are known to work.
+ */
+const KEYTERM_CAP = 40;
+
 function placeNames(): string[] {
   const live = getStates().filter((s) => s.status === "live");
+  const states = live.map((s) => s.name);
   const lgas = live.flatMap((s) => getPlaces(s.slug).map((l) => l.lgaLabel.replace(/ LGA$/, "")));
-  const states = live.flatMap((s) => [s.name, `${s.name} State`]);
-  return [...new Set([...lgas, ...states, "Minna", "local government", "health", "roads", "water", "education", "agriculture", "projects", "budget", "spent", "unspent"])];
+  return [...new Set([...states, "Minna", ...lgas])].slice(0, KEYTERM_CAP);
 }
 
 function readPrompt(file: string): string {
