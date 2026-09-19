@@ -9,7 +9,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createVoiceClient, type VoiceConfig, type VoiceStatus } from "@/modules/voice";
 
-type Line = { t: number; kind: "you-browser" | "you-browser-partial" | "you-vapi" | "you-vapi-partial" | "agent" | "tool-call" | "tool-result" | "status" | "raw"; text: string };
+type Line = { t: number; kind: "you-openai" | "you-browser" | "you-browser-partial" | "you-vapi" | "you-vapi-partial" | "agent" | "tool-call" | "tool-result" | "status" | "raw"; text: string };
 
 type SR = { start(): void; stop(): void; continuous: boolean; interimResults: boolean; lang: string; onresult: ((e: SpeechRecognitionEventLike) => void) | null; onerror: ((e: unknown) => void) | null; onend: (() => void) | null };
 type SpeechRecognitionEventLike = { resultIndex: number; results: ArrayLike<{ isFinal: boolean; 0: { transcript: string; confidence: number } }> };
@@ -110,16 +110,50 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
-      const rec = new MediaRecorder(stream);
-      rec.ondataavailable = (e) => {
-        if (e.data.size > 0) setClips((c) => [...c, { url: URL.createObjectURL(e.data), at: performance.now() }]);
+      // One recorder per clip: a fresh file each time so every clip is playable
+      // and transcribable on its own (a single stream's chunks are not).
+      const cut = () => {
+        if (!streamRef.current) return;
+        const rec = new MediaRecorder(streamRef.current);
+        const started = performance.now();
+        rec.ondataavailable = (e) => {
+          if (e.data.size < 2000) return; // silence-sized
+          const url = URL.createObjectURL(e.data);
+          setClips((c) => [...c, { url, at: started }]);
+          void transcribeClip(e.data, started);
+        };
+        rec.start();
+        recRef.current = rec;
+        setTimeout(() => {
+          if (rec.state !== "inactive") rec.stop();
+          if (streamRef.current) cut();
+        }, 6000);
       };
-      rec.start(8000);
-      recRef.current = rec;
+      cut();
     } catch (e) {
       push("status", `mic recording failed: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
+
+  async function transcribeClip(blob: Blob, at: number) {
+    const form = new FormData();
+    form.append("clip", blob, "clip.webm");
+    try {
+      const res = await fetch("/api/debug/transcribe", { method: "POST", body: form });
+      const data = (await res.json()) as { text?: string; error?: string };
+      if (data.error) {
+        if (!serverNoted.current) {
+          serverNoted.current = true;
+          push("status", `server transcription unavailable: ${data.error}`);
+        }
+        return;
+      }
+      if (data.text?.trim()) setLines((l) => [...l, { t: at, kind: "you-openai" as const, text: data.text!.trim() }].sort((a, b) => a.t - b.t));
+    } catch (e) {
+      push("status", `server transcription failed: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  }
+  const serverNoted = useRef(false);
 
   function stopLocalCapture() {
     const sr = srRef.current;
@@ -148,7 +182,8 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
   }
 
   const colour: Record<Line["kind"], string> = {
-    "you-browser": "#1d4ed8",
+    "you-openai": "#1d4ed8",
+    "you-browser": "#2563eb",
     "you-browser-partial": "#60a5fa",
     "you-vapi": "#b45309",
     "you-vapi-partial": "#d97706",
@@ -163,9 +198,10 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
     <div style={{ fontFamily: "ui-monospace, Menlo, monospace", fontSize: 13, padding: 20, maxWidth: 1100, margin: "0 auto", color: "#111" }}>
       <h1 style={{ fontSize: 18, margin: 0 }}>Voice troubleshooting</h1>
       <p style={{ margin: "6px 0 14px", color: "#555" }}>
-        Blue = what this browser&apos;s own recogniser heard from your mic. Orange = what Vapi&apos;s transcriber heard (the only thing the
-        agent gets). Green = what the agent said. Purple = tool calls with the exact arguments. If blue and orange disagree, the
-        problem is on Vapi&apos;s side; if blue is wrong too, it is the mic or the room.
+        Blue = what your mic recorded, transcribed independently of Vapi (OpenAI, 6-second clips; Chrome&apos;s own recogniser too,
+        when its network allows). Orange = what Vapi&apos;s transcriber heard (the only thing the agent gets). Green = what the agent
+        said. Purple = tool calls with the exact arguments. If blue and orange disagree, the problem is on Vapi&apos;s side; if blue
+        is wrong too, it is the mic or the room. The clips at the bottom are the ground truth either way.
       </p>
       <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
         <button
@@ -214,7 +250,7 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
 
       {clips.length > 0 && (
         <div style={{ marginTop: 14 }}>
-          <b>Mic recordings</b> (8-second clips, this browser only — nothing is uploaded):
+          <b>Mic recordings</b> (6-second clips; each is sent once to OpenAI for the blue transcript, nothing else):
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 6 }}>
             {clips.map((c, i) => (
               <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
