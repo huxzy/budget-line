@@ -37,7 +37,7 @@ export function useChat(ctx: { state?: string; lga?: string | null }): Chat {
         const data = (await res.json()) as ChatReply & { error?: string };
         if (!res.ok || data.error) throw new Error(data.error ?? "Chat failed");
         chatId.current = data.chatId;
-        setMessages((m) => [...m.slice(0, -1), { role: "assistant", text: data.reply }]);
+        setMessages((m) => [...m.slice(0, -1), { role: "assistant", text: data.reply, results: data.toolResults }]);
         setResults((r) => [...r, ...data.toolResults]);
         return data;
       } catch (e) {

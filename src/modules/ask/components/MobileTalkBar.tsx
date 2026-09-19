@@ -17,18 +17,15 @@ export function MobileTalkBar({
   onMic,
   onEnd,
   languageName,
-  composer,
 }: {
   state: MicState;
   onMic: () => void;
   onEnd: () => void;
   languageName: string;
-  composer?: React.ReactNode;
 }) {
   const inCall = state === "listening" || state === "speaking" || state === "thinking" || state === "connecting";
   return (
     <div className="fixed inset-x-0 bottom-0 z-20 flex flex-col gap-2 bg-clay px-5 pb-[max(14px,env(safe-area-inset-bottom))] pt-3 text-on-clay shadow-[0_-12px_30px_-18px_rgba(36,22,17,0.7)] lg:hidden">
-      {composer}
       <div className="flex items-center gap-4">
         <MicButton state={state} onPress={onMic} size={64} />
         <div className="min-w-0 flex-1">

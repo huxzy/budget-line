@@ -8,3 +8,4 @@ export { SourceLine } from "./SourceLine";
 export { SpendBar } from "./SpendBar";
 export { LiveTag, PlannedTag, Tag } from "./Tag";
 export { Wordmark } from "./Wordmark";
+export { PageLoading } from "./PageLoading";

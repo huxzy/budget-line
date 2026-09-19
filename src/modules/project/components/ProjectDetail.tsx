@@ -3,11 +3,13 @@
 import { useRouter } from "next/navigation";
 import { Amount, Button, PlannedTag, SourceLine, SpendBar, Tag } from "@/components/ui";
 import { formatNaira, isPlace, lgaSlug, sectorLabel, type Project, type StateSummary } from "@/modules/budget";
+import { ChatBubble, useChat } from "@/modules/chat";
 import { spendStatus } from "@/modules/results";
 
 /** One project: the figure, the 2025 record, history and the source row. */
-export function ProjectDetail({ project, registry }: { project: Project; registry: StateSummary }) {
+export function ProjectDetail({ project, registry, chatAvailable }: { project: Project; registry: StateSummary; chatAvailable: boolean }) {
   const router = useRouter();
+  const chat = useChat({ state: registry.slug, lga: isPlace(project.lga) ? project.lga : undefined });
   const s = spendStatus(project);
   const a25 = formatNaira(project.approved2025);
   const s25 = formatNaira(project.spent2025);
@@ -16,6 +18,7 @@ export function ProjectDetail({ project, registry }: { project: Project; registr
 
   return (
     <div className="min-h-dvh bg-surface">
+      <ChatBubble chat={chat} disabled={!chatAvailable} />
       <header className="bg-clay px-5 pb-8 pt-5 text-on-clay sm:px-10">
         <div className="mx-auto flex max-w-[960px] flex-wrap items-center gap-3">
           <button

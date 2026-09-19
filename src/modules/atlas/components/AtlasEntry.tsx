@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button, type MicState, PlannedTag } from "@/components/ui";
 import { MobileTalkBar } from "@/modules/ask";
-import { ChatComposer, useChat } from "@/modules/chat";
+import { ChatBubble, useChat } from "@/modules/chat";
 import { useVoiceSession, type VoiceConfig } from "@/modules/voice";
 import { useAtlasView } from "../hooks/useMotion";
 import type { AtlasData } from "../types";
@@ -28,31 +28,20 @@ export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
   const session = useVoiceSession(voice, {});
   const micState: MicState = session.status === "error" ? "idle" : session.status;
   const chat = useChat({ state: level === "state" ? stateSlug : undefined });
-  const [typed, setTyped] = useState(false);
-
-  function type(text: string) {
-    if (session.inCall) session.stop();
-    setSearchOpen(false);
-    setTyped(true);
-    setOverlay(true);
-    void chat.send(text);
-  }
-  function closeOverlay() {
-    session.stop();
-    setOverlay(false);
-  }
-  const composer = <ChatComposer onSend={type} pending={chat.pending} disabled={!voice.chatAvailable} placeholder="Or type a place or a question" />;
 
   const state = level === "state" ? data.states.find((s) => s.key === stateSlug) : null;
   const pendingState = level === "state" && state && state.status !== "live";
 
+  function closeOverlay() {
+    session.stop();
+    setOverlay(false);
+  }
   function mic() {
     if (session.inCall) {
       session.stop();
       setOverlay(false);
     } else {
       setSearchOpen(false);
-      setTyped(false);
       setOverlay(true);
       session.start();
     }
@@ -61,7 +50,7 @@ export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
   const listMode = ready && view === "list" && level === "nigeria";
 
   return (
-    <div className="relative flex min-h-dvh flex-col bg-surface pb-44 lg:pb-0">
+    <div className="relative flex min-h-dvh flex-col bg-surface pb-28 lg:pb-0">
       <AtlasHeader
         back={level === "state" ? { href: "/", label: "Nigeria" } : undefined}
         crumb={state ? `${state.name} State · ${state.status === "live" ? `${data.lgas.length} local governments` : "budget not available yet"}` : undefined}
@@ -101,18 +90,19 @@ export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
       ) : !ready ? (
         <div className="flex-1" aria-busy />
       ) : listMode ? (
-        <ListView data={data} reduced={reduced} onShowMap={() => set("map")} micState={micState} onMic={mic} composer={composer} />
+        <ListView data={data} reduced={reduced} onShowMap={() => set("map")} micState={micState} onMic={mic} />
       ) : level === "nigeria" ? (
-        <NigeriaView data={data} micState={micState} onMic={mic} onSearch={() => setSearchOpen(true)} composer={composer} />
+        <NigeriaView data={data} micState={micState} onMic={mic} onSearch={() => setSearchOpen(true)} />
       ) : (
-        <StateView data={data} view={view} micState={micState} onMic={mic} composer={composer} />
+        <StateView data={data} view={view} micState={micState} onMic={mic} />
       )}
 
       <SearchPanel data={data} open={searchOpen} onClose={() => setSearchOpen(false)} onMic={mic} />
-      {overlay && <VoiceOverlay session={session} chat={chat} typed={typed} data={data} onClose={closeOverlay} composer={composer} />}
+      {overlay && <VoiceOverlay session={session} data={data} onClose={closeOverlay} />}
 
+      <ChatBubble chat={chat} disabled={!voice.chatAvailable} offset="raised" hint="Type a state or a local government and ask." />
       <div className="lg:hidden">
-        <MobileTalkBar state={micState} onMic={mic} onEnd={closeOverlay} languageName="English" composer={composer} />
+        <MobileTalkBar state={micState} onMic={mic} onEnd={closeOverlay} languageName="English" />
       </div>
     </div>
   );

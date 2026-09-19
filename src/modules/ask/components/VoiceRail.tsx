@@ -20,10 +20,6 @@ type Props = {
   languageName: string;
   onMic: () => void;
   onEnd: () => void;
-  /** The text alternative to the mic. */
-  composer?: React.ReactNode;
-  typing?: boolean;
-  typedError?: string | null;
   className?: string;
 };
 
@@ -51,9 +47,6 @@ export function VoiceRail({
   languageName,
   onMic,
   onEnd,
-  composer,
-  typing,
-  typedError,
   className,
 }: Props) {
   const inCall = state === "listening" || state === "speaking" || state === "thinking" || state === "connecting";
@@ -77,14 +70,6 @@ export function VoiceRail({
                 ? `Speaking ${languageName} · pause when you're done`
                 : `Speaking ${languageName}`}
           </p>
-        </div>
-      )}
-
-      {composer && (
-        <div className="mt-5 hidden flex-col gap-1.5 lg:flex">
-          {composer}
-          {typing && <span className="text-[12px] text-on-clay-muted">Budget Line is checking…</span>}
-          {typedError && <span className="text-[12px] text-marigold">{typedError}</span>}
         </div>
       )}
 

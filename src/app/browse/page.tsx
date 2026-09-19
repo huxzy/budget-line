@@ -8,5 +8,5 @@ export default async function BrowsePage({ searchParams }: { searchParams: Promi
   const params = await searchParams;
   const data = loadBrowse(params.state ?? "", params);
   if (!data) notFound();
-  return <BrowseScreen data={data} />;
+  return <BrowseScreen data={data} chatAvailable={Boolean(process.env.VAPI_PRIVATE_KEY)} />;
 }

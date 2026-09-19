@@ -7,5 +7,5 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   const registry = stateOfProjectId(id);
   const project = registry ? getProject(registry.slug, id) : null;
   if (!project || !registry) notFound();
-  return <ProjectDetail project={project} registry={registry} />;
+  return <ProjectDetail project={project} registry={registry} chatAvailable={Boolean(process.env.VAPI_PRIVATE_KEY)} />;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/modules/budget";
 
 /**
@@ -11,6 +11,7 @@ import type { Project } from "@/modules/budget";
  */
 export function PageImage({ src, page, cited, zoom }: { src: string; page: number; cited: Project | null; zoom: boolean }) {
   const bandRef = useRef<HTMLDivElement>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     bandRef.current?.scrollIntoView({ block: "center", inline: "start", behavior: "smooth" });
@@ -18,9 +19,17 @@ export function PageImage({ src, page, cited, zoom }: { src: string; page: numbe
 
   return (
     <div className={zoom ? "max-h-[70vh] overflow-auto rounded-[12px] bg-white shadow-card" : "rounded-[12px] bg-white shadow-card"}>
-      <div className="relative" style={{ width: zoom ? "220%" : "100%" }}>
+      <div className="relative" style={{ width: zoom ? "220%" : "100%", minHeight: loaded ? undefined : "40vh" }}>
         {/* eslint-disable-next-line @next/next/no-img-element -- static pre-rendered page */}
-        <img src={src} alt={`Budget document, page ${page}`} className="block h-auto w-full" loading="eager" decoding="async" />
+        {!loaded && <div className="absolute inset-0 animate-shimmer bg-[linear-gradient(90deg,var(--hairline)_0%,var(--card-soft)_50%,var(--hairline)_100%)] bg-[length:240px_100%]" style={{ aspectRatio: "792 / 612" }} aria-busy aria-label="Loading the page image" />}
+        <img
+          src={src}
+          alt={`Budget document, page ${page}`}
+          className={loaded ? "block h-auto w-full" : "block h-auto w-full opacity-0"}
+          loading="eager"
+          decoding="async"
+          onLoad={() => setLoaded(true)}
+        />
         {cited && (
           <div
             ref={bandRef}

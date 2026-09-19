@@ -11,13 +11,11 @@ type Props = {
   data: AtlasData;
   micState: MicState;
   onMic: () => void;
-  /** Type instead of talking. */
-  composer?: React.ReactNode;
   onSearch: () => void;
 };
 
 /** The Nigeria view: 37 states as a drifting cluster, Niger live in marigold. */
-export function NigeriaView({ data, micState, onMic, onSearch, composer }: Props) {
+export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
   const live = data.states.filter((s) => s.status === "live");
   const niger = live[0];
   const pendingCount = data.states.length - data.liveCount;
@@ -97,7 +95,6 @@ export function NigeriaView({ data, micState, onMic, onSearch, composer }: Props
           <span className="max-w-[240px] text-center text-[13px] leading-snug text-muted">
             Ask Budget Line out loud about any covered state or local government; it answers with figures from the budget.
           </span>
-          {composer && <div className="mt-2 w-full">{composer}</div>}
         </div>
         <div>
           <span className="eyebrow">Available now{live.length > 1 ? ` · ${live.length}` : ""}</span>

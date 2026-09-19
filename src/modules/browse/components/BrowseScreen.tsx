@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AppHeader } from "@/components/shell";
+import { ChatBubble, useChat } from "@/modules/chat";
 import { MicPill, PlannedTag } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatCompact, lgaSlug, sectorLabel } from "@/modules/budget";
@@ -24,12 +25,14 @@ function href(base: BrowseData["query"], patch: Partial<Record<"lga" | "sector" 
 }
 
 /** Browse your LGA: the ledger, grouped by sector, filterable to unspent. */
-export function BrowseScreen({ data }: { data: BrowseData }) {
+export function BrowseScreen({ data, chatAvailable }: { data: BrowseData; chatAvailable: boolean }) {
   const { query, summary, groups, lgas, registry } = data;
+  const chat = useChat({ state: registry.slug, lga: query.lga });
   const place = summary.lgaLabel.replace(/ LGA$/, "");
 
   return (
     <div className="flex min-h-dvh flex-col bg-surface">
+      <ChatBubble chat={chat} disabled={!chatAvailable} />
       <AppHeader places={lgas} state={{ slug: registry.slug, name: registry.name }} current={query.lga} />
       <div className="grid flex-1 grid-cols-1 lg:grid-cols-[270px_minmax(0,1fr)]">
         <aside className="flex flex-col gap-5 border-b border-hairline px-5 py-6 lg:sticky lg:top-0 lg:h-[calc(100dvh-57px)] lg:overflow-y-auto lg:border-b-0 lg:border-r lg:px-6">

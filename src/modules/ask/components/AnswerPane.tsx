@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SkeletonBlock, SkeletonLine } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import type { StateSummary } from "@/modules/budget";
 import { ResultList } from "@/modules/results";
@@ -33,6 +34,19 @@ export function AnswerPane({ turn, headline, speaking, summary, registry, placeh
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
       <section className="flex min-w-0 flex-col gap-5">
         {idle && placeholder}
+        {idle && !summary && (
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2" aria-busy>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="flex items-center justify-between rounded-[16px] bg-card px-5 py-4 shadow-card">
+                <span className="flex w-1/2 flex-col gap-2">
+                  <SkeletonLine className="w-2/3" />
+                  <SkeletonLine className="h-3 w-1/2" />
+                </span>
+                <SkeletonBlock className="h-6 w-1/3" />
+              </div>
+            ))}
+          </div>
+        )}
         {idle && summary && (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {summary.bySector.map((s) => (
@@ -112,7 +126,16 @@ export function AnswerPane({ turn, headline, speaking, summary, registry, placeh
       </section>
 
       <aside className="flex flex-col gap-4 lg:sticky lg:top-6 lg:self-start">
-        {summary && <LgaSummaryPanel summary={summary} sector={projects?.sector} shown={projects?.returned} />}
+        {summary ? (
+          <LgaSummaryPanel summary={summary} sector={projects?.sector} shown={projects?.returned} />
+        ) : (
+          <div className="flex flex-col gap-3 rounded-[20px] bg-card p-5 shadow-card" aria-busy aria-label="Loading the area summary">
+            <SkeletonLine className="w-1/2" />
+            <SkeletonBlock className="w-2/3" />
+            <SkeletonLine />
+            <SkeletonLine className="w-4/5" />
+          </div>
+        )}
         <ProvenancePanel registry={registry} />
       </aside>
     </div>

@@ -13,4 +13,4 @@ export type ChatReply = {
   toolResults: ToolResult[];
 };
 
-export type ChatMessage = { role: "user" | "assistant"; text: string; pending?: boolean };
+export type ChatMessage = { role: "user" | "assistant"; text: string; pending?: boolean; results?: ToolResult[] };

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AppHeader } from "@/components/shell";
 import type { StateSummary } from "@/modules/budget";
 import { usePreferences } from "@/modules/prefs";
-import { ChatComposer, useChat } from "@/modules/chat";
+import { ChatBubble, useChat } from "@/modules/chat";
 import { useVoiceSession, type ToolResult, type Transcript, type VoiceConfig } from "@/modules/voice";
 import { useLgaSummary } from "../hooks/useLgaSummary";
 import { startersFor } from "../services/starters";
@@ -95,12 +95,7 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
           languageName={languageName}
           onMic={() => (session.inCall ? session.stop() : session.start())}
           onEnd={session.stop}
-          composer={
-            <ChatComposer onClay onSend={chat.send} pending={chat.pending} disabled={!voice.chatAvailable} placeholder="Or type your question" />
-          }
-          typing={chat.pending}
-          typedError={chat.error}
-          className="order-2 pb-44 lg:order-1 lg:pb-6"
+          className="order-2 pb-28 lg:order-1 lg:pb-6"
         />
         <main className="order-1 min-w-0 px-5 py-6 sm:px-8 lg:order-2 lg:px-10 lg:py-8">
           {session.status === "error" && session.detail && (
@@ -127,12 +122,12 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
           />
         </main>
       </div>
+      <ChatBubble chat={chat} disabled={!voice.chatAvailable} offset="raised" />
       <MobileTalkBar
         state={micState}
         onMic={() => (session.inCall ? session.stop() : session.start())}
         onEnd={session.stop}
         languageName={languageName}
-        composer={<ChatComposer onClay onSend={chat.send} pending={chat.pending} disabled={!voice.chatAvailable} placeholder="Or type here" />}
       />
     </div>
   );

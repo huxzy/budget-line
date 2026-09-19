@@ -11,8 +11,6 @@ type Props = {
   onShowMap: () => void;
   micState: MicState;
   onMic: () => void;
-  /** Type instead of talking. */
-  composer?: React.ReactNode;
 };
 
 /**
@@ -20,7 +18,7 @@ type Props = {
  * figures, pending states as an A–Z grid of chips. Shown under reduced motion
  * and available to anyone; "Show the map anyway" is always there.
  */
-export function ListView({ data, reduced, onShowMap, micState, onMic, composer }: Props) {
+export function ListView({ data, reduced, onShowMap, micState, onMic }: Props) {
   const live = data.states.filter((s) => s.status === "live");
   const pending = data.states.filter((s) => s.status === "pending").sort((a, b) => a.name.localeCompare(b.name));
   const featured = data.lgas.filter((l) => l.figures);
@@ -66,7 +64,6 @@ export function ListView({ data, reduced, onShowMap, micState, onMic, composer }
           <span className="max-w-[230px] text-center text-[13px] leading-snug text-muted">
             Ask out loud about any covered place. Voice works the same with motion off.
           </span>
-          {composer && <div className="mt-2 w-full">{composer}</div>}
         </div>
         <div>
           <span className="font-display text-[15px] font-bold">Why this view</span>
