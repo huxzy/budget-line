@@ -35,6 +35,8 @@ export type CallContext = {
   lgaLabel?: string | null;
   /** The state the caller is looking at; absent on the Nigeria view. */
   state?: { slug: string; name: string; document: string; pages?: number; projects?: number } | null;
+  /** Three local governments of that state to offer as examples, most projects first. */
+  examples?: string[];
   /** Troubleshooting only: replace the assistant's transcriber for this call. */
   transcriber?: Record<string, unknown>;
 };
@@ -67,4 +69,6 @@ export type VoiceConfig = {
   chatAvailable: boolean;
   /** Empty when the app is not reachable by Vapi (tools will fail). */
   publicUrl: string;
+  /** Three local governments of the state on screen, most projects first; empty on the Nigeria view. */
+  examples: string[];
 };

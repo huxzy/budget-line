@@ -25,7 +25,14 @@ export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
   const { view, reduced, ready, set } = useAtlasView();
   const [searchOpen, setSearchOpen] = useState(false);
   const [overlay, setOverlay] = useState(false);
-  const session = useVoiceSession(voice, {});
+  // On a state page the call knows the state; the Nigeria view starts by asking for one.
+  const r = data.registry;
+  const session = useVoiceSession(
+    voice,
+    level === "state" && r.slug === stateSlug
+      ? { state: { slug: r.slug, name: r.name, document: r.document ?? "", pages: r.pages, projects: r.projects }, examples: voice.examples }
+      : {},
+  );
   const micState: MicState = session.status === "error" ? "idle" : session.status;
   const chat = useChat({ state: level === "state" ? stateSlug : undefined });
 

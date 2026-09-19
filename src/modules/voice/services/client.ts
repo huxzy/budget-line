@@ -124,7 +124,7 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
 
   async function start(ctx: CallContext = {}) {
     emit("status", "connecting");
-    const overrides: Record<string, unknown> = { variableValues: variablesFor(ctx, coverage, "voice"), firstMessage: firstMessageFor(ctx) };
+    const overrides: Record<string, unknown> = { variableValues: variablesFor(ctx, coverage, "voice"), firstMessage: firstMessageFor(ctx, coverage) };
     if (ctx.transcriber) overrides.transcriber = ctx.transcriber;
     try {
       const v = await client();

@@ -5,6 +5,7 @@
 import {
   stateOfProjectId,
   getLgaSummary,
+  getPlaces,
   getProject,
   getProjects,
   getStates,
@@ -117,5 +118,6 @@ export const stateCoverage: ToolHandler = (args) => {
   }
   const state = resolveState(query);
   if (!state) return { found: false, reason: "unknown_state", query, live };
-  return { found: true, state, covered: state.status === "live", live };
+  const examples = state.status === "live" ? [...getPlaces(state.slug)].sort((a, b) => b.projects - a.projects).slice(0, 3).map((l) => l.lgaLabel.replace(/ LGA$/, "")) : [];
+  return { found: true, state, covered: state.status === "live", live, examples };
 };

@@ -20,9 +20,22 @@ export function variablesFor(ctx: CallContext, coverage: Coverage, channel: "voi
   };
 }
 
-export function firstMessageFor(ctx: CallContext): string {
+/**
+ * The opening line narrows one step at a time: the Nigeria view asks for a
+ * state, a state page asks for a local government with three real examples,
+ * an area page invites the question. A short list of options is much easier
+ * to hear than an open question.
+ */
+export function firstMessageFor(ctx: CallContext, coverage: Coverage): string {
   const place = ctx.lgaLabel?.replace(/ LGA$/, "");
   if (place) return `This is Budget Line. Ask me what has been budgeted in ${place}.`;
-  if (ctx.state) return `This is Budget Line. Which local government in ${ctx.state.name} State do you want to ask about?`;
-  return "This is Budget Line. Which state or local government do you want to ask about?";
+  if (ctx.state) {
+    const eg = ctx.examples?.length ? ` — ${listOf(ctx.examples)}, for example` : "";
+    return `This is Budget Line. Which local government in ${ctx.state.name} State do you want to ask about${eg}?`;
+  }
+  return `This is Budget Line. Which state do you want to ask about? I have ${coverage.coveredStates}.`;
+}
+
+function listOf(names: string[]): string {
+  return names.length > 1 ? `${names.slice(0, -1).join(", ")} or ${names[names.length - 1]}` : (names[0] ?? "");
 }

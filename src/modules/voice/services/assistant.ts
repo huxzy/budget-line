@@ -196,9 +196,19 @@ export function coverage(): Coverage {
 }
 
 /** Everything the voice UI needs for one language, resolved on the server. */
+/** The three local governments with the most projects — recognisable names to offer as examples. */
+export function examplePlaces(stateSlug?: string): string[] {
+  if (!stateSlug) return [];
+  return [...getPlaces(stateSlug)]
+    .sort((a, b) => b.projects - a.projects)
+    .slice(0, 3)
+    .map((l) => l.lgaLabel.replace(/ LGA$/, ""));
+}
+
 export function voiceConfigFor(lang: string, stateSlug?: string): VoiceConfig {
   const assistantId = assistantIdFor(lang);
   return {
+    examples: examplePlaces(stateSlug),
     publicKey: process.env.NEXT_PUBLIC_VAPI_PUBLIC_KEY || undefined,
     target: assistantId ? { assistantId } : { assistant: buildAssistant(lang, stateSlug) },
     coverage: coverage(),

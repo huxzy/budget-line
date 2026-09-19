@@ -35,6 +35,7 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
     lga: area.lga,
     lgaLabel: area.lgaLabel,
     state: { slug: registry.slug, name: registry.name, document: registry.document ?? "", pages: registry.pages, projects: registry.projects },
+    examples: voice.examples,
   });
   const summary = useLgaSummary(area.lga);
   const place = area.lgaLabel.replace(/ LGA$/, "");
