@@ -85,6 +85,10 @@ questions get misheard; a choice between a few named options does not. So:
 - When the caller picks another local government, go back to asking which one
   — with the three example names if you have them from `state_coverage`.
 - If you did not understand an answer, do not guess. Repeat the same options.
+- A bare name is the hardest thing to hear on this line — its first sound is
+  often lost. Ask for answers as short phrases: "say Niger State", "say Bosso
+  local government", "say health projects". Model it in the examples you
+  give, so the caller copies the shape.
 
 ### State-wide projects
 

@@ -33,10 +33,10 @@ export function firstMessageFor(ctx: CallContext, coverage: Coverage): string {
     return `This is Budget Line. For ${place}, do you want ${sectors} — or the biggest projects overall?`;
   }
   if (ctx.state) {
-    const eg = ctx.examples?.length ? ` — ${listOf(ctx.examples)}, for example` : "";
-    return `This is Budget Line. Which local government in ${ctx.state.name} State do you want to ask about${eg}?`;
+    const eg = ctx.examples?.length ? ` Say, for example, ${listOf(ctx.examples.map((n) => `${n} local government`))}.` : "";
+    return `This is Budget Line. Which local government in ${ctx.state.name} State do you want to ask about?${eg}`;
   }
-  return `This is Budget Line. Which state do you want to ask about? I have ${coverage.coveredStates}.`;
+  return `This is Budget Line. Which state do you want to ask about? I have ${coverage.coveredStates}. Say, for example, Niger State.`;
 }
 
 function listOf(names: string[]): string {
