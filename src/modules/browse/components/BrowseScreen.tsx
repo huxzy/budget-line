@@ -4,7 +4,7 @@ import Link from "next/link";
 import { AppHeader } from "@/components/shell";
 import { MicPill, PlannedTag } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { formatCompact, sectorLabel } from "@/modules/budget";
+import { formatCompact, lgaSlug, sectorLabel } from "@/modules/budget";
 import { ResultCard } from "@/modules/results";
 import { publishedOn } from "@/modules/ask";
 import type { BrowseData } from "../types";
@@ -32,7 +32,7 @@ export function BrowseScreen({ data }: { data: BrowseData }) {
     <div className="flex min-h-dvh flex-col bg-surface">
       <AppHeader />
       <div className="grid flex-1 grid-cols-1 lg:grid-cols-[270px_minmax(0,1fr)]">
-        <aside className="flex flex-col gap-5 border-b border-hairline px-5 py-6 lg:sticky lg:top-0 lg:max-h-dvh lg:overflow-y-auto lg:border-b-0 lg:border-r lg:px-6">
+        <aside className="flex flex-col gap-5 border-b border-hairline px-5 py-6 lg:sticky lg:top-0 lg:h-[calc(100dvh-57px)] lg:overflow-y-auto lg:border-b-0 lg:border-r lg:px-6">
           <div>
             <h1 className="font-display text-[26px] font-bold tracking-[-0.03em]">{summary.lgaLabel}</h1>
             <p className="text-[14px] text-muted">
@@ -87,7 +87,7 @@ export function BrowseScreen({ data }: { data: BrowseData }) {
             </ul>
           </div>
 
-          <Link href={`/?ask=${encodeURIComponent(`Projects in ${place}`)}`} className="mt-auto no-underline hover:no-underline">
+          <Link href={`/s/${query.state}/${lgaSlug(query.lga)}`} className="mt-auto no-underline hover:no-underline">
             <MicPill state="idle" onPress={() => {}} className="w-full justify-center">
               Ask instead
             </MicPill>

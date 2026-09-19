@@ -85,14 +85,15 @@ export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
       </main>
 
       <aside className="hidden flex-col gap-5 border-l border-hairline px-6 py-6 lg:sticky lg:top-0 lg:flex lg:max-h-dvh lg:overflow-y-auto">
-        <button type="button" onClick={onSearch} className="flex items-center gap-3 rounded-[14px] bg-card px-4 py-3.5 text-left text-[14px] text-soft shadow-card hover:bg-hairline">
-          <span className="h-3.5 w-3.5 rounded-full border-2 border-hairline-strong" aria-hidden /> Search states and local governments
+        <button type="button" onClick={onSearch} className="flex items-center gap-2.5 rounded-full bg-card px-4 py-2.5 text-left text-[14px] text-soft shadow-card hover:bg-hairline">
+          <span className="h-3 w-3 shrink-0 rounded-full border-2 border-hairline-strong" aria-hidden />
+          <span className="truncate">Search states and areas</span>
         </button>
         <div className="flex flex-col items-center gap-1.5">
           <MicButton state={micState} onPress={onMic} size={140} />
           <span className="font-display text-[22px] font-bold">Tap to talk</span>
           <span className="max-w-[240px] text-center text-[13px] leading-snug text-muted">
-            Budget Line greets you, then you name a state or a local government and ask what you want to know.
+            Ask Budget Line out loud about any covered state or local government; it answers with figures from the budget.
           </span>
         </div>
         <div>

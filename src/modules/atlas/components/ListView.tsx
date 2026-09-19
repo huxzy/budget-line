@@ -62,7 +62,7 @@ export function ListView({ data, reduced, onShowMap, micState, onMic }: Props) {
           <MicButton state={micState} onPress={onMic} size={112} />
           <span className="font-display text-[20px] font-bold">Tap to talk</span>
           <span className="max-w-[230px] text-center text-[13px] leading-snug text-muted">
-            Budget Line greets you, then you name a place and ask. Voice works the same with motion off.
+            Ask out loud about any covered place. Voice works the same with motion off.
           </span>
         </div>
         <div>

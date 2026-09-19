@@ -48,7 +48,7 @@ export function StateView({ data, view, micState, onMic }: Props) {
         </div>
         <div className="rounded-[18px] bg-card p-5 shadow-card">
           <span className="eyebrow">Approved for 2026</span>
-          <p data-num className="mt-1 font-display text-[26px] font-extrabold leading-none tracking-[-0.04em]">
+          <p data-num className="mt-1 break-all font-display font-extrabold leading-none tracking-[-0.04em]" style={{ fontSize: "clamp(18px, 1.55vw, 24px)" }}>
             {niger.figures?.display}
           </p>
           <p className="mt-1 text-[11px] font-bold uppercase tracking-[0.08em] text-marigold-text">{niger.figures?.plain}</p>
@@ -63,7 +63,7 @@ export function StateView({ data, view, micState, onMic }: Props) {
           <MicButton state={micState} onPress={onMic} size={140} />
           <span className="font-display text-[20px] font-bold">Tap to talk</span>
           <span className="max-w-[230px] text-center text-[13px] leading-snug text-muted">
-            Budget Line greets you, then you name a local government and ask. {view === "map" ? "Or pick one from the cluster." : "Or pick one from the list."}
+            Ask out loud about any local government in {niger.name} State. {view === "map" ? "Or pick one from the cluster." : "Or pick one from the list."}
           </span>
         </div>
         <p className="mt-auto hidden border-t border-hairline pt-4 text-[12px] leading-snug text-muted lg:block">
