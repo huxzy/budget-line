@@ -152,16 +152,32 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
         problem is on Vapi&apos;s side; if blue is wrong too, it is the mic or the room.
       </p>
       <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-        <button type="button" onClick={toggle} disabled={status === "unavailable"} style={{ padding: "8px 14px", fontWeight: 700 }}>
-          {inCall ? "End call" : "Start call"}
+        <button
+          type="button"
+          onClick={toggle}
+          disabled={status === "unavailable"}
+          style={{
+            padding: "10px 18px",
+            fontWeight: 700,
+            fontSize: 15,
+            color: "#fff",
+            background: inCall ? "#b91c1c" : "#1d4ed8",
+            border: "none",
+            borderRadius: 8,
+            cursor: status === "unavailable" ? "not-allowed" : "pointer",
+            opacity: status === "unavailable" ? 0.5 : 1,
+          }}
+        >
+          {inCall ? "■ End call" : "● Start call"}
         </button>
+        {status === "unavailable" && <span style={{ color: "#b91c1c" }}>No NEXT_PUBLIC_VAPI_PUBLIC_KEY on this server — voice cannot start.</span>}
         <span>
           status: <b>{status}</b> · browser recogniser: <b>{browserSr}</b> · transcriber: <b>{transcriberName(config)}</b>
         </span>
         <label style={{ marginLeft: "auto" }}>
           <input type="checkbox" checked={showRaw} onChange={(e) => setShowRaw(e.target.checked)} /> show raw Vapi messages
         </label>
-        <button type="button" onClick={() => navigator.clipboard.writeText(lines.filter((l) => l.kind !== "raw").map((l) => `${stamp(t0.current, l.t)} ${l.kind.padEnd(16)} ${l.text}`).join("\n"))}>
+        <button type="button" style={{ padding: "6px 12px", border: "1px solid #999", borderRadius: 6, background: "#fff", cursor: "pointer" }} onClick={() => navigator.clipboard.writeText(lines.filter((l) => l.kind !== "raw").map((l) => `${stamp(t0.current, l.t)} ${l.kind.padEnd(16)} ${l.text}`).join("\n"))}>
           copy log
         </button>
       </div>
