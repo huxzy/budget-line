@@ -31,3 +31,11 @@ JSON
 )
 q "17. Vapi envelope round-trip"               projects "$ENVELOPE" '{toolCallId: .results[0].toolCallId, name: .results[0].name, result: (.results[0].result | fromjson | {found, lga, first: .projects[0].display, page: .projects[0].page})}'
 q "18. Garbage body"                           projects 'not json' '{found, reason}'
+# Cross-state resolution — eight states live, no state named
+q "19. Jos North, no state → Plateau"          projects '{"lga":"Jos North","limit":1}' '{found, state, lga}'
+q "20. Bida, no state → Niger, not Borno Abadam" projects '{"lga":"Bida","unspent_only":true,"limit":1}' '{found, state, lga, total}'
+q "21. Onitsha (Anambra, no rows) must not become Ebonyi Onicha" projects '{"lga":"Onitsha"}' '{found, reason, nearest: [.nearest[].lga]}'
+q "22. Aba (Abia, pending) must not become Borno Abadam" projects '{"lga":"Aba"}' '{found, reason, nearest: [.nearest[].lga]}'
+q "23. Kaduna health → not_live, names what is covered" projects '{"state":"Kaduna","lga":"Kaduna North","sector":"health"}' '{found, reason, covered: [.covered[].name]}'
+q "24. state:\"any\" is treated as no state"     projects '{"state":"any","lga":"Abeokuta","limit":1}' '{found, state, lga}'
+q "25. Isa (Sokoto) not Bauchi Misau"           projects '{"lga":"Isa","limit":1}' '{found, state, lga}'

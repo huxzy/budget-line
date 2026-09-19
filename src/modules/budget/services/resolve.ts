@@ -23,7 +23,19 @@ function cleanLga(input: string) {
 }
 
 /** A match at or under this score is accepted as the LGA the person meant. */
-const MATCH = 0.32;
+const MATCH = 0.25;
+
+/**
+ * A fuzzy hit must also be the right shape: about the same length as the
+ * name, or exactly one of its words ("Jos" → JOS EAST, "Sokoto" → SOKOTO
+ * NORTH). Without this, "Aba" scores as ABADAM and "Isa" as MISAU.
+ */
+function plausible(query: string, name: string): boolean {
+  const q = query.toUpperCase().replace(/[^A-Z ]/g, "").trim();
+  if (!q) return false;
+  if (name.split(/[\s/-]+/).includes(q)) return true;
+  return Math.abs(q.replace(/\s/g, "").length - name.replace(/\s/g, "").length) <= 2;
+}
 
 const lgaIndexes = new Map<string, Fuse<LgaMatch>>();
 
@@ -44,11 +56,13 @@ function lgaIndex(slug: string) {
 export function resolveLga(slug: string, input: string): LgaResolution {
   const query = cleanLga(input ?? "");
   const alias = PLACE_ALIASES[query.toLowerCase()];
-  const results = query ? lgaIndex(slug).search(alias ?? query) : [];
-  if (results.length && (results[0].score ?? 1) <= MATCH) {
-    return { found: true, match: results[0].item, score: results[0].score ?? 0 };
+  const term = alias ?? query;
+  const results = query ? lgaIndex(slug).search(term) : [];
+  const best = results.find((r) => (r.score ?? 1) <= MATCH && plausible(term, r.item.lga));
+  if (best) {
+    return { found: true, match: best.item, score: best.score ?? 0 };
   }
-  return { found: false, query: input, nearest: results.slice(0, 3).map((r) => r.item) };
+  return { found: false, query: input, nearest: results.slice(0, 3).map((r) => ({ ...r.item, score: r.score })) };
 }
 
 // ---- states ----------------------------------------------------------------

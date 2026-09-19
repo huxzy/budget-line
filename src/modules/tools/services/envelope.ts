@@ -89,8 +89,14 @@ export type StateResolution =
  * Resolve a spoken state name. With nothing given, the first live state is
  * used; handlers that take an LGA search every live state instead.
  */
+/** Values the model may send when it means "no state". */
+export function stateQuery(input: unknown): string {
+  const q = str(input).trim();
+  return ["any", "none", "all", "null", "undefined"].includes(q.toLowerCase()) ? "" : q;
+}
+
 export function requireLiveState(input: unknown): StateResolution {
-  const query = str(input);
+  const query = stateQuery(input);
   const state = query ? resolveState(query) : (liveStates()[0] ?? getState("niger"));
   if (!state) return { ok: false, payload: { found: false, reason: "unknown_state", query, covered: liveStates() } };
   if (state.status !== "live") {

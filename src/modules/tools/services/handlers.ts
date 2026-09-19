@@ -14,7 +14,7 @@ import {
   resolveState,
 } from "@/modules/budget/server";
 import type { ToolHandler } from "../types";
-import { bool, int, liveStates, requireLiveState, str } from "./envelope";
+import { bool, int, liveStates, requireLiveState, stateQuery, str } from "./envelope";
 
 function placeName(lgaLabel: string) {
   return lgaLabel.replace(/ LGA$/, "");
@@ -26,7 +26,7 @@ function placeName(lgaLabel: string) {
  * Borno's "Abadam" just because Borno comes first.
  */
 function findLga(stateInput: unknown, lgaInput: string) {
-  if (str(stateInput)) {
+  if (stateQuery(stateInput)) {
     const st = requireLiveState(stateInput);
     if (!st.ok) return st;
     return { ok: true as const, state: st.state, lga: resolveLga(st.state.slug, lgaInput) };
@@ -36,7 +36,10 @@ function findLga(stateInput: unknown, lgaInput: string) {
   const hits = tries.filter((t) => t.lga.found).sort((a, b) => (a.lga.found && b.lga.found ? a.lga.score - b.lga.score : 0));
   if (hits.length) return { ok: true as const, ...hits[0] };
   // No state has it: report the miss against the first state, with the nearest names from all of them.
-  const nearest = tries.flatMap((t) => (t.lga.found ? [] : t.lga.nearest)).slice(0, 3);
+  const nearest = tries
+    .flatMap((t) => (t.lga.found ? [] : t.lga.nearest))
+    .sort((a, b) => (a.score ?? 1) - (b.score ?? 1))
+    .slice(0, 3);
   return { ok: true as const, state: states[0], lga: { found: false as const, query: lgaInput, nearest } };
 }
 
@@ -95,7 +98,7 @@ export const stateCoverage: ToolHandler = (args) => {
   const states = getStates();
   const live = states.filter((s) => s.status === "live");
   const pending = states.filter((s) => s.status === "pending");
-  const query = str(args.state);
+  const query = stateQuery(args.state);
 
   if (!query) {
     return { found: true, live, pendingCount: pending.length, pending: pending.map((s) => s.name) };

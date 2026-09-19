@@ -92,6 +92,16 @@ bash scripts/smoke-api.sh   # 18 curl questions against the four tool endpoints
 npx tsx scripts/dump-assistant.ts [--prompt]   # the assistant config as sent to Vapi
 ```
 
+## About `public/pages` (79 MB)
+
+`public/pages/<state>-<year>/NNN.webp` are the pre-rendered pages of each
+state's approved budget PDF — only the pages that carry capital-project rows
+(258 pages across eight states, ~1600px wide). They are committed on purpose:
+the source-verification screen shows the actual page with the cited row
+highlighted, and a clean clone must be able to do that without the PDFs
+(360 MB, not in the repo) or a render step. `npm run pages` regenerates them
+from the PDFs when a state is added.
+
 ## How it is built
 
 Next.js App Router, TypeScript, Tailwind. No database: per-state JSON loaded

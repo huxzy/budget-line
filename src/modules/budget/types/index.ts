@@ -102,7 +102,7 @@ export type LgaSummary = {
 
 export type Lang = "en" | "ha";
 
-export type LgaMatch = { lga: string; lgaLabel: string; projects: number };
+export type LgaMatch = { lga: string; lgaLabel: string; projects: number; score?: number };
 
 export type LgaResolution =
   | { found: true; match: LgaMatch; score: number }
