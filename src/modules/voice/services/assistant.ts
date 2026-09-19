@@ -39,20 +39,18 @@ export function publicBaseUrl(): string {
 
 /** Every live state's local governments, plus the towns the resolver knows, for the transcriber. */
 /**
- * Keyterms for Deepgram. Vapi's Deepgram path fails outright with all ~180
- * live place names, so this is capped: every state name first, then the local
- * governments of the state the caller is looking at (or the first live state
- * on the Nigeria view). Lists of 40 are known to work; no state has more
- * than 27 local governments in the data.
+ * Keyterms for Deepgram. More is worse: with 120 place names the transcriber
+ * returned nonsense for a plain sentence, and Vapi fails outright at 180. So
+ * the list is the state names plus the local governments of the state the
+ * caller is looking at (at most 27), and on the Nigeria view the state names
+ * alone. Lists of that size were the ones that heard "Bosso" and "Bida".
  */
-const KEYTERM_CAP = 40;
-
 function placeNames(stateSlug?: string): string[] {
   const live = getStates().filter((s) => s.status === "live");
   const states = live.map((s) => s.name);
-  const focus = live.find((s) => s.slug === stateSlug) ?? live[0];
+  const focus = live.find((s) => s.slug === stateSlug);
   const lgas = focus ? getPlaces(focus.slug).map((l) => l.lgaLabel.replace(/ LGA$/, "")) : [];
-  return [...new Set([...states, "Minna", ...lgas])].slice(0, KEYTERM_CAP);
+  return [...new Set([...states, "Minna", ...lgas])];
 }
 
 function readPrompt(file: string): string {
