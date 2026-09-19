@@ -35,6 +35,8 @@ export type CallContext = {
   lgaLabel?: string | null;
   /** The state the caller is looking at; absent on the Nigeria view. */
   state?: { slug: string; name: string; document: string; pages?: number; projects?: number } | null;
+  /** Troubleshooting only: replace the assistant's transcriber for this call. */
+  transcriber?: Record<string, unknown>;
 };
 
 /** What the prompt's variables are filled from when no state is chosen. */

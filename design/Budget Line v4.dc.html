@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #E9DCCD; font-family: 'Figtree', sans-serif; font-optical-sizing: none; font-variation-settings: 'opsz' 14; }
+  a { color: #A5520B; text-decoration: none; }
+  a:hover { color: #241611; text-decoration: underline; }
+  @keyframes bl-ring { 0% { transform: scale(1); opacity: 0.5; } 70% { transform: scale(1.55); opacity: 0; } 100% { transform: scale(1.55); opacity: 0; } }
+  @keyframes bl-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+  @keyframes bl-wave { 0%, 100% { transform: scaleY(0.28); } 50% { transform: scaleY(1); } }
+  @keyframes bl-caret { 0%, 45% { opacity: 1; } 55%, 100% { opacity: 0; } }
+  @keyframes bl-cardin { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes bl-shimmer { 0% { background-position: -240px 0; } 100% { background-position: 240px 0; } }
+</style>
+</helmet>
+
+<section style="padding: 56px 56px 40px; display: flex; flex-direction: column; gap: 26px;">
+  <div style="display: flex; align-items: center; gap: 14px;">
+    <span id="4a" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 13px; color: #FFF4E8; background: #3A1F17; padding: 5px 11px; border-radius: 999px;">4a</span>
+    <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #6B564D;">Hero · desktop mid-call, a result arriving (1440 × 900)</span>
+  </div>
+
+  <div style="width: 1440px; height: 900px; background: #FFF4E8; border-radius: 28px; overflow: hidden; color: #241611; display: flex; flex-direction: column; box-shadow: 0 34px 70px -34px rgba(58,31,23,0.55);">
+    <div style="padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #F1E2D3;">
+      <div style="display: flex; align-items: center; gap: 28px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 14px; height: 14px; border-radius: 5px; background: #F2911F;"></span>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.015em;">Budget Line</span>
+        </div>
+        <div style="display: flex; gap: 22px; font-size: 15px; font-weight: 600;">
+          <span style="color: #241611; border-bottom: 2px solid #3A1F17; padding-bottom: 2px;">Ask</span>
+          <span style="color: #6B564D;">Browse</span>
+          <span style="color: #6B564D;">Saved</span>
+          <span style="color: #6B564D;">Phone access</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="min-height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Bida LGA <span style="color: #7A6355;">▾</span></span>
+        <span style="min-height: 44px; display: flex; align-items: center; gap: 9px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Hausa <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 3px 7px; border-radius: 5px; background: #F1E2D3; color: #5C4237;">LIVE</span></span>
+      </div>
+    </div>
+
+    <div style="flex: 1; display: grid; grid-template-columns: 468px minmax(0, 1fr); overflow: hidden;">
+      <div style="background: #3A1F17; color: #FFF4E8; padding: 34px 34px 30px; display: flex; flex-direction: column; gap: 26px; overflow: hidden;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 22px;">
+          <div style="position: relative; display: flex; align-items: center; justify-content: center; width: 100%;">
+            <span style="position: absolute; width: 176px; height: 176px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.4s ease-out infinite;"></span>
+            <span style="position: absolute; width: 176px; height: 176px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.4s ease-out infinite; animation-delay: 1.2s;"></span>
+            <div style="position: relative; width: 152px; height: 152px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center; animation: bl-breathe 3.2s ease-in-out infinite; box-shadow: 0 22px 44px -18px rgba(0,0,0,0.5);">
+              <span style="position: relative; display: block; width: 39.68px; height: 64px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 21.76px; height: 33.28px; border-radius: 10.88px; background: #3A1F17;"></span><span style="position: absolute; top: 23.04px; left: 0; width: 39.68px; height: 19.2px; box-sizing: border-box; border: 4.8px solid #3A1F17; border-top: 0; border-radius: 0 0 21.76px 21.76px;"></span><span style="position: absolute; top: 43.52px; left: 50%; transform: translateX(-50%); width: 5.44px; height: 12.8px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 26.88px; height: 5.44px; border-radius: 999px; background: #3A1F17;"></span></span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 6px; height: 64px;">
+            <span style="width: 6px; height: 24px; border-radius: 4px; background: rgba(255,244,232,0.35); animation: bl-wave 1.1s ease-in-out infinite; animation-delay: -0.9s;"></span>
+            <span style="width: 6px; height: 40px; border-radius: 4px; background: rgba(255,244,232,0.5); animation: bl-wave 1.1s ease-in-out infinite; animation-delay: -0.75s;"></span>
+            <span style="width: 6px; height: 58px; border-radius: 4px; background: rgba(255,244,232,0.72); animation: bl-wave 1.1s ease-in-out infinite; animation-delay: -0.55s;"></span>
+            <span style="width: 6px; height: 44px; border-radius: 4px; background: rgba(255,244,232,0.72); animation: bl-wave 1.1s ease-in-out infinite; animation-delay: -0.35s;"></span>
+            <span style="width: 6px; height: 64px; border-radius: 4px; background: #FFF4E8; animation: bl-wave 1.1s ease-in-out infinite; animation-delay: -0.15s;"></span>
+            <span style="width: 6px; height: 36px; border-radius: 4px; background: rgba(255,244,232,0.72); animation: bl-wave 1.1s ease-in-out infinite;"></span>
+            <span style="width: 6px; height: 52px; border-radius: 4px; background: rgba(255,244,232,0.6); animation: bl-wave 1.1s ease-in-out infinite; animation-delay: -0.45s;"></span>
+            <span style="width: 6px; height: 28px; border-radius: 4px; background: rgba(255,244,232,0.45); animation: bl-wave 1.1s ease-in-out infinite; animation-delay: -0.65s;"></span>
+            <span style="width: 6px; height: 20px; border-radius: 4px; background: rgba(255,244,232,0.3); animation: bl-wave 1.1s ease-in-out infinite; animation-delay: -0.85s;"></span>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 7px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.02em;">Listening…</span>
+            <span style="font-size: 14px; color: rgba(255,244,232,0.66);">Speaking Hausa · pause when you're done</span>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="flex: 1; height: 1px; background: rgba(255,244,232,0.18);"></span>
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,244,232,0.5);">This call</span>
+            <span style="flex: 1; height: 1px; background: rgba(255,244,232,0.18);"></span>
+          </div>
+          <div style="background: rgba(255,244,232,0.08); border-radius: 14px; padding: 11px 15px; display: flex; align-items: baseline; gap: 10px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,244,232,0.5); white-space: nowrap;">Turn 1</span>
+            <span style="font-size: 14px; font-weight: 600; color: rgba(255,244,232,0.72);">Bida · 41 projects, ₦37.2bn</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 5px; padding: 0 3px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,244,232,0.62);">You · now</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 27px; letter-spacing: -0.03em; display: flex; align-items: center; gap: 7px;">Health<span style="width: 3px; height: 24px; border-radius: 2px; background: #FFF4E8; animation: bl-caret 1.1s steps(1) infinite;"></span></span>
+          </div>
+        </div>
+
+        <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <div style="display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums;">1,523 projects · ₦783.7bn</span>
+            <span style="font-size: 13px; color: rgba(255,244,232,0.6);">27 local governments · Niger State 2026</span>
+          </div>
+          <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: rgba(255,244,232,0.14); font-size: 14px; font-weight: 600;">End</span>
+        </div>
+      </div>
+
+      <div style="padding: 24px 44px 28px; display: flex; flex-direction: column; gap: 16px; overflow: hidden;">
+        <div style="display: flex; flex-direction: column; gap: 10px; max-width: 720px;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Budget Line is answering</span>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 33px; line-height: 1.16; letter-spacing: -0.035em;">Five health projects. The biggest is a new primary health centre at Dokotza — <span style="font-variant-numeric: tabular-nums;">₦75 million</span> approved this year. Nothing was spent on it last year.<span style="display: inline-block; width: 3px; height: 30px; border-radius: 2px; background: #241611; margin-left: 6px; vertical-align: -4px; animation: bl-caret 1.1s steps(1) infinite;"></span></span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #A5520B;">Just cited</span>
+          <span style="flex: 1; height: 1px; background: #E3CDB8;"></span>
+          <span style="font-size: 14px; font-weight: 600; color: #6B564D;">1 of 5 · more arriving</span>
+        </div>
+
+        <div style="background: #FFFFFF; border-radius: 26px; padding: 22px 24px 18px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 28px; box-shadow: 0 22px 44px -26px rgba(58,31,23,0.6); outline: 2px solid #F2911F; outline-offset: -2px; animation: bl-cardin 460ms cubic-bezier(0.2,0.8,0.2,1) both;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; align-items: center; gap: 9px;">
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 9px; border-radius: 6px; background: #F1E2D3; color: #5C4237;">STATE</span>
+              <span style="font-size: 14px; font-weight: 600; color: #6B564D;">Bida LGA · State House of Assembly</span>
+            </div>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; line-height: 1.16; letter-spacing: -0.03em;">Construction of Additional PHC at Dokotza in Bida</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Approved 2026</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 50px; line-height: 1.02; letter-spacing: -0.045em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 15px; font-weight: 600; color: #7A6355;">75 million naira</span>
+            </div>
+            <div style="margin-top: auto; min-height: 44px; display: flex; align-items: center; gap: 14px; border-top: 1px solid #F1E2D3; padding-top: 14px;">
+              <span style="font-size: 15px; font-weight: 600; color: #A5520B;">Niger State 2026 Approved Budget · page 69</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; color: #A5520B;">→</span>
+              <span style="margin-left: auto; font-size: 14px; font-weight: 600; color: #6B564D;">Share · Follow</span>
+            </div>
+          </div>
+          <div style="background: #FFE9CF; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+              <span style="font-size: 14px; font-weight: 600; color: #5C4237;">2025 approved</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; font-variant-numeric: tabular-nums;">₦75,000,000</span>
+            </div>
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+              <span style="font-size: 15px; font-weight: 700; color: #3A1F17;">2025 spent</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 34px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #A5520B;">₦0</span>
+            </div>
+            <div style="height: 8px; border-radius: 999px; background: #F3D3AC; overflow: hidden;"><span style="display: block; width: 4px; height: 8px; border-radius: 999px; background: #B4590C;"></span></div>
+            <span style="font-size: 14px; line-height: 1.45; color: #5C4237;">Approved last year, none of it spent. Approved again for 2026.</span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
+          <div style="background: #FFFFFF; border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 11px; box-shadow: 0 16px 34px -28px rgba(58,31,23,0.6); animation: bl-cardin 460ms cubic-bezier(0.2,0.8,0.2,1) 140ms both;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 9px; border-radius: 6px; background: #F1E2D3; color: #5C4237;">STATE</span>
+              <span style="font-size: 13px; font-weight: 600; color: #6B564D;">Bida LGA · State House of Assembly</span>
+            </div>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; line-height: 1.2; letter-spacing: -0.025em;">Renovation of Basic Health Center, Masaga, Bida</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.04em; font-variant-numeric: tabular-nums;">₦25,000,000</span><span style="font-size: 14px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">25 million naira</span>
+            <span style="font-size: 14px; font-weight: 600; color: #A5520B;">page 69 →</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 22px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 16px 34px -28px rgba(58,31,23,0.6);">
+            <div style="display: flex; gap: 9px;">
+              <span style="width: 58px; height: 20px; border-radius: 6px; background: #F4E6D8;"></span>
+              <span style="width: 150px; height: 20px; border-radius: 6px; background: #F8EFE5;"></span>
+            </div>
+            <span style="height: 18px; border-radius: 6px; background: linear-gradient(90deg, #F4E6D8 0%, #FBF2E8 50%, #F4E6D8 100%); background-size: 240px 100%; animation: bl-shimmer 1.3s linear infinite;"></span>
+            <span style="height: 18px; width: 64%; border-radius: 6px; background: linear-gradient(90deg, #F4E6D8 0%, #FBF2E8 50%, #F4E6D8 100%); background-size: 240px 100%; animation: bl-shimmer 1.3s linear infinite;"></span>
+            <span style="height: 36px; width: 56%; border-radius: 10px; background: linear-gradient(90deg, #F1E2D3 0%, #FBF2E8 50%, #F1E2D3 100%); background-size: 240px 100%; animation: bl-shimmer 1.3s linear infinite;"></span>
+            <span style="font-size: 13px; font-weight: 600; color: #7A6355;">Result 3 of 5 arriving</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 900px;">The clay rail is the call itself: a 152px mic disc with two offset rings, the live waveform under it, and the caller's word typing in with a marigold caret. Results sit at a 720px reading width on the cream side. The just-cited card carries a marigold hairline, arrives with a 460ms rise, and counts its amount up from zero; the next result is still a skeleton at the exact height it will settle into.</div>
+  <div style="display: flex; align-items: flex-start; gap: 34px; padding-top: 10px;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; width: 200px;">
+        <div style="height: 150px; display: flex; align-items: center; justify-content: center;"><div style="position: relative; width: 104px; height: 104px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 28px -16px rgba(58,31,23,0.55);"><span style="position: relative; display: block; width: 27.28px; height: 44px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 14.96px; height: 22.88px; border-radius: 7.48px; background: #3A1F17;"></span><span style="position: absolute; top: 15.84px; left: 0; width: 27.28px; height: 13.2px; box-sizing: border-box; border: 3.3px solid #3A1F17; border-top: 0; border-radius: 0 0 14.96px 14.96px;"></span><span style="position: absolute; top: 29.92px; left: 50%; transform: translateX(-50%); width: 3.74px; height: 8.8px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 18.48px; height: 3.74px; border-radius: 999px; background: #3A1F17;"></span></span></div></div>
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #3A1F17;">Idle</span>
+        <span style="font-size: 13px; line-height: 1.5; color: #6B564D; text-align: center;">Marigold disc at rest, breathing on a 3.4s loop.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; width: 200px;">
+        <div style="height: 150px; display: flex; align-items: center; justify-content: center;"><div style="position: relative; display: flex; align-items: center; justify-content: center;"><span style="position: absolute; width: 128px; height: 128px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.4s ease-out infinite;"></span><span style="position: absolute; width: 128px; height: 128px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.4s ease-out infinite; animation-delay: 1.2s;"></span><div style="position: relative; width: 104px; height: 104px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center; animation: bl-breathe 3.2s ease-in-out infinite;"><span style="position: relative; display: block; width: 27.28px; height: 44px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 14.96px; height: 22.88px; border-radius: 7.48px; background: #3A1F17;"></span><span style="position: absolute; top: 15.84px; left: 0; width: 27.28px; height: 13.2px; box-sizing: border-box; border: 3.3px solid #3A1F17; border-top: 0; border-radius: 0 0 14.96px 14.96px;"></span><span style="position: absolute; top: 29.92px; left: 50%; transform: translateX(-50%); width: 3.74px; height: 8.8px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 18.48px; height: 3.74px; border-radius: 999px; background: #3A1F17;"></span></span></div></div></div>
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #3A1F17;">Listening</span>
+        <span style="font-size: 13px; line-height: 1.5; color: #6B564D; text-align: center;">Two offset rings expand from the disc edge while the mic level rides the waveform.</span>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; width: 200px;">
+        <div style="height: 150px; display: flex; align-items: center; justify-content: center;"><div style="position: relative; width: 104px; height: 104px; border-radius: 999px; background: #D97A0E; display: flex; align-items: center; justify-content: center; transform: scale(0.94); box-shadow: 0 4px 10px -8px rgba(58,31,23,0.7);"><span style="position: relative; display: block; width: 27.28px; height: 44px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 14.96px; height: 22.88px; border-radius: 7.48px; background: #241611;"></span><span style="position: absolute; top: 15.84px; left: 0; width: 27.28px; height: 13.2px; box-sizing: border-box; border: 3.3px solid #241611; border-top: 0; border-radius: 0 0 14.96px 14.96px;"></span><span style="position: absolute; top: 29.92px; left: 50%; transform: translateX(-50%); width: 3.74px; height: 8.8px; background: #241611;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 18.48px; height: 3.74px; border-radius: 999px; background: #241611;"></span></span></div></div>
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; color: #3A1F17;">Pressed</span>
+        <span style="font-size: 13px; line-height: 1.5; color: #6B564D; text-align: center;">0.94 scale, deeper marigold, shadow drops to 4px. 120ms down, 180ms back.</span>
+      </div>
+  </div>
+</section>
+
+<section style="padding: 16px 56px 40px; display: flex; flex-direction: column; gap: 30px;">
+  <div style="display: flex; align-items: center; gap: 14px;">
+    <span id="4b" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 13px; color: #FFF4E8; background: #3A1F17; padding: 5px 11px; border-radius: 999px;">4b</span>
+    <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #6B564D;">Desktop · every screen, with reflow notes</span>
+    <span style="display: inline-flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 600; color: #6B564D;"><span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 8px; border-radius: 5px; background: #FFF4E8; border: 1.5px dashed #C9A98C; color: #7A6355;">PLANNED</span> marks capability that is designed but not built yet. Everything unmarked works today.</span>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 14px;">
+    <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #3A1F17;">D1 · First run · choose your area, then your language</div>
+    <div style="width: 1440px; height: 820px; background: #FFF4E8; border-radius: 28px; overflow: hidden; color: #241611; display: grid; grid-template-columns: 520px minmax(0, 1fr); box-shadow: 0 30px 60px -36px rgba(58,31,23,0.5);">
+      <div style="background: #3A1F17; color: #FFF4E8; padding: 40px 40px 36px; display: flex; flex-direction: column; gap: 22px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="width: 14px; height: 14px; border-radius: 5px; background: #F2911F;"></span>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px;">Budget Line</span>
+        </div>
+        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 44px; line-height: 1.06; letter-spacing: -0.035em;">What has government budgeted where you live?</div>
+        <div style="font-size: 18px; line-height: 1.5; color: rgba(255,244,232,0.8); max-width: 380px;">Ask out loud in your language. Every figure comes back with the page of the approved budget it was read from.</div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 10px;">
+          <div style="position: relative; display: flex; align-items: center; justify-content: center;">
+            <span style="position: absolute; width: 150px; height: 150px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.6s ease-out infinite;"></span>
+            <div style="position: relative; width: 128px; height: 128px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center; animation: bl-breathe 3.4s ease-in-out infinite;">
+              <span style="position: relative; display: block; width: 32.86px; height: 53px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 18.02px; height: 27.56px; border-radius: 9.01px; background: #3A1F17;"></span><span style="position: absolute; top: 19.08px; left: 0; width: 32.86px; height: 15.9px; box-sizing: border-box; border: 3.97px solid #3A1F17; border-top: 0; border-radius: 0 0 18.02px 18.02px;"></span><span style="position: absolute; top: 36.04px; left: 50%; transform: translateX(-50%); width: 4.51px; height: 10.6px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 22.26px; height: 4.51px; border-radius: 999px; background: #3A1F17;"></span></span>
+            </div>
+          </div>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px;">Tap to talk</span>
+          <span style="font-size: 14px; color: rgba(255,244,232,0.62);">Pick your area first so answers are local</span>
+        </div>
+        <div style="margin-top: auto; display: flex; flex-direction: column; gap: 6px;">
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums;">1,523 projects · ₦783.7bn · 27 LGAs</span>
+          <span style="font-size: 14px; color: rgba(255,244,232,0.6);">Phone and USSD access for people without data is planned, not live yet.</span>
+        </div>
+      </div>
+      <div style="padding: 40px 44px 36px; display: flex; flex-direction: column; gap: 20px; overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="min-height: 40px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #3A1F17; color: #FFF4E8; font-size: 14px; font-weight: 600;">1 · Your area</span>
+          <span style="flex: 1; height: 1.5px; background: #E3CDB8;"></span>
+          <span style="min-height: 40px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 14px; font-weight: 600; color: #6B564D;">2 · Language</span>
+        </div>
+        <div style="min-height: 60px; background: #FFFFFF; border-radius: 18px; padding: 0 20px; display: flex; align-items: center; gap: 12px; box-shadow: 0 12px 26px -20px rgba(58,31,23,0.5);">
+          <span style="width: 15px; height: 15px; border-radius: 999px; border: 2px solid #9A8377;"></span>
+          <span style="font-size: 17px;">Bid<span style="display: inline-block; width: 2px; height: 18px; background: #241611; vertical-align: -3px; margin-left: 2px; animation: bl-caret 1.1s steps(1) infinite;"></span></span>
+          <span style="margin-left: auto; font-size: 14px; font-weight: 600; color: #6B564D;">1 of 27 matches</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 66px; outline: 2px solid #F2911F; outline-offset: -2px;">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: -0.02em;">Bida</span>
+              <span style="font-size: 14px; color: #6B564D; font-variant-numeric: tabular-nums;">41 projects · ₦37.2bn</span>
+            </div>
+            <span style="width: 24px; height: 24px; border-radius: 999px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">✓</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 66px;">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: -0.02em; color: #6B564D;">No other match</span>
+              <span style="font-size: 14px; color: #6B564D;">27 local governments searched</span>
+            </div>
+          </div>
+        </div>
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Suggested for Bida — a Nupe-speaking city</span>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 62px;">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">Nupe · Nupenchizhi</span>
+              <span style="font-size: 14px; color: #6B564D;">Spoken in Bida</span>
+            </div>
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 6px; border: 1.5px dashed #C9A98C; color: #8A6A52;">PLANNED</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 62px; outline: 2px solid #F2911F; outline-offset: -2px;">
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">Hausa</span>
+              <span style="font-size: 14px; color: #6B564D;">Speak and listen</span>
+            </div>
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 6px; background: #F1E2D3; color: #5C4237;">LIVE</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">English</span>
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 6px; background: #F1E2D3; color: #5C4237;">LIVE</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">Nigerian Pidgin</span>
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 6px; background: #F1E2D3; color: #5C4237;">LIVE</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.55); border-radius: 18px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #6B564D;">Yorùbá</span>
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 6px; border: 1.5px dashed #C9A98C; color: #8A6A52;">PLANNED</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.55); border-radius: 18px; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; color: #6B564D;">Igbo</span>
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 6px; border: 1.5px dashed #C9A98C; color: #8A6A52;">PLANNED</span>
+          </div>
+        </div>
+        <div style="margin-top: auto; display: flex; align-items: center; gap: 16px;">
+          <div style="min-height: 64px; padding: 0 30px; border-radius: 22px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px;">Continue · Bida in Hausa</div>
+          <span style="font-size: 14px; color: #6B564D;">Saved in this browser. Change it any time.</span>
+        </div>
+      </div>
+    </div>
+    <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 900px;"><strong style="color: #241611;">Reflow to 360–430px:</strong> the clay panel becomes the top third with the mic disc at 96px, the two steps become two screens, and the language grid collapses to one column keeping the three tiers in order.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 14px;">
+    <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #3A1F17;">D2 · Answer · settled, five results at reading width</div>
+    <div style="width: 1440px; height: 790px; background: #FFF4E8; border-radius: 28px; overflow: hidden; color: #241611; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(58,31,23,0.5);">
+      <div style="padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #F1E2D3;">
+        <div style="display: flex; align-items: center; gap: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="width: 14px; height: 14px; border-radius: 5px; background: #F2911F;"></span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px;">Budget Line</span>
+          </div>
+          <div style="display: flex; gap: 22px; font-size: 15px; font-weight: 600;">
+            <span style="color: #241611; border-bottom: 2px solid #3A1F17; padding-bottom: 2px;">Ask</span>
+            <span style="color: #6B564D;">Browse</span>
+            <span style="color: #6B564D;">Saved</span>
+            <span style="color: #6B564D;">Phone access</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="min-height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Bida LGA <span style="color: #7A6355;">▾</span></span>
+          <span style="min-height: 44px; display: flex; align-items: center; gap: 9px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Hausa <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; padding: 3px 7px; border-radius: 5px; background: #F1E2D3; color: #5C4237;">LIVE</span></span>
+        </div>
+      </div>
+      <div style="flex: 1; display: grid; grid-template-columns: 420px minmax(0, 1fr); overflow: hidden;">
+        <div style="padding: 30px 30px 32px; border-right: 1px solid #F1E2D3; display: flex; flex-direction: column; gap: 18px; overflow: hidden;">
+          <div style="position: relative; display: flex; justify-content: center;">
+            <span style="position: absolute; top: 50%; left: 50%; width: 156px; height: 156px; margin: -78px 0 0 -78px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.6s ease-out infinite;"></span>
+            <div style="position: relative; width: 100%; min-height: 104px; border-radius: 28px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; justify-content: center; gap: 16px; animation: bl-breathe 3.4s ease-in-out infinite; box-shadow: 0 22px 40px -20px rgba(58,31,23,0.7);">
+              <span style="width: 54px; height: 54px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center;"><span style="position: relative; display: block; width: 21.08px; height: 34px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 11.56px; height: 17.68px; border-radius: 5.78px; background: #3A1F17;"></span><span style="position: absolute; top: 12.24px; left: 0; width: 21.08px; height: 10.2px; box-sizing: border-box; border: 2.55px solid #3A1F17; border-top: 0; border-radius: 0 0 11.56px 11.56px;"></span><span style="position: absolute; top: 23.12px; left: 50%; transform: translateX(-50%); width: 2.89px; height: 6.8px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 14.28px; height: 2.89px; border-radius: 999px; background: #3A1F17;"></span></span></span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; letter-spacing: -0.02em;">Ask again</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="flex: 1; height: 1px; background: #E3CDB8;"></span>
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Conversation</span>
+            <span style="flex: 1; height: 1px; background: #E3CDB8;"></span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
+            <div style="background: rgba(255,255,255,0.6); border-radius: 14px; padding: 11px 15px; display: flex; align-items: baseline; gap: 10px;">
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7A6355; white-space: nowrap;">Turn 1</span>
+              <span style="font-size: 14px; font-weight: 600; color: #6B564D;">Bida · 41 projects, ₦37.2bn</span>
+            </div>
+            <div style="background: #FFFFFF; border-radius: 14px; padding: 12px 15px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 10px 22px -22px rgba(58,31,23,0.5);">
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7A6355;">Turn 2 · now</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -0.02em;">Health</span>
+              <span style="font-size: 14px; color: #6B564D;">Five projects · ₦180,000,000</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 9px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Try next</span>
+            <span style="min-height: 48px; display: flex; align-items: center; padding: 0 16px; border-radius: 14px; background: #FFFFFF; font-size: 15px; font-weight: 600;">What wasn't spent last year?</span>
+            <span style="min-height: 48px; display: flex; align-items: center; padding: 0 16px; border-radius: 14px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Biggest project in Bida</span>
+          </div>
+          <div style="margin-top: auto; background: #FFFFFF; border-radius: 18px; padding: 15px 17px; display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums;">1,523 projects · ₦783.7bn</span>
+            <span style="font-size: 13px; color: #6B564D;">27 local governments · Niger State 2026</span>
+          </div>
+        </div>
+        <div style="padding: 28px 44px 32px; display: flex; flex-direction: column; gap: 16px; overflow: hidden;">
+          <div style="display: flex; flex-direction: column; gap: 9px; max-width: 760px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Budget Line said</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 29px; line-height: 1.18; letter-spacing: -0.03em;">Five health projects. The biggest is a new primary health centre at Dokotza — ₦75 million approved this year. Nothing was spent on it last year.</span>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <span style="font-size: 14px; font-weight: 600; color: #6B564D;">5 results · health · Bida LGA</span>
+            <div style="display: flex; gap: 10px;">
+              <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #3A1F17; color: #FFF4E8; font-size: 14px; font-weight: 600;">Highest amount</span>
+              <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 14px; font-weight: 600;">Unspent only</span>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 18px; align-items: start;">
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="background: #FFFFFF; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 13px; box-shadow: 0 18px 38px -26px rgba(58,31,23,0.6);">
+                <div style="display: flex; align-items: center; gap: 9px;">
+                  <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 9px; border-radius: 6px; background: #F1E2D3; color: #5C4237;">STATE</span>
+                  <span style="font-size: 14px; font-weight: 600; color: #6B564D;">Bida LGA · State House of Assembly</span>
+                </div>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; line-height: 1.18; letter-spacing: -0.03em;">Construction of Additional PHC at Dokotza in Bida</span>
+                <div style="display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 22px; align-items: end;">
+                  <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Approved 2026</span>
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 42px; line-height: 1.02; letter-spacing: -0.045em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 15px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">75 million naira</span>
+                  </div>
+                  <div style="background: #FFE9CF; border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                      <span style="font-size: 13px; font-weight: 600; color: #5C4237;">2025 approved</span>
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums;">₦75,000,000</span>
+                    </div>
+                    <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                      <span style="font-size: 14px; font-weight: 700;">2025 spent</span>
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 24px; font-variant-numeric: tabular-nums; color: #A5520B;">₦0</span>
+                    </div>
+                    <div style="height: 7px; border-radius: 999px; background: #F3D3AC; overflow: hidden;"><span style="display: block; width: 4px; height: 7px; background: #B4590C;"></span></div>
+                  </div>
+                </div>
+                <div style="min-height: 44px; display: flex; align-items: center; gap: 14px; border-top: 1px solid #F1E2D3; padding-top: 12px;">
+                  <span style="font-size: 15px; font-weight: 600; color: #A5520B;">Niger State 2026 Approved Budget · page 69</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; color: #A5520B;">→</span>
+                  <span style="margin-left: auto; font-size: 14px; font-weight: 600; color: #6B564D;">Share · Follow</span>
+                </div>
+              </div>
+              <div style="background: #FFFFFF; border-radius: 22px; padding: 17px 20px; display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 20px; align-items: center; box-shadow: 0 16px 34px -28px rgba(58,31,23,0.6);">
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: -0.025em; line-height: 1.2;">Renovation of Basic Health Center, Masaga, Bida</span>
+                  <span style="font-size: 14px; color: #6B564D;">State House of Assembly · STATE · page 69</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1px; align-items: flex-end;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; text-align: right;">₦25,000,000</span><span style="font-size: 14px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">25 million naira</span></div>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="background: #FFFFFF; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 16px 34px -28px rgba(58,31,23,0.6);">
+                <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Bida LGA, 2026</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 30px; letter-spacing: -0.04em; font-variant-numeric: tabular-nums;">₦37.2bn</span><span style="font-size: 14px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">37.2 billion naira</span>
+                <span style="font-size: 14px; line-height: 1.45; color: #6B564D;">Across 41 capital projects, of which five are health. Sorted by approved amount.</span>
+              </div>
+              <div style="border: 1.5px solid #E3CDB8; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 9px;">
+                <span style="font-size: 15px; font-weight: 700;">Where these figures come from</span>
+                <span style="font-size: 14px; line-height: 1.5; color: #6B564D;">Niger State 2026 Approved Budget, published 8 January. 399 pages, read line by line, reconciling to the official state total.</span>
+                <span style="font-size: 14px; font-weight: 600; color: #A5520B;">Open the document →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 900px;"><strong style="color: #241611;">Reflow:</strong> the rail's talk button moves to a pinned bottom bar within thumb reach, the conversation collapses into folded one-line turns above the answer, the sector summary and provenance panels move below the results, and every two-column card becomes a stack with the amount under the project name.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 14px;">
+    <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #3A1F17;">D3 · Source verification · the page and the line, side by side</div>
+    <div style="width: 1440px; height: 880px; background: #241814; border-radius: 28px; overflow: hidden; color: #FBEFE4; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(36,24,20,0.6);">
+      <div style="padding: 18px 36px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #33241E;">
+        <div style="display: flex; align-items: center; gap: 18px;">
+          <span style="min-height: 44px; display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700;">←</span> Back to the answer</span>
+          <span style="font-size: 15px; color: #B39C90;">Niger State 2026 Approved Budget · page 69 of 399</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #33241E; font-size: 14px; font-weight: 600;">Text only</span>
+          <span style="min-height: 44px; display: flex; align-items: center; padding: 0 18px; border-radius: 999px; background: #FBEFE4; color: #241611; font-size: 14px; font-weight: 700;">Download page</span>
+        </div>
+      </div>
+      <div style="flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 460px; overflow: hidden;">
+        <div style="padding: 24px 28px 26px 36px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <div style="display: flex; gap: 9px;">
+              <span style="min-height: 40px; display: flex; align-items: center; padding: 0 14px; border-radius: 999px; background: #33241E; font-size: 14px; font-weight: 600;">Fit width</span>
+              <span style="min-height: 40px; display: flex; align-items: center; padding: 0 14px; border-radius: 999px; background: #33241E; font-size: 14px; font-weight: 600;">Jump to line 41</span>
+              <span style="min-height: 40px; display: flex; align-items: center; padding: 0 14px; border-radius: 999px; background: #33241E; font-size: 14px; font-weight: 600;">Page 68 · 70</span>
+            </div>
+            <span style="font-size: 13px; color: #B39C90; font-variant-numeric: tabular-nums;">Cited region loads first on a slow connection</span>
+          </div>
+          <div style="flex: 1; background: #FBF6EF; border-radius: 12px; padding: 26px 32px; color: #241611; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid #DCD2C6; padding-bottom: 10px;">
+              <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6B564D;">Niger State of Nigeria · 2026 Approved Budget · Capital Expenditure</span>
+              <span style="font-size: 12px; font-weight: 700; color: #6B564D; font-variant-numeric: tabular-nums;">69</span>
+            </div>
+            <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6B564D;">Head 32100100101 · State House of Assembly</span>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #6B564D; border-bottom: 1px solid #DCD2C6; padding-bottom: 7px;">
+              <span>Project</span><span style="text-align: right;">2026 approved</span><span style="text-align: right;">2025 approved</span><span style="text-align: right;">2025 actual</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center;"><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span></div>
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center;"><span style="height: 8px; width: 82%; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span></div>
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center;"><span style="height: 8px; width: 68%; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span></div>
+            </div>
+            <div style="background: #FFE0A8; border-radius: 8px; padding: 16px 18px; display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center; outline: 2px solid #E08A14; outline-offset: -2px;">
+              <div style="display: flex; flex-direction: column; gap: 3px;">
+                <span style="font-size: 16px; font-weight: 600; line-height: 1.3;">Construction of Additional PHC at Dokotza in Bida</span>
+                <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6B564D;">Line 41</span>
+              </div>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums; text-align: right;">75,000,000.00</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums; text-align: right;">75,000,000.00</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 16px; font-variant-numeric: tabular-nums; text-align: right;">0.00</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center;"><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span></div>
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center;"><span style="height: 8px; width: 74%; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span><span style="height: 8px; border-radius: 3px; background: #E4DACD;"></span></div>
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center;"><span style="height: 8px; border-radius: 3px; background: #EDE5DA;"></span><span style="height: 8px; border-radius: 3px; background: #EDE5DA;"></span><span style="height: 8px; border-radius: 3px; background: #EDE5DA;"></span><span style="height: 8px; border-radius: 3px; background: #EDE5DA;"></span></div>
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center;"><span style="height: 8px; width: 60%; border-radius: 3px; background: #EDE5DA;"></span><span style="height: 8px; border-radius: 3px; background: #EDE5DA;"></span><span style="height: 8px; border-radius: 3px; background: #EDE5DA;"></span><span style="height: 8px; border-radius: 3px; background: #EDE5DA;"></span></div>
+              <div style="display: grid; grid-template-columns: minmax(0, 1fr) 150px 150px 150px; gap: 16px; align-items: center;"><span style="height: 8px; border-radius: 3px; background: #F2ECE3;"></span><span style="height: 8px; border-radius: 3px; background: #F2ECE3;"></span><span style="height: 8px; border-radius: 3px; background: #F2ECE3;"></span><span style="height: 8px; border-radius: 3px; background: #F2ECE3;"></span></div>
+            </div>
+            <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid #DCD2C6; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 12px; color: #6B564D;">Rows outside the cited region render as layout until the rest of the page arrives.</span>
+              <span style="font-size: 12px; font-weight: 700; color: #A5520B;">Load rest of page</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 24px 36px 26px 28px; border-left: 1px solid #33241E; display: flex; flex-direction: column; gap: 16px; overflow: hidden;">
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #B39C90;">What the agent said</span>
+          <div style="background: #33241E; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; align-items: center; gap: 9px;">
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 9px; border-radius: 6px; background: #4A362D; color: #E8D8CB;">STATE</span>
+              <span style="font-size: 13px; font-weight: 600; color: #B39C90;">Bida LGA · State House of Assembly</span>
+            </div>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 23px; line-height: 1.2; letter-spacing: -0.025em;">Construction of Additional PHC at Dokotza in Bida</span>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #B39C90;">Approved 2026</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -0.04em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 15px; font-weight: 600; color: #B39C90; font-variant-numeric: tabular-nums;">75 million naira</span>
+            </div>
+            <div style="background: #4A362D; border-radius: 16px; padding: 15px 17px; display: flex; flex-direction: column; gap: 9px;">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                <span style="font-size: 14px; color: #E8D8CB;">2025 approved</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums;">₦75,000,000</span>
+              </div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                <span style="font-size: 14px; font-weight: 700;">2025 spent</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #FFA834;">₦0</span>
+              </div>
+              <div style="height: 7px; border-radius: 999px; background: #6B5348; overflow: hidden;"><span style="display: block; width: 4px; height: 7px; background: #FFA834;"></span></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 11px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #B39C90;">How it was matched</span>
+            <div style="display: flex; gap: 11px; align-items: flex-start;"><span style="width: 24px; height: 24px; border-radius: 999px; background: #33241E; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex: none;">1</span><span style="font-size: 14px; line-height: 1.45; color: #D8C4B6;">Page 69, line 41, head 32100100101 — highlighted at left.</span></div>
+            <div style="display: flex; gap: 11px; align-items: flex-start;"><span style="width: 24px; height: 24px; border-radius: 999px; background: #33241E; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex: none;">2</span><span style="font-size: 14px; line-height: 1.45; color: #D8C4B6;">Figures read from the published PDF, never retyped.</span></div>
+            <div style="display: flex; gap: 11px; align-items: flex-start;"><span style="width: 24px; height: 24px; border-radius: 999px; background: #33241E; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex: none;">3</span><span style="font-size: 14px; line-height: 1.45; color: #D8C4B6;">Sector and state totals reconcile to the official total.</span></div>
+          </div>
+          <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px;">
+            <div style="min-height: 58px; border-radius: 19px; background: #FFA834; color: #241611; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px;">Share this proof</div>
+            <span style="font-size: 13px; color: #B39C90;">Niger State 2026 Approved Budget · 399 pages · published 8 January</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 900px;"><strong style="color: #241611;">Reflow:</strong> with no room for two columns the claim card goes on top as a compact summary and the page becomes a horizontally pannable sheet below it, opening scrolled to line 41 with the highlight centred. "Text only" replaces the render with the extracted row at 4 KB.</div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 14px;">
+    <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #3A1F17;">D4 · Browse your LGA · the ledger, filtered to unspent</div>
+    <div style="width: 1440px; height: 690px; background: #FFF4E8; border-radius: 28px; overflow: hidden; color: #241611; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(58,31,23,0.5);">
+      <div style="padding: 18px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #F1E2D3;">
+        <div style="display: flex; align-items: center; gap: 28px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="width: 14px; height: 14px; border-radius: 5px; background: #F2911F;"></span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px;">Budget Line</span>
+          </div>
+          <div style="display: flex; gap: 22px; font-size: 15px; font-weight: 600;">
+            <span style="color: #6B564D;">Ask</span>
+            <span style="color: #241611; border-bottom: 2px solid #3A1F17; padding-bottom: 2px;">Browse</span>
+            <span style="color: #6B564D;">Saved</span>
+            <span style="color: #6B564D;">Phone access</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="min-height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Bida LGA <span style="color: #7A6355;">▾</span></span>
+          <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Hausa</span>
+        </div>
+      </div>
+      <div style="flex: 1; display: grid; grid-template-columns: 330px minmax(0, 1fr); overflow: hidden;">
+        <div style="padding: 24px 26px 26px; border-right: 1px solid #F1E2D3; display: flex; flex-direction: column; gap: 15px; overflow: hidden;">
+          <div style="display: flex; flex-direction: column; gap: 3px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -0.03em;">Bida LGA</span>
+            <span style="font-size: 15px; color: #6B564D; font-variant-numeric: tabular-nums;">41 projects · ₦37.2bn approved for 2026</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 9px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Filter</span>
+            <div style="min-height: 48px; border-radius: 14px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 15px; font-weight: 600;">Bida LGA <span style="font-variant-numeric: tabular-nums;">41</span></div>
+            <div style="min-height: 48px; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 15px; font-weight: 600; color: #6B564D;">All 27 LGAs <span style="font-variant-numeric: tabular-nums;">1,523</span></div>
+            <div style="min-height: 48px; border-radius: 14px; background: #FFFFFF; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; font-size: 15px; font-weight: 600; color: #6B564D;">Federal tier <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 8px; border-radius: 5px; border: 1.5px dashed #C9A98C; color: #8A6A52; white-space: nowrap;">PLANNED</span></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 9px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Sector</span>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 15px;">
+              <div style="display: flex; align-items: baseline; justify-content: space-between;"><span style="font-weight: 600;">Health</span><span style="color: #6B564D; font-variant-numeric: tabular-nums;">5</span></div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between;"><span style="font-weight: 600;">Roads and works</span><span style="color: #6B564D; font-variant-numeric: tabular-nums;">11</span></div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between;"><span style="font-weight: 600;">Education</span><span style="color: #6B564D; font-variant-numeric: tabular-nums;">8</span></div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between;"><span style="font-weight: 600;">Other</span><span style="color: #6B564D; font-variant-numeric: tabular-nums;">8</span></div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between;"><span style="font-weight: 600;">Agriculture</span><span style="color: #6B564D; font-variant-numeric: tabular-nums;">6</span></div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between;"><span style="font-weight: 600;">Water</span><span style="color: #6B564D; font-variant-numeric: tabular-nums;">3</span></div>
+            </div>
+          </div>
+          <div style="margin-top: auto; position: relative; display: flex; justify-content: center;">
+            <span style="position: absolute; top: 50%; left: 50%; width: 140px; height: 140px; margin: -70px 0 0 -70px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.6s ease-out infinite;"></span>
+            <div style="position: relative; width: 100%; min-height: 88px; border-radius: 24px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; justify-content: center; gap: 13px; animation: bl-breathe 3.4s ease-in-out infinite; box-shadow: 0 20px 38px -22px rgba(58,31,23,0.7);">
+              <span style="width: 46px; height: 46px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center;"><span style="position: relative; display: block; width: 17.98px; height: 29px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 9.86px; height: 15.08px; border-radius: 4.93px; background: #3A1F17;"></span><span style="position: absolute; top: 10.44px; left: 0; width: 17.98px; height: 8.7px; box-sizing: border-box; border: 2.17px solid #3A1F17; border-top: 0; border-radius: 0 0 9.86px 9.86px;"></span><span style="position: absolute; top: 19.72px; left: 50%; transform: translateX(-50%); width: 2.47px; height: 5.8px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 12.18px; height: 2.47px; border-radius: 999px; background: #3A1F17;"></span></span></span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.02em;">Ask instead</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 22px 40px 22px; display: flex; flex-direction: column; gap: 9px; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <span style="font-size: 15px; font-weight: 600; color: #6B564D;">41 projects · sorted by approved amount</span>
+            <div style="display: flex; gap: 10px;">
+              <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #3A1F17; color: #FFF4E8; font-size: 14px; font-weight: 600;">Highest amount</span>
+              <span style="min-height: 44px; display: flex; align-items: center; gap: 9px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; font-size: 14px; font-weight: 600; color: #6B564D;">Export CSV <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 8px; border-radius: 5px; border: 1.5px dashed #C9A98C; color: #8A6A52; white-space: nowrap;">PLANNED</span></span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1.5px solid #E3CDB8; padding-bottom: 8px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.02em;">Health</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 12px 22px; display: grid; grid-template-columns: minmax(0, 1fr) 190px 210px; align-items: center; gap: 20px; box-shadow: 0 12px 26px -26px rgba(58,31,23,0.5);">
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <span style="font-size: 17px; font-weight: 600;">Construction of Additional PHC at Dokotza in Bida</span>
+              <span style="font-size: 14px; color: #6B564D;">State House of Assembly · STATE · page 69</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="height: 6px; width: 62px; border-radius: 999px; background: #F3D3AC; overflow: hidden;"><span style="display: block; width: 3px; height: 6px; background: #B4590C;"></span></span>
+              <span style="font-size: 14px; font-weight: 700; color: #A5520B;">₦0 spent</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1px; align-items: flex-end;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 25px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; text-align: right;">₦75,000,000</span><span style="font-size: 13px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">75 million naira</span></div>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 12px 22px; display: grid; grid-template-columns: minmax(0, 1fr) 190px 210px; align-items: center; gap: 20px; box-shadow: 0 12px 26px -26px rgba(58,31,23,0.5);">
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <span style="font-size: 17px; font-weight: 600;">Renovation of Basic Health Center, Masaga, Bida</span>
+              <span style="font-size: 14px; color: #6B564D;">State House of Assembly · STATE · page 69</span>
+            </div>
+            <span style="font-size: 14px; color: #6B564D;">No 2025 record</span>
+            <div style="display: flex; flex-direction: column; gap: 1px; align-items: flex-end;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 25px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; text-align: right;">₦25,000,000</span><span style="font-size: 13px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">25 million naira</span></div>
+          </div>
+          <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1.5px solid #E3CDB8; padding-bottom: 7px; padding-top: 2px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.02em;">Roads and works</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 18px; padding: 12px 22px; display: grid; grid-template-columns: minmax(0, 1fr) 190px 210px; align-items: center; gap: 20px; box-shadow: 0 12px 26px -26px rgba(58,31,23,0.5);">
+            <div style="display: flex; flex-direction: column; gap: 3px;">
+              <span style="font-size: 17px; font-weight: 600;">Construction of Bida Ring Road (41km)</span>
+              <span style="font-size: 14px; color: #6B564D;">Ministry of Works · STATE · page 81</span>
+            </div>
+            <span style="font-size: 14px; color: #6B564D;">First approved 2026</span>
+            <div style="display: flex; flex-direction: column; gap: 1px; align-items: flex-end;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 25px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; text-align: right;">₦20,000,000,000</span><span style="font-size: 13px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">20 billion naira</span></div>
+          </div>
+          <div style="margin-top: 3px; display: flex; flex-direction: column; gap: 12px;">
+            <div style="min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 18px; border-top: 1.5px solid #E3CDB8; padding-top: 14px;">
+              <span style="font-size: 15px; font-weight: 600; color: #5C4237;">38 more projects in Bida LGA</span>
+              <span style="font-size: 15px; font-weight: 600; color: #5C4237;">Show all →</span>
+            </div>
+            <div style="background: #FFFFFF; border-radius: 18px; padding: 18px 22px; display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 24px; align-items: center; box-shadow: 0 12px 26px -26px rgba(58,31,23,0.5);">
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Where these figures come from</span>
+                <span style="font-size: 15px; line-height: 1.5; color: #5C4237;">Niger State 2026 Approved Budget, published 8 January. 399 pages, read line by line, reconciling to the official state total.</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 2px; text-align: right;">
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums;">₦783,694,704,491</span><span style="font-size: 14px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">about 784 billion naira</span>
+                <span style="font-size: 14px; color: #6B564D; font-variant-numeric: tabular-nums;">1,523 projects · 27 local governments</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 900px;"><strong style="color: #241611;">Reflow:</strong> filters and sectors become a sheet behind two chips at the top, each ledger row stacks to name / amount / unspent marker, and the talk button returns to the pinned bottom bar.</div>
+  </div>
+
+  <div style="display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap;">
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #3A1F17;">D5 · Project detail</div>
+      <div style="width: 940px; height: 782px; background: #FFF4E8; border-radius: 28px; overflow: hidden; color: #241611; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(58,31,23,0.5);">
+        <div style="background: #3A1F17; color: #FFF4E8; padding: 26px 34px 28px; display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+            <span style="min-height: 44px; display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700;">←</span> Health in Bida · 5 results</span>
+            <div style="display: flex; gap: 10px;">
+              <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: rgba(255,244,232,0.14); font-size: 14px; font-weight: 600;">Follow</span>
+              <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: rgba(255,244,232,0.14); font-size: 14px; font-weight: 600;">Share</span>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 9px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 9px; border-radius: 6px; background: rgba(255,244,232,0.16);">STATE</span>
+            <span style="font-size: 14px; font-weight: 600; color: rgba(255,244,232,0.74);">Bida LGA · State House of Assembly</span>
+          </div>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 34px; line-height: 1.12; letter-spacing: -0.035em; max-width: 640px;">Construction of Additional PHC at Dokotza in Bida</span>
+        </div>
+        <div style="flex: 1; padding: 22px 34px 26px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; overflow: hidden;">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="background: #FFFFFF; border-radius: 24px; padding: 22px 24px; display: flex; flex-direction: column; gap: 2px; box-shadow: 0 16px 34px -26px rgba(58,31,23,0.6);">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Approved this year</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 52px; line-height: 1.02; letter-spacing: -0.045em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 15px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">75 million naira</span>
+              <span style="font-size: 14px; color: #6B564D;">Niger State 2026 Approved Budget · capital expenditure</span>
+            </div>
+            <div style="background: #FFE9CF; border-radius: 24px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; gap: 22px;">
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">2025 approved</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 27px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 14px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">75 million naira</span>
+                </div>
+                <span style="width: 1px; background: #F3D3AC;"></span>
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">2025 spent</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 27px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; color: #A5520B;">₦0</span>
+                </div>
+              </div>
+              <div style="height: 8px; border-radius: 999px; background: #F3D3AC; overflow: hidden;"><span style="display: block; width: 4px; height: 8px; background: #B4590C;"></span></div>
+              <span style="font-size: 15px; line-height: 1.5; color: #5C4237; max-width: 520px;">The full ₦75,000,000 was approved for this project in 2025. None of it was spent. It has been approved again for 2026.</span>
+            </div>
+            <div style="background: #FFFFFF; border-radius: 22px; padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; box-shadow: 0 16px 34px -28px rgba(58,31,23,0.6);">
+              <div style="display: flex; flex-direction: column; gap: 3px;">
+                <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Source</span>
+                <span style="font-size: 16px; font-weight: 600; color: #A5520B;">Niger State 2026 Approved Budget, page 69 · line 41</span>
+              </div>
+              <span style="min-height: 48px; display: flex; align-items: center; padding: 0 18px; border-radius: 16px; background: #3A1F17; color: #FFF4E8; font-size: 15px; font-weight: 700;">See the page</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: #FFFFFF; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 16px 34px -28px rgba(58,31,23,0.6);">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">History</span>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;"><span style="font-size: 15px;">2026 approved</span><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">₦75,000,000</span></div>
+              <div style="height: 1px; background: #F1E2D3;"></div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;"><span style="font-size: 15px;">2025 approved</span><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums;">₦75,000,000</span></div>
+              <div style="height: 1px; background: #F1E2D3;"></div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;"><span style="font-size: 15px; font-weight: 700;">2025 spent</span><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15px; font-variant-numeric: tabular-nums; color: #A5520B;">₦0</span></div>
+              
+            </div>
+            <div style="border: 1.5px solid #E3CDB8; border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px;">
+              <span style="font-size: 15px; font-weight: 700;">Ask about this project</span>
+              <span style="font-size: 14px; line-height: 1.45; color: #6B564D;">"Who is the contractor?" · "Has anything been spent this year?"</span>
+            </div>
+            <div style="margin-top: auto; position: relative; display: flex; justify-content: center;">
+              <span style="position: absolute; top: 50%; left: 50%; width: 128px; height: 128px; margin: -64px 0 0 -64px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.6s ease-out infinite;"></span>
+              <div style="position: relative; width: 100%; min-height: 80px; border-radius: 22px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; justify-content: center; gap: 12px; animation: bl-breathe 3.4s ease-in-out infinite; box-shadow: 0 18px 34px -20px rgba(58,31,23,0.7);">
+                <span style="width: 42px; height: 42px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center;"><span style="position: relative; display: block; width: 16.74px; height: 27px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 9.18px; height: 14.04px; border-radius: 4.59px; background: #3A1F17;"></span><span style="position: absolute; top: 9.72px; left: 0; width: 16.74px; height: 8.1px; box-sizing: border-box; border: 2.03px solid #3A1F17; border-top: 0; border-radius: 0 0 9.18px 9.18px;"></span><span style="position: absolute; top: 18.36px; left: 50%; transform: translateX(-50%); width: 2.3px; height: 5.4px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 11.34px; height: 2.3px; border-radius: 999px; background: #3A1F17;"></span></span></span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px;">Ask about this</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 900px;"><strong style="color: #241611;">Reflow:</strong> the clay header keeps the title and tier, the two prior-year stats stay side by side (they are short), history and follow-up drop below the source row, and the talk button pins to the bottom.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #3A1F17;">D6 · No result · honest, not an error</div>
+      <div style="width: 940px; height: 682px; background: #FFF4E8; border-radius: 28px; overflow: hidden; color: #241611; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(58,31,23,0.5);">
+        <div style="padding: 16px 34px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #F1E2D3; font-size: 15px; font-weight: 600;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="width: 13px; height: 13px; border-radius: 4px; background: #F2911F;"></span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px;">Budget Line</span>
+          </div>
+          <span style="color: #6B564D;">Bida LGA · water · Hausa</span>
+        </div>
+        <div style="flex: 1; display: grid; grid-template-columns: 300px minmax(0, 1fr); overflow: hidden;">
+          <div style="padding: 24px 24px 26px; border-right: 1px solid #F1E2D3; display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: rgba(255,255,255,0.6); border-radius: 14px; padding: 11px 15px; display: flex; align-items: baseline; gap: 10px;">
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7A6355; white-space: nowrap;">Turn 1</span>
+              <span style="font-size: 14px; font-weight: 600; color: #6B564D;">Bida · 41 projects</span>
+            </div>
+            <div style="background: #FFFFFF; border-radius: 14px; padding: 12px 15px; display: flex; flex-direction: column; gap: 3px;">
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7A6355;">Turn 2 · now</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.02em;">Borehole in Masaga?</span>
+            </div>
+            <div style="margin-top: auto; position: relative; display: flex; justify-content: center;">
+              <span style="position: absolute; top: 50%; left: 50%; width: 128px; height: 128px; margin: -64px 0 0 -64px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.6s ease-out infinite;"></span>
+              <div style="position: relative; width: 100%; min-height: 84px; border-radius: 22px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; justify-content: center; gap: 12px; animation: bl-breathe 3.4s ease-in-out infinite; box-shadow: 0 18px 34px -20px rgba(58,31,23,0.7);">
+                <span style="width: 44px; height: 44px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center;"><span style="position: relative; display: block; width: 17.36px; height: 28px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 9.52px; height: 14.56px; border-radius: 4.76px; background: #3A1F17;"></span><span style="position: absolute; top: 10.08px; left: 0; width: 17.36px; height: 8.4px; box-sizing: border-box; border: 2.1px solid #3A1F17; border-top: 0; border-radius: 0 0 9.52px 9.52px;"></span><span style="position: absolute; top: 19.04px; left: 50%; transform: translateX(-50%); width: 2.38px; height: 5.6px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 11.76px; height: 2.38px; border-radius: 999px; background: #3A1F17;"></span></span></span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px;">Ask again</span>
+              </div>
+            </div>
+          </div>
+          <div style="padding: 22px 34px 24px; display: flex; flex-direction: column; gap: 15px; overflow: hidden;">
+            <div style="display: flex; flex-direction: column; gap: 9px; max-width: 560px;">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Budget Line said</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 27px; line-height: 1.2; letter-spacing: -0.03em;">I can't find a borehole project for Masaga in the 2026 approved budget. That doesn't mean none was promised — it means none is funded in this document.</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+              <div style="background: #FFFFFF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 2px;">
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums;">1,523</span>
+                <span style="font-size: 14px; color: #6B564D;">capital projects searched</span>
+              </div>
+              <div style="background: #FFFFFF; border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 2px;">
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums;">399</span>
+                <span style="font-size: 14px; color: #6B564D;">pages read line by line</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">The nearest match</span>
+              <div style="background: #FFFFFF; border-radius: 20px; padding: 18px 22px; display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 20px; align-items: center; box-shadow: 0 14px 30px -26px rgba(58,31,23,0.55);">
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                  <span style="font-size: 17px; font-weight: 600;">Renovation of Basic Health Center, Masaga, Bida</span>
+                  <span style="font-size: 14px; font-weight: 600; color: #A5520B;">page 69 →</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1px; align-items: flex-end;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; text-align: right;">₦25,000,000</span><span style="font-size: 14px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">25 million naira</span></div>
+              </div>
+            </div>
+            <div style="margin-top: auto; display: flex; gap: 10px; flex-wrap: wrap;">
+              <span style="min-height: 48px; display: flex; align-items: center; padding: 0 18px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Try another sector</span>
+              <span style="min-height: 48px; display: flex; align-items: center; padding: 0 18px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Ask about a nearby LGA</span>
+              <span style="min-height: 48px; display: flex; align-items: center; padding: 0 18px; border-radius: 999px; background: #FFFFFF; font-size: 15px; font-weight: 600;">Report a missing project</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 900px;"><strong style="color: #241611;">Reflow:</strong> the three search counts become one three-up strip, chips wrap to two rows, and the nearest match stacks.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #3A1F17;">D7 · Saved</div>
+      <div style="width: 700px; height: 736px; background: #FFF4E8; border-radius: 28px; overflow: hidden; color: #241611; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(58,31,23,0.5);">
+        <div style="padding: 16px 30px; display: flex; align-items: center; gap: 22px; border-bottom: 1px solid #F1E2D3; font-size: 15px; font-weight: 600;">
+          <span style="color: #6B564D;">Ask</span><span style="color: #6B564D;">Browse</span>
+          <span style="color: #241611; border-bottom: 2px solid #3A1F17; padding-bottom: 2px;">Saved</span>
+          <span style="color: #6B564D;">Phone access</span>
+          <span style="margin-left: auto; font-size: 14px; color: #6B564D;">Bida LGA · Hausa</span>
+        </div>
+        <div style="flex: 1; padding: 24px 30px 28px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Following · 3 <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 8px; border-radius: 5px; border: 1.5px dashed #C9A98C; color: #8A6A52; white-space: nowrap;">PLANNED</span></span>
+            <span style="display: inline-flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 600; color: #6B564D;">Re-checked each budget release <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 8px; border-radius: 5px; border: 1.5px dashed #C9A98C; color: #8A6A52; white-space: nowrap;">PLANNED</span></span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 20px; padding: 18px 20px; display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 18px; align-items: center; box-shadow: 0 14px 30px -26px rgba(58,31,23,0.55);">
+            <div style="display: flex; flex-direction: column; gap: 7px;">
+              <span style="font-size: 17px; font-weight: 600;">Construction of Additional PHC at Dokotza in Bida</span>
+              <span style="display: inline-flex; align-items: center; gap: 8px; background: #FFE9CF; border-radius: 10px; padding: 7px 11px; width: fit-content; font-size: 13px; font-weight: 600; color: #5C4237;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #B4590C;"></span> ₦0 spent in 2025 · page 69</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1px; align-items: flex-end;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 25px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; text-align: right;">₦75,000,000</span><span style="font-size: 13px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">75 million naira</span></div>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 20px; padding: 18px 20px; display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 18px; align-items: center;">
+            <span style="font-size: 17px; font-weight: 600;">Construction of Bida Ring Road (41km)</span>
+            <div style="display: flex; flex-direction: column; gap: 1px; align-items: flex-end;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 25px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; text-align: right;">₦20,000,000,000</span><span style="font-size: 13px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">20 billion naira</span></div>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 20px; padding: 18px 20px; display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 18px; align-items: center;">
+            <span style="font-size: 17px; font-weight: 600;">Renovation of Basic Health Center, Masaga, Bida</span>
+            <div style="display: flex; flex-direction: column; gap: 1px; align-items: flex-end;"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 25px; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; text-align: right;">₦25,000,000</span><span style="font-size: 13px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">25 million naira</span></div>
+          </div>
+          <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355; padding-top: 6px;">Recent questions</span>
+          <div style="background: rgba(255,255,255,0.65); border-radius: 14px; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 15px; font-weight: 600;">Was the Dokotza one built?</span><span style="font-size: 13px; color: #6B564D;">Hausa · today</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.65); border-radius: 14px; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 15px; font-weight: 600;">Health projects near me</span><span style="font-size: 13px; color: #6B564D;">Hausa · yesterday</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.65); border-radius: 14px; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 15px; font-weight: 600;">Wetin dem budget for road?</span><span style="font-size: 13px; color: #6B564D;">Pidgin · 3 days ago</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.65); border-radius: 14px; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 15px; font-weight: 600;">Biggest project in Bida</span><span style="font-size: 13px; color: #6B564D;">Hausa · last week</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.65); border-radius: 14px; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 15px; font-weight: 600;">What wasn't spent last year?</span><span style="font-size: 13px; color: #6B564D;">English · last week</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 700px;"><strong style="color: #241611;">Reflow:</strong> rows stack name over amount; the settings row (LGA and language) moves to the bottom of the list where mobile keeps it.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #3A1F17;">D8 · Reach without a smartphone · planned</div>
+      <div style="width: 700px; height: 660px; background: #3A1F17; border-radius: 28px; overflow: hidden; color: #FFF4E8; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(58,31,23,0.5);">
+        <div style="padding: 16px 30px; display: flex; align-items: center; gap: 22px; border-bottom: 1px solid rgba(255,244,232,0.14); font-size: 15px; font-weight: 600;">
+          <span style="color: rgba(255,244,232,0.66);">Ask</span><span style="color: rgba(255,244,232,0.66);">Browse</span><span style="color: rgba(255,244,232,0.66);">Saved</span>
+          <span style="border-bottom: 2px solid #E8D8CB; padding-bottom: 2px;">Phone access</span>
+        </div>
+        <div style="flex: 1; padding: 26px 30px 28px; display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 26px; overflow: hidden;">
+          <div style="display: flex; flex-direction: column; gap: 15px;">
+            <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 11px; border-radius: 6px; border: 1.5px dashed rgba(255,244,232,0.42); color: #FFD9A8; width: fit-content;">PLANNED · NOT LIVE YET</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px; line-height: 1.14; letter-spacing: -0.035em;">Next: the same answers on any phone, with no data.</span>
+            <span style="font-size: 16px; line-height: 1.5; color: rgba(255,244,232,0.78);">Voice and browsing work in this browser today. A toll-free line and a USSD short code are the next build, so a caller with no smartphone can ask the same question and hear the same figure with its page number.</span>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="border-radius: 16px; background: rgba(255,244,232,0.08); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 15px; font-weight: 700;">Toll-free voice line</span>
+                  <span style="font-size: 13px; line-height: 1.4; color: rgba(255,244,232,0.68);">Number to be issued by the network operator</span>
+                </div>
+                <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 5px; border: 1.5px dashed rgba(255,244,232,0.42); color: #FFD9A8; white-space: nowrap;">PLANNED</span>
+              </div>
+              <div style="border-radius: 16px; background: rgba(255,244,232,0.08); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 15px; font-weight: 700;">USSD short code</span>
+                  <span style="font-size: 13px; line-height: 1.4; color: rgba(255,244,232,0.68);">Works with no airtime balance and no internet</span>
+                </div>
+                <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 5px; border: 1.5px dashed rgba(255,244,232,0.42); color: #FFD9A8; white-space: nowrap;">PLANNED</span>
+              </div>
+              <div style="border-radius: 16px; background: rgba(255,244,232,0.08); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                  <span style="font-size: 15px; font-weight: 700;">SMS a figure and its page</span>
+                  <span style="font-size: 13px; line-height: 1.4; color: rgba(255,244,232,0.68);">Project, amount and page number as plain text</span>
+                </div>
+                <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 5px 9px; border-radius: 5px; border: 1.5px dashed rgba(255,244,232,0.42); color: #FFD9A8; white-space: nowrap;">PLANNED</span>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: #FFF4E8; border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 8px; color: #241611;">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Working today</span>
+              <span style="font-size: 15px; line-height: 1.5; color: #5C4237;">Ask by voice or text in this browser, browse all of Bida, and open the budget page behind any figure.</span>
+            </div>
+            <div style="min-height: 58px; border-radius: 20px; background: #F2911F; color: #241611; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px;">Tell me when it launches</div>
+            <div style="min-height: 52px; border-radius: 18px; border: 1.5px solid rgba(255,244,232,0.3); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600;">Use the browser version</div>
+            <div style="margin-top: auto; font-size: 13px; line-height: 1.5; color: rgba(255,244,232,0.6);">No number is published until the line is live. The agent will read only from approved budget documents.</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 700px;"><strong style="color: #241611;">Reflow:</strong> the planned chip and headline lead, the three planned channels stack beneath, and "Tell me when it launches" becomes the pinned bottom action.</div>
+    </div>
+  </div>
+</section>
+
+<section style="padding: 16px 56px 40px; display: flex; flex-direction: column; gap: 28px;">
+  <div style="display: flex; align-items: center; gap: 14px;">
+    <span id="4c" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 13px; color: #FFF4E8; background: #3A1F17; padding: 5px 11px; border-radius: 999px;">4c</span>
+    <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #6B564D;">Mobile · the same app at 390px</span>
+  </div>
+
+  <div style="display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap;">
+    <div style="display: flex; flex-direction: column; gap: 13px; width: 390px;">
+      <div style="width: 390px; height: 844px; background: #FFF4E8; border-radius: 30px; overflow: hidden; display: flex; flex-direction: column; color: #241611; box-shadow: 0 24px 48px -28px rgba(58,31,23,0.45);">
+        <div style="padding: 18px 22px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 9px;">
+            <span style="width: 12px; height: 12px; border-radius: 4px; background: #F2911F;"></span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px;">Budget Line</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <span style="min-height: 44px; display: flex; align-items: center; padding: 0 13px; border-radius: 999px; background: #F6E4D2; font-size: 13px; font-weight: 700;">HA</span>
+            <span style="min-height: 44px; display: flex; align-items: center; padding: 0 13px; border-radius: 999px; background: #F6E4D2; font-size: 13px; font-weight: 600;">Menu</span>
+          </div>
+        </div>
+        <div style="flex: 1; overflow: hidden; padding: 6px 22px 0; display: flex; flex-direction: column; gap: 11px;">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 38px; line-height: 1.02; letter-spacing: -0.035em;">Sannu.</span>
+            <span style="font-size: 16px; line-height: 1.45; color: #6B564D; max-width: 300px;">Ask what government has budgeted in Bida. Every answer shows its page.</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 22px; padding: 17px 20px; display: flex; flex-direction: column; gap: 13px; box-shadow: 0 10px 24px -20px rgba(58,31,23,0.5);">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <div style="display: flex; flex-direction: column; gap: 2px;">
+                <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Your area</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 25px; letter-spacing: -0.025em;">Bida LGA</span>
+              </div>
+              <span style="min-height: 44px; display: flex; align-items: center; padding: 0 16px; border-radius: 999px; background: #F6E4D2; font-size: 14px; font-weight: 600;">Change</span>
+            </div>
+            <div style="height: 1px; background: #F1E2D3;"></div>
+            <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;">
+              <div style="display: flex; flex-direction: column; gap: 1px;">
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; font-variant-numeric: tabular-nums;">41</span>
+                <span style="font-size: 13px; color: #6B564D;">projects in 2026</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 1px; text-align: right;">
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; font-variant-numeric: tabular-nums;">₦37.2bn</span><span style="font-size: 13px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">37.2 billion naira</span>
+                <span style="font-size: 13px; color: #6B564D;">approved</span>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 9px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Start with</span>
+            <div style="min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 16px; padding: 13px 18px;">
+              <span style="font-size: 16px; font-weight: 600;">Health projects near me</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; color: #5C4237; font-weight: 700;">→</span>
+            </div>
+            <div style="min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 16px; padding: 13px 18px;">
+              <span style="font-size: 16px; font-weight: 600;">Biggest project in my LGA</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; color: #5C4237; font-weight: 700;">→</span>
+            </div>
+            <div style="min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #FFFFFF; border-radius: 16px; padding: 13px 18px;">
+              <span style="font-size: 16px; font-weight: 600;">What wasn't spent last year</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; color: #5C4237; font-weight: 700;">→</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 9px;">
+            <span style="flex: 1; min-height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 14px; border: 1.5px solid #E3CDB8; font-size: 15px; font-weight: 600;">Browse all 41</span>
+            <span style="flex: 1; min-height: 48px; display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; border: 1.5px solid #E3CDB8; font-size: 15px; font-weight: 600; color: #6B564D;">Phone access <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 8px; border-radius: 5px; border: 1.5px dashed #C9A98C; color: #8A6A52; white-space: nowrap;">PLANNED</span></span>
+          </div>
+        </div>
+        <div style="padding: 10px 22px 26px; display: flex; flex-direction: column; align-items: center; gap: 11px; background: linear-gradient(to top, #FFF4E8 62%, rgba(255,244,232,0));">
+          <div style="position: relative; width: 100%; display: flex; justify-content: center;">
+            <span style="position: absolute; top: 50%; left: 50%; width: 132px; height: 132px; margin: -66px 0 0 -66px; border-radius: 999px; background: #F2911F; animation: bl-ring 2.6s ease-out infinite;"></span>
+            <div style="position: relative; width: 100%; min-height: 84px; border-radius: 26px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; justify-content: center; gap: 14px; animation: bl-breathe 3.4s ease-in-out infinite; box-shadow: 0 18px 34px -18px rgba(58,31,23,0.75);">
+              <span style="width: 44px; height: 44px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center;"><span style="position: relative; display: block; width: 17.36px; height: 28px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 9.52px; height: 14.56px; border-radius: 4.76px; background: #3A1F17;"></span><span style="position: absolute; top: 10.08px; left: 0; width: 17.36px; height: 8.4px; box-sizing: border-box; border: 2.1px solid #3A1F17; border-top: 0; border-radius: 0 0 9.52px 9.52px;"></span><span style="position: absolute; top: 19.04px; left: 50%; transform: translateX(-50%); width: 2.38px; height: 5.6px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 11.76px; height: 2.38px; border-radius: 999px; background: #3A1F17;"></span></span></span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.02em;">Tap to talk</span>
+            </div>
+          </div>
+          <span style="font-size: 13px; color: #6B564D;">Speak Hausa or English — or type instead</span>
+        </div>
+      </div>
+      <div style="font-size: 13px; line-height: 1.5; color: #6B564D; max-width: 380px;"><strong style="color: #241611;">Home.</strong> The desktop clay rail becomes this pinned bottom block: the talk button stays the largest object and sits in thumb reach. Nav collapses into the Menu pill; the language pill keeps its two-letter form.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 13px; width: 390px;">
+      <div style="width: 390px; height: 844px; background: #FFF4E8; border-radius: 30px; overflow: hidden; display: flex; flex-direction: column; color: #241611; box-shadow: 0 24px 48px -28px rgba(58,31,23,0.45);">
+        <div style="padding: 16px 22px 10px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #F1E2D3;">
+          <span style="font-size: 15px; font-weight: 600;">Bida LGA · Health</span>
+          <span style="min-height: 44px; display: flex; align-items: center; padding: 0 13px; border-radius: 999px; background: #F6E4D2; font-size: 13px; font-weight: 600;">2 turns</span>
+        </div>
+        <div style="flex: 1; overflow: hidden; padding: 8px 22px 0; display: flex; flex-direction: column; gap: 8px;">
+          <div style="background: rgba(255,255,255,0.6); border-radius: 14px; padding: 9px 14px; display: flex; align-items: baseline; gap: 10px;">
+            <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7A6355; white-space: nowrap;">Turn 1</span>
+            <span style="font-size: 14px; font-weight: 600; color: #6B564D;">Bida · 41 projects, ₦37.2bn</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Budget Line said</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 18px; line-height: 1.26; letter-spacing: -0.02em;">Five health projects. The biggest is a new primary health centre at Dokotza — ₦75 million approved this year. Nothing was spent on it last year.</span>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">5 results</span>
+            <span style="font-size: 13px; font-weight: 600; color: #5C4237;">Highest amount</span>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 12px 26px -22px rgba(58,31,23,0.55); animation: bl-cardin 420ms cubic-bezier(0.2,0.8,0.2,1) both;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 9px; border-radius: 6px; background: #F1E2D3; color: #5C4237;">STATE</span>
+              <span style="font-size: 13px; font-weight: 600; color: #6B564D;">Bida LGA</span>
+            </div>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; line-height: 1.2; letter-spacing: -0.025em;">Construction of Additional PHC at Dokotza in Bida</span>
+            <div style="display: flex; flex-direction: column; gap: 1px;">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Approved 2026</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 31px; line-height: 1.04; letter-spacing: -0.04em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 14px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">75 million naira</span>
+            </div>
+            <div style="background: #FFE9CF; border-radius: 13px; padding: 11px 13px; display: flex; flex-direction: column; gap: 6px;">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                <span style="font-size: 13px; font-weight: 600; color: #5C4237;">2025 approved</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums;">₦75,000,000</span>
+              </div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                <span style="font-size: 14px; font-weight: 700;">2025 spent</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 21px; font-variant-numeric: tabular-nums; color: #A5520B;">₦0</span>
+              </div>
+              <div style="height: 6px; border-radius: 999px; background: #F3D3AC; overflow: hidden;"><span style="display: block; width: 3px; height: 6px; background: #B4590C;"></span></div>
+              <span style="font-size: 13px; color: #5C4237;">Approved last year, none of it spent.</span>
+            </div>
+            <div style="min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid #F1E2D3; padding-top: 9px;">
+              <span style="font-size: 13px; font-weight: 600; color: #A5520B;">Niger State 2026 budget · page 69</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; color: #A5520B;">→</span>
+            </div>
+          </div>
+          <div style="background: #FFFFFF; border-radius: 16px; padding: 13px 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; animation: bl-cardin 420ms cubic-bezier(0.2,0.8,0.2,1) 90ms both;">
+            <span style="font-size: 15px; font-weight: 600; line-height: 1.3; max-width: 190px;">Renovation of Basic Health Center, Masaga, Bida</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; white-space: nowrap;">₦25,000,000</span>
+          </div>
+          <div style="min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 0 4px;">
+            <span style="font-size: 14px; font-weight: 600; color: #5C4237;">See the other 3 results</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; color: #5C4237;">→</span>
+          </div>
+        </div>
+        <div style="padding: 10px 22px 24px; display: flex; align-items: center; gap: 10px; background: linear-gradient(to top, #FFF4E8 62%, rgba(255,244,232,0));">
+          <div style="flex: 1; min-height: 62px; border-radius: 20px; background: #3A1F17; color: #FFF4E8; display: flex; align-items: center; justify-content: center; gap: 11px; animation: bl-breathe 3.4s ease-in-out infinite;">
+            <span style="width: 36px; height: 36px; border-radius: 999px; background: #F2911F; display: flex; align-items: center; justify-content: center;"><span style="position: relative; display: block; width: 14.88px; height: 24px;"><span style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 8.16px; height: 12.48px; border-radius: 4.08px; background: #3A1F17;"></span><span style="position: absolute; top: 8.64px; left: 0; width: 14.88px; height: 7.2px; box-sizing: border-box; border: 1.8px solid #3A1F17; border-top: 0; border-radius: 0 0 8.16px 8.16px;"></span><span style="position: absolute; top: 16.32px; left: 50%; transform: translateX(-50%); width: 2.04px; height: 4.8px; background: #3A1F17;"></span><span style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 10.08px; height: 2.04px; border-radius: 999px; background: #3A1F17;"></span></span></span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px;">Ask a follow-up</span>
+          </div>
+          <span style="min-height: 62px; padding: 0 16px; border-radius: 20px; border: 1.5px solid #E3CDB8; display: flex; align-items: center; font-size: 15px; font-weight: 600;">Share</span>
+        </div>
+      </div>
+      <div style="font-size: 13px; line-height: 1.5; color: #6B564D; max-width: 380px;"><strong style="color: #241611;">Answer.</strong> The desktop rail's conversation becomes folded one-line turns above the answer; the two-column card stacks with the unspent panel below the amount; sort and provenance move into the header row and the card footer.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 13px; width: 390px;">
+      <div style="width: 390px; height: 844px; background: #150E0B; border-radius: 30px; overflow: hidden; display: flex; flex-direction: column; color: #FBEFE4; box-shadow: 0 24px 48px -28px rgba(21,14,11,0.6);">
+        <div style="padding: 18px 22px 8px; display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 15px; font-weight: 600;">Share</span>
+          <span style="min-height: 44px; display: flex; align-items: center; padding: 0 14px; border-radius: 999px; background: #241814; font-size: 14px; font-weight: 600;">Close</span>
+        </div>
+        <div style="flex: 1; overflow: hidden; padding: 6px 24px 0; display: flex; flex-direction: column; justify-content: center;">
+          <div style="background: #FFF4E8; border-radius: 22px; padding: 22px; display: flex; flex-direction: column; gap: 15px; color: #241611; box-shadow: 0 24px 50px -24px rgba(0,0,0,0.6);">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="width: 13px; height: 13px; border-radius: 4px; background: #F2911F;"></span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 16px;">Budget Line</span>
+              </div>
+              <span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; padding: 4px 9px; border-radius: 6px; background: #F1E2D3; color: #5C4237;">STATE</span>
+            </div>
+            <div style="height: 1px; background: #E3CDB8;"></div>
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Bida LGA · State House of Assembly</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 25px; line-height: 1.16; letter-spacing: -0.03em;">Construction of Additional PHC at Dokotza in Bida</span>
+            <div style="display: flex; flex-direction: column;">
+              <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Approved 2026</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 40px; line-height: 1.02; letter-spacing: -0.045em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 15px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">75 million naira</span>
+            </div>
+            <div style="background: #FFE9CF; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                <span style="font-size: 14px; font-weight: 600; color: #5C4237;">2025 approved</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums;">₦75,000,000</span>
+              </div>
+              <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px;">
+                <span style="font-size: 15px; font-weight: 700;">2025 spent</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; color: #A5520B;">₦0</span>
+              </div>
+              <div style="height: 7px; border-radius: 999px; background: #F3D3AC; overflow: hidden;"><span style="display: block; width: 4px; height: 7px; background: #B4590C;"></span></div>
+              <span style="font-size: 13px; line-height: 1.4; color: #5C4237;">Approved last year, none of it spent.</span>
+            </div>
+            <div style="border-top: 1px solid #E3CDB8; padding-top: 12px; display: flex; flex-direction: column; gap: 3px;">
+              <span style="font-size: 13px; font-weight: 600; color: #A5520B;">Niger State 2026 Approved Budget, page 69</span>
+              <span style="font-size: 12px; color: #6B564D;">Check it yourself: budgetline.ng/p/69</span>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 16px 22px 24px; display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; gap: 9px;">
+            <div style="flex: 1; min-height: 58px; border-radius: 19px; background: #FFA834; color: #241611; display: flex; align-items: center; justify-content: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px;">Send on WhatsApp</div>
+            <div style="min-height: 58px; padding: 0 18px; border-radius: 19px; border: 1.5px solid #4A362D; display: flex; align-items: center; font-size: 15px; font-weight: 600;">Save image</div>
+          </div>
+          <span style="font-size: 12px; color: #B39C90; text-align: center;">1080 × 1350 · readable at thumbnail size · no app needed to check it</span>
+        </div>
+      </div>
+      <div style="font-size: 13px; line-height: 1.5; color: #6B564D; max-width: 380px;"><strong style="color: #241611;">Share.</strong> Same sheet on desktop, where it opens as a centred dialog with format and caption options beside the preview.</div>
+    </div>
+  </div>
+</section>
+
+<section style="padding: 16px 56px 80px; display: flex; flex-direction: column; gap: 28px;">
+  <div style="display: flex; align-items: center; gap: 14px;">
+    <span id="4d" style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 13px; color: #FFF4E8; background: #3A1F17; padding: 5px 11px; border-radius: 999px;">4d</span>
+    <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #6B564D;">Share asset · portrait 1080 × 1350, standalone</span>
+  </div>
+
+  <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div style="width: 540px; height: 675px; box-sizing: border-box; background: #FFF4E8; padding: 34px 38px 30px; display: flex; flex-direction: column; gap: 13px; color: #241611; box-shadow: 0 30px 60px -32px rgba(58,31,23,0.55);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+          <div style="display: flex; align-items: center; gap: 11px;">
+            <span style="width: 20px; height: 20px; border-radius: 6px; background: #F2911F;"></span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 25px; letter-spacing: -0.02em;">Budget Line</span>
+          </div>
+          <span style="font-size: 14px; font-weight: 700; letter-spacing: 0.12em; padding: 6px 12px; border-radius: 8px; background: #F1E2D3; color: #5C4237;">STATE</span>
+        </div>
+        <div style="height: 2px; flex: none; background: #241611;"></div>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <span style="font-size: 15px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6A52;">Bida LGA · State House of Assembly</span>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 36px; line-height: 1.12; letter-spacing: -0.035em;">Construction of Additional PHC at Dokotza in Bida</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <span style="font-size: 16px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6A52;">Approved 2026</span>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 68px; line-height: 1.02; letter-spacing: -0.05em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 26px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #5C4237;">75 million naira</span>
+        </div>
+        <div style="background: #FFE9CF; border-radius: 20px; padding: 17px 22px; display: flex; flex-direction: column; gap: 11px;">
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+            <span style="font-size: 18px; font-weight: 600; color: #5C4237;">2025 approved</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 14px; font-weight: 600; color: #7A6355; font-variant-numeric: tabular-nums;">75 million naira</span>
+          </div>
+          <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+            <span style="font-size: 20px; font-weight: 700;">2025 spent</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 42px; line-height: 1; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; color: #A5520B;">₦0</span>
+          </div>
+          <div style="height: 12px; border-radius: 999px; background: #F3D3AC; overflow: hidden;"><span style="display: block; width: 6px; height: 12px; border-radius: 999px; background: #B4590C;"></span></div>
+          <span style="font-size: 18px; line-height: 1.4; color: #5C4237;">Approved last year, none of it spent. Approved again this year.</span>
+        </div>
+        <div style="margin-top: auto; border-top: 2px solid #241611; padding-top: 18px; display: flex; align-items: flex-end; justify-content: space-between; gap: 18px;">
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-size: 18px; font-weight: 700; color: #A5520B;">Niger State 2026 Approved Budget, page 69</span>
+            <span style="font-size: 16px; color: #6B564D;">Check it: budgetline.ng/p/69</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 2px; text-align: right; flex: none;">
+            <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #8A6A52; white-space: nowrap;">Read it yourself</span>
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 20px; white-space: nowrap;">page 69 of 399</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 14px; line-height: 1.55; color: #6B564D; max-width: 540px;">Shown at 50% of the 1080 × 1350 export. Square corners and 2px ledger rules, since the asset has no app around it — the rules replace the card edge. Everything a stranger needs to check the claim is on the sheet: amount, the unspent fact, the document, the page number and a short URL.</div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <span style="font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #6B564D;">Forwarded at WhatsApp preview size</span>
+      <div style="display: flex; gap: 22px; align-items: flex-start;">
+        <div style="width: 176px; height: 220px; box-sizing: border-box; background: #FFF4E8; padding: 15px 13px 13px; display: flex; flex-direction: column; gap: 5px; color: #241611; box-shadow: 0 16px 34px -24px rgba(58,31,23,0.6);">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 5px;">
+              <span style="width: 8px; height: 8px; border-radius: 2px; background: #F2911F;"></span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 10px;">Budget Line</span>
+            </div>
+            <span style="font-size: 6px; font-weight: 700; letter-spacing: 0.12em; padding: 2px 4px; border-radius: 3px; background: #F1E2D3; color: #5C4237;">STATE</span>
+          </div>
+          <div style="height: 1px; flex: none; background: #241611;"></div>
+          <span style="font-size: 6px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6A52;">Bida LGA</span>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 13px; line-height: 1.14; letter-spacing: -0.025em;">Construction of Additional PHC at Dokotza in Bida</span>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 23px; line-height: 1.02; letter-spacing: -0.045em; font-variant-numeric: tabular-nums;">₦75,000,000</span><span style="font-size: 9px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #5C4237;">75 million naira</span>
+          <div style="background: #FFE9CF; border-radius: 7px; padding: 8px 9px; display: flex; flex-direction: column; gap: 5px;">
+            <div style="display: flex; align-items: baseline; justify-content: space-between;">
+              <span style="font-size: 8px; font-weight: 700;">2025 spent</span>
+              <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: -0.03em; color: #A5520B;">₦0</span>
+            </div>
+            <div style="height: 4px; border-radius: 999px; background: #F3D3AC; overflow: hidden;"><span style="display: block; width: 2px; height: 4px; background: #B4590C;"></span></div>
+          </div>
+          <div style="margin-top: auto; border-top: 1px solid #241611; padding-top: 6px; display: flex; flex-direction: column; gap: 1px;">
+            <span style="font-size: 7px; font-weight: 700; color: #A5520B;">Niger State 2026 budget, p. 69</span>
+            <span style="font-size: 6px; color: #6B564D;">budgetline.ng/p/69</span>
+          </div>
+        </div>
+        <div style="width: 300px; display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-size: 14px; line-height: 1.55; color: #6B564D;">At 176px wide the reading order still holds: mark, project, amount, ₦0, source. Nothing depends on colour to be understood, and the accent never sits on the accent panel, so heavy compression can't take the proof line out.</span>
+          <div style="background: #FFFFFF; border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 7px;">
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7A6355;">Caption sent with it</span>
+            <span style="font-size: 14px; line-height: 1.5; color: #5C4237;">₦75m was approved for a health centre at Dokotza in Bida in 2025. Nothing was spent. It is approved again for 2026. Page 69 of the Niger State budget.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -21,5 +21,7 @@ export async function POST(req: Request) {
   const res = await fetch("https://api.openai.com/v1/audio/transcriptions", { method: "POST", headers: { authorization: `Bearer ${key}` }, body });
   if (!res.ok) return NextResponse.json({ error: `OpenAI ${res.status}: ${(await res.text()).slice(0, 200)}` }, { status: 502 });
   const data = (await res.json()) as { text?: string };
-  return NextResponse.json({ text: data.text ?? "" });
+  // On near-silent clips the model echoes its prompt back; treat that as nothing said.
+  const text = (data.text ?? "").trim();
+  return NextResponse.json({ text: text.startsWith("Nigerian place names") || text.startsWith("Bida, Borno, Sokoto") ? "" : text });
 }
