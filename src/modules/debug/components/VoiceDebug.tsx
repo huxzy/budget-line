@@ -26,11 +26,15 @@ const TRANSCRIBERS: Record<string, Record<string, unknown> | null> = {
   "gladia solaria-1": { provider: "gladia", model: "solaria-1", language: "en" },
   "11labs scribe realtime": { provider: "11labs", model: "scribe_v2_realtime", language: "en" },
   "deepgram nova-3 en": { provider: "deepgram", model: "nova-3", language: "en" },
+  "deepgram + 80 keyterms": { provider: "deepgram", model: "nova-3", language: "en", keyterm: 80 },
+  "deepgram + 120 keyterms": { provider: "deepgram", model: "nova-3", language: "en", keyterm: 120 },
+  "deepgram + every keyterm": { provider: "deepgram", model: "nova-3", language: "en", keyterm: 0 },
   "deepgram nova-3 multi": { provider: "deepgram", model: "nova-3", language: "multi" },
   "openai gpt-4o-transcribe": { provider: "openai", model: "gpt-4o-transcribe", language: "en" },
 };
 
-export function VoiceDebug({ config }: { config: VoiceConfig }) {
+/** `places`: every live state and local government name, for sizing the keyterm list. */
+export function VoiceDebug({ config, places }: { config: VoiceConfig; places: string[] }) {
   const [transcriber, setTranscriber] = useState<string>("assistant (current)");
   const [status, setStatus] = useState<VoiceStatus>(config.publicKey ? "idle" : "unavailable");
   const [lines, setLines] = useState<Line[]>([]);
@@ -172,7 +176,9 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
       setClips([]);
       t0.current = performance.now();
       await startLocalCapture();
-      const t = TRANSCRIBERS[transcriber];
+      let t = TRANSCRIBERS[transcriber];
+      // a number is how many of `places` to send as keyterms (0 = all), to find Vapi's limit
+      if (t && typeof t.keyterm === "number") t = { ...t, keyterm: t.keyterm ? places.slice(0, t.keyterm) : places };
       // the keyterm list (every live place name) lives on the assistant's deepgram fallback
 
       push("status", `transcriber for this call: ${t ? JSON.stringify(t) : transcriberName(config)}`);

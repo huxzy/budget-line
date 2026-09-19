@@ -96,5 +96,13 @@ const sectorIndex = new Fuse(
 
 export function resolveSector(input?: string | null): Sector | undefined {
   if (!input) return undefined;
-  return sectorIndex.search(input.trim().toLowerCase())[0]?.item.sector;
+  const q = input.trim().toLowerCase();
+  // The canonical name itself ("roads and works") is too long for a fuzzy hit on "roads".
+  if (q in SECTOR_WORDS) return q as Sector;
+  // Whole phrase first, then word by word ("road projects" → roads and works).
+  for (const term of [q, ...q.split(/\s+/)]) {
+    const hit = sectorIndex.search(term)[0]?.item.sector;
+    if (hit) return hit;
+  }
+  return undefined;
 }
