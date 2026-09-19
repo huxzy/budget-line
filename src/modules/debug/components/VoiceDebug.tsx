@@ -58,7 +58,14 @@ export function VoiceDebug({ config }: { config: VoiceConfig }) {
         setStatus(s);
         push("status", d ? `${s} — ${d}` : s);
       }),
-      client.on("transcript", (t) => push(t.role === "user" ? (t.final ? "you-vapi" : "you-vapi-partial") : "agent", t.text)),
+      client.on("transcript", (t) => {
+        // the agent's text streams a token at a time; only the finished line is worth a row
+        if (t.role === "assistant") {
+          if (t.final) push("agent", t.text);
+          return;
+        }
+        push(t.final ? "you-vapi" : "you-vapi-partial", t.text);
+      }),
       client.on("toolCall", (name, args) => push("tool-call", `${name}(${JSON.stringify(args)})`)),
       client.on("toolResult", (r) => {
         const p = r.payload as Record<string, unknown>;
