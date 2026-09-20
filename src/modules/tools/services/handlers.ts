@@ -38,7 +38,7 @@ function findLga(stateInput: unknown, lgaInput: string) {
   if (stateQuery(stateInput)) {
     const st = requireLiveState(stateInput);
     if (!st.ok) return st;
-    const lga = resolveLga(st.state.slug, lgaInput);
+    const lga = resolveLga(st.state.slug, lgaInput, { loose: true });
     if (lga.found) return { ok: true as const, state: st.state, lga };
     // Not in the state the caller named — but perhaps in another one we have ("Bosso" said with "Sokoto").
     const other = lgaEverywhere(lgaInput).hits.find((h) => h.state.slug !== st.state.slug);
@@ -74,6 +74,7 @@ export const projectsByLga: ToolHandler = (args) => {
     state: slug,
     lga: lga.match.lga,
     lgaLabel: lga.match.lgaLabel,
+    ...(lga.uncertain ? { uncertain: true, heard: lga.heard } : {}),
     sector: sector ?? null,
     unspentOnly,
     total: all.length,
@@ -103,7 +104,7 @@ export const lgaSummary: ToolHandler = (args) => {
   if (!lga.found) return { ...lga, reason: "unknown_lga", state: slug };
 
   const summary = getLgaSummary(slug, lga.match.lga);
-  return summary ? { found: true, ...summary } : { found: false, reason: "unknown_lga", query: args.lga, nearest: [] };
+  return summary ? { found: true, ...summary, ...(lga.uncertain ? { uncertain: true, heard: lga.heard } : {}) } : { found: false, reason: "unknown_lga", query: args.lga, nearest: [] };
 };
 
 /** state_coverage({ state? }) — answered from the registry. */

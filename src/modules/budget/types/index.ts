@@ -105,5 +105,6 @@ export type Lang = "en" | "ha";
 export type LgaMatch = { lga: string; lgaLabel: string; projects: number; score?: number };
 
 export type LgaResolution =
-  | { found: true; match: LgaMatch; score: number }
+  /** `uncertain`: a loose match the agent must say out loud ("I heard Vida, taking that as Bida"). */
+  | { found: true; match: LgaMatch; score: number; uncertain?: boolean; heard?: string }
   | { found: false; query: string; nearest: LgaMatch[] };

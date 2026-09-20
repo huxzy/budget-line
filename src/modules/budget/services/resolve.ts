@@ -18,12 +18,36 @@ const PLACE_ALIASES: Record<string, string> = {
   minna: "CHANCHAGA",
 };
 
+/**
+ * What the transcriber has actually returned for a place name in testing,
+ * taken from the voice debug logs. The first consonant of a lone word is
+ * the usual casualty. Add a line when a log shows a new one; never guess.
+ */
+const HEARD_AS: Record<string, string> = {
+  vida: "BIDA",
+  vita: "BIDA",
+  beta: "BIDA",
+  boso: "BOSSO",
+  bosu: "BOSSO",
+  busso: "BOSSO",
+  oso: "BOSSO",
+  also: "BOSSO",
+  wushu: "BOSSO",
+};
+
 function cleanLga(input: string) {
   return input.replace(NOISE, " ").replace(/\s+/g, " ").trim();
 }
 
 /** A match at or under this score is accepted as the LGA the person meant. */
 const MATCH = 0.25;
+/**
+ * With the state known there are at most 27 candidates, so a looser hit is
+ * accepted too — flagged `uncertain`, and only when it is clearly ahead of
+ * the runner-up. "Vida" → BIDA, said back to the caller as an assumption.
+ */
+const LOOSE = 0.5;
+const LEAD = 0.1;
 
 /**
  * A fuzzy hit must also be the right shape: about the same length as the
@@ -53,14 +77,24 @@ function lgaIndex(slug: string) {
   return idx;
 }
 
-export function resolveLga(slug: string, input: string): LgaResolution {
+export function resolveLga(slug: string, input: string, opts: { loose?: boolean } = {}): LgaResolution {
   const query = cleanLga(input ?? "");
-  const alias = PLACE_ALIASES[query.toLowerCase()];
-  const term = alias ?? query;
+  const key = query.toLowerCase();
+  const alias = PLACE_ALIASES[key];
+  const heardAs = HEARD_AS[key];
+  const term = alias ?? heardAs ?? query;
   const results = query ? lgaIndex(slug).search(term) : [];
   const best = results.find((r) => (r.score ?? 1) <= MATCH && plausible(term, r.item.lga));
   if (best) {
-    return { found: true, match: best.item, score: best.score ?? 0 };
+    return heardAs && best.item.lga === heardAs
+      ? { found: true, match: best.item, score: best.score ?? 0, uncertain: true, heard: query }
+      : { found: true, match: best.item, score: best.score ?? 0 };
+  }
+  if (opts.loose) {
+    const [first, second] = results.filter((r) => plausible(term, r.item.lga));
+    if (first && (first.score ?? 1) <= LOOSE && (!second || (second.score ?? 1) - (first.score ?? 1) >= LEAD)) {
+      return { found: true, match: first.item, score: first.score ?? 0, uncertain: true, heard: query };
+    }
   }
   return { found: false, query: input, nearest: results.slice(0, 3).map((r) => ({ ...r.item, score: r.score })) };
 }
