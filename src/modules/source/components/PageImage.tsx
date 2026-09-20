@@ -23,7 +23,11 @@ export function PageImage({ src, page, cited, zoom }: { src: string; page: numbe
 
   // Centre on the row once the image has its real height (the band sits at 0 before then).
   useEffect(() => {
-    if (loaded) bandRef.current?.scrollIntoView({ block: "center", inline: "start", behavior: "smooth" });
+    // Instant, and on the next frame: a smooth scroll here gets cancelled by the
+    // router's own scroll-to-top on arrival, leaving the page at the top.
+    if (!loaded) return;
+    const id = requestAnimationFrame(() => bandRef.current?.scrollIntoView({ block: "center", inline: "start" }));
+    return () => cancelAnimationFrame(id);
   }, [cited?.id, zoom, loaded]);
 
   return (
