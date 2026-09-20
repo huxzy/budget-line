@@ -15,7 +15,6 @@ type Props = {
   featured?: boolean;
   /** Show the place's figures in a persistent tooltip (Niger, Bida). */
   showFigures?: boolean;
-  liveStateName?: string;
   /** Slightly smaller discs for a field where every circle carries a figures card. */
   dense?: boolean;
   /** Two-line figures card (count and compact total) instead of the full one. */
@@ -29,7 +28,7 @@ type Props = {
  * the DOM at all times and referenced by aria-describedby, so screen readers
  * get the same content sighted users hover for. Size carries no data.
  */
-export function PlaceCircle({ place, position, filled = false, featured = false, showFigures = false, liveStateName = "Niger", dense = false, compactFigures = false }: Props) {
+export function PlaceCircle({ place, position, filled = false, featured = false, showFigures = false, dense = false, compactFigures = false }: Props) {
   const solid = filled || featured;
   const tipId = useId();
   const live = place.status === "live";
@@ -68,7 +67,7 @@ export function PlaceCircle({ place, position, filled = false, featured = false,
     <>
       <span className="block font-display text-[14px] font-bold">{place.name}</span>
       <span className="block text-[12px] leading-snug">
-        Budget not available yet. {liveStateName} is the first state on Budget Line.
+        Budget not available yet.
       </span>
     </>
   );

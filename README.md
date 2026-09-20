@@ -3,8 +3,8 @@
 Ask out loud what government has budgeted where you live. Every figure comes
 back with the page of the approved budget it was read from.
 
-Budget Line is a voice-first web app over the **Niger State 2026 Approved
-Budget**. A caller picks their local government, presses the microphone and
+Budget Line is a voice-first web app over the **2026 approved budgets of
+eight Nigerian states**. A caller picks their local government, presses the microphone and
 asks a question in plain words. The answer is spoken and shown as cards; each
 card links to the page of the official document with the cited row
 highlighted, so the caller — or a journalist — can check it independently.
@@ -28,10 +28,6 @@ track. A proof of concept, not a production launch.
   nothing recorded as spent".
 - **Share** a 1080 × 1350 card to WhatsApp with a factual caption.
 - Renders and browses with no Vapi keys; voice shows as unavailable.
-
-Planned and clearly labelled as such in the UI, with no code behind them:
-Nigerian Pidgin, Hausa, Nupe, Yoruba and Igbo assistants; saved projects;
-CSV export; the federal tier and other states; phone, USSD and SMS access.
 
 ## The data and the integrity claim
 

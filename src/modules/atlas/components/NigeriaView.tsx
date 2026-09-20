@@ -34,7 +34,6 @@ export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
           positionFor={(p) => statePosition(p.key)}
           featureLive
           dense
-          liveStateName={niger.name}
           status={`${data.liveCount} of ${data.states.length} states available`}
         />
 

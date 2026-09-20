@@ -74,12 +74,9 @@ export function AtlasEntry({ data, voice, level, stateSlug }: Props) {
             <PlannedTag />
           </div>
           <p className="text-[16px] leading-relaxed text-muted">
-            Budget not available yet. {data.registry.name} is the only state read so far — {state.name}&apos;s approved budget hasn&apos;t been
-            processed. When it is, it goes through the same extraction and reconciliation as {data.registry.name}&apos;s.
+            Budget not available yet. {state.name}&apos;s approved budget hasn&apos;t been processed. When it is, it goes through the same
+            extraction and reconciliation as the {data.liveCount} states that are live.
           </p>
-          <span className="inline-flex items-center gap-2 text-[14px] font-semibold text-muted">
-            Tell me when {state.name} lands <PlannedTag />
-          </span>
           <span className="eyebrow mt-4">You can look at</span>
           <Link href="/s/niger" className="flex items-center justify-between rounded-[14px] bg-card px-5 py-4 no-underline shadow-card outline outline-2 -outline-offset-2 outline-marigold hover:no-underline">
             <span>

@@ -91,13 +91,7 @@ export function SearchPanel({ data, open, onClose, inline = false, onMic }: Prop
                   <span className="font-display text-[19px] font-bold text-muted">{p.name} State</span>
                   <PlannedTag />
                 </div>
-                <p className="mt-1 text-[14px] leading-snug text-muted">
-                  Budget not available yet. {niger?.name} is the only state read so far — {p.name}&apos;s approved budget hasn&apos;t been
-                  processed.
-                </p>
-                <p className="mt-3 inline-flex items-center gap-2 text-[13px] font-semibold text-muted">
-                  Tell me when {p.name} lands <PlannedTag />
-                </p>
+                <p className="mt-1 text-[14px] leading-snug text-muted">Budget not available yet. {p.name}&apos;s approved budget hasn&apos;t been processed.</p>
               </div>
             ))}
             {niger && !liveStates.length && !parentOfLga && (

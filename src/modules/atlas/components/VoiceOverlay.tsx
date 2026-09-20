@@ -91,7 +91,7 @@ export function VoiceOverlay({ session, data, onClose }: { session: VoiceSession
             <p className="font-display text-[24px] font-bold text-ink">{pending.name} State</p>
             <PlannedTag />
           </div>
-          <p className="mt-1 text-[14px] text-muted">Budget not available yet. {data.registry.name} is the first state on Budget Line.</p>
+          <p className="mt-1 text-[14px] text-muted">Budget not available yet. {data.liveCount} states are live on Budget Line.</p>
         </div>
       )}
       <p className="text-[13px] text-on-clay/85">Heard a place we don&apos;t cover yet? It says so instead of guessing.</p>

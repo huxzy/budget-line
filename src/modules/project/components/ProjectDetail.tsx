@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Amount, Button, PlannedTag, SourceLine, SpendBar, Tag } from "@/components/ui";
+import { Amount, Button, SourceLine, SpendBar, Tag } from "@/components/ui";
 import { formatNaira, isPlace, lgaSlug, sectorLabel, type Project, type StateSummary } from "@/modules/budget";
 import { ChatBubble, useChat } from "@/modules/chat";
 import { spendStatus } from "@/modules/results";
@@ -29,9 +29,6 @@ export function ProjectDetail({ project, registry, chatAvailable }: { project: P
             <span aria-hidden>←</span> {sectorLabel(project.sector)} · {isPlace(project.lga) ? place : project.lgaLabel}
           </button>
           <div className="ml-auto flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-clay-raised px-4 py-2 text-[14px] font-semibold text-on-clay-muted">
-              Follow <PlannedTag />
-            </span>
             <Button href={`/share/${project.id}`} variant="pill" className="border-0 bg-clay-raised text-on-clay hover:bg-clay-deep">
               Share
             </Button>

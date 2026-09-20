@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LiveTag, PlannedTag, Wordmark } from "@/components/ui";
+import { LiveTag, Wordmark } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { lgaSlug } from "@/modules/budget";
 import { usePreferences } from "@/modules/prefs";
@@ -22,7 +22,7 @@ type Props = {
   current?: string;
 };
 
-/** Top bar on every cream screen. Planned items are labels, not links. */
+/** Top bar on every cream screen. */
 export function AppHeader({ className, places, state, current }: Props) {
   const path = usePathname();
   const router = useRouter();
@@ -49,12 +49,6 @@ export function AppHeader({ className, places, state, current }: Props) {
               </Link>
             );
           })}
-          <span className="inline-flex items-center gap-1.5 text-muted/70">
-            Saved <PlannedTag />
-          </span>
-          <span className="inline-flex items-center gap-1.5 text-muted/70">
-            Phone access <PlannedTag />
-          </span>
         </nav>
       </div>
       <div className="flex items-center gap-2.5">

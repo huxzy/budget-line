@@ -115,9 +115,6 @@ export function BrowseScreen({ data, chatAvailable }: { data: BrowseData; chatAv
               >
                 Unspent only
               </Link>
-              <span className="inline-flex items-center gap-2 rounded-full bg-card/60 px-4 py-2 text-[13px] font-semibold text-muted">
-                Export CSV <PlannedTag />
-              </span>
             </div>
           </div>
 

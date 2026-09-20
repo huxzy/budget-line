@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { LiveTag, PlannedTag, Wordmark } from "@/components/ui";
+import { LiveTag, Wordmark } from "@/components/ui";
 import { cn } from "@/lib/cn";
 
 type Props = {
@@ -42,9 +42,6 @@ export function AtlasHeader({ back, crumb, view, onView, onSearch, motionOff }: 
         )}
         <span className="hidden items-center gap-2 rounded-full bg-card px-3.5 py-2 text-[14px] font-semibold shadow-card sm:inline-flex">
           English <LiveTag />
-        </span>
-        <span className="hidden items-center gap-1.5 rounded-full bg-card/60 px-3.5 py-2 text-[14px] font-semibold text-muted lg:inline-flex">
-          Phone access <PlannedTag />
         </span>
       </div>
     </header>

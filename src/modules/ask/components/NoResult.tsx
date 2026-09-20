@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { PlannedTag } from "@/components/ui";
 import type { StateSummary } from "@/modules/budget";
 import type { MissPayload, ProjectsPayload } from "../types";
 import { ResultCardLike } from "./NoResult.parts";
@@ -54,9 +53,6 @@ export function NoResult({ payload, registry }: { payload: ProjectsPayload | Mis
             See every sector in {empty.lgaLabel.replace(/ LGA$/, "")}
           </Link>
         )}
-        <span className="inline-flex items-center gap-2 rounded-full bg-card/60 px-4 py-2.5 text-[14px] font-semibold text-muted">
-          Report a missing project <PlannedTag />
-        </span>
       </div>
     </div>
   );

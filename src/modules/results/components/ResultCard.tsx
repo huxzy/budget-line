@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { stateName, type Project } from "@/modules/budget";
-import { Amount, PlannedTag, SourceLine, SpendBar, Tag } from "@/components/ui";
+import { Amount, SourceLine, SpendBar, Tag } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { spendStatus } from "../services/status";
 import { HistoryPanel } from "./HistoryPanel";
@@ -108,15 +108,9 @@ export function ResultCard({ project, variant = "compact", cited = false, index 
           </div>
           <div className="mt-auto flex min-h-11 flex-wrap items-center gap-3.5 border-t border-hairline pt-3.5">
             <SourceLine state={project.state} page={project.page} rowId={project.id} />
-            <span className="ml-auto flex items-center gap-2 text-[14px] font-semibold text-muted">
-              <Link href={`/share/${project.id}`} className="text-muted hover:text-ink">
-                Share
-              </Link>
-              <span aria-hidden>·</span>
-              <span className="inline-flex items-center gap-1.5">
-                Follow <PlannedTag />
-              </span>
-            </span>
+            <Link href={`/share/${project.id}`} className="ml-auto text-[14px] font-semibold text-muted hover:text-ink">
+              Share
+            </Link>
           </div>
         </div>
         <HistoryPanel project={project} />
