@@ -65,7 +65,10 @@ export function Amount({ display, plain, value, size = "md", countUp = false, ac
   const text = settled ? display : `₦${whole.format(n ?? 0)}`;
 
   return (
-    <div className={cn("flex flex-col gap-0.5", align === "right" && "items-end text-right", className)}>
+    // min-w-0: as a flex item the figure must be allowed to shrink, and the caller
+    // gives it real width (flex-1); a size-contained FitText with no width
+    // collapses to zero and spills past the card.
+    <div className={cn("flex min-w-0 flex-col gap-0.5", align === "right" && "items-end text-right", className)}>
       <FitText
         data-num
         text={text}

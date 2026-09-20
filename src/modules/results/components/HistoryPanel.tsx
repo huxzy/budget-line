@@ -1,5 +1,6 @@
 import type { Project } from "@/modules/budget";
 import { Amount, SpendBar } from "@/components/ui";
+import { cn } from "@/lib/cn";
 import { formatNaira } from "@/modules/budget";
 import { spendStatus } from "../services/status";
 
@@ -35,19 +36,17 @@ export function HistoryPanel({ project, onClay = false }: { project: Project; on
       ) : (
         <>
           <div className="flex items-baseline justify-between gap-2.5">
-            <span className={`text-[14px] font-semibold ${label}`}>2025 approved</span>
-            <span data-num className={`font-display text-[19px] font-bold ${strong}`}>
-              {approved.display}
-            </span>
+            <span className={`shrink-0 text-[14px] font-semibold ${label}`}>2025 approved</span>
+            <Amount display={approved.display} size="sm" align="right" className={cn("flex-1", onClay && "[&>span:first-child]:text-on-clay")} />
           </div>
           <div className="flex items-baseline justify-between gap-2.5">
-            <span className={`text-[15px] font-bold ${strong}`}>2025 spent</span>
+            <span className={`shrink-0 text-[15px] font-bold ${strong}`}>2025 spent</span>
             <Amount
               display={spent.display}
               size={zeroSpent ? "lg" : "sm"}
               accent={zeroSpent}
               align="right"
-              className={zeroSpent ? accentCls : onClay ? "[&>span:first-child]:text-on-clay" : ""}
+              className={cn("flex-1", zeroSpent ? accentCls : onClay ? "[&>span:first-child]:text-on-clay" : "")}
             />
           </div>
           <SpendBar ratio={s.ratio} />
