@@ -52,7 +52,7 @@ export function useChat(ctx: { state?: string; lga?: string | null }): Chat {
     const stored = load();
     if (stored) {
       chatId.current = stored.chatId;
-      setMessages(stored.messages.filter((m) => !m.pending));
+      setMessages(stored.messages.filter((m) => !m.pending).map((m) => ({ ...m, restored: true })));
     }
   }, []);
   useEffect(() => {

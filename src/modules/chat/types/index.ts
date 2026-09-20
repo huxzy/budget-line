@@ -13,4 +13,11 @@ export type ChatReply = {
   toolResults: ToolResult[];
 };
 
-export type ChatMessage = { role: "user" | "assistant"; text: string; pending?: boolean; results?: ToolResult[] };
+export type ChatMessage = {
+  role: "user" | "assistant";
+  text: string;
+  pending?: boolean;
+  results?: ToolResult[];
+  /** Came back from sessionStorage on this page, i.e. was said on an earlier one. */
+  restored?: boolean;
+};
