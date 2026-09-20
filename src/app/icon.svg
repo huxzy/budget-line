@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The wordmark's marigold square on clay, with the source line beneath it. -->
+  <rect width="64" height="64" rx="14" fill="#3a1f17"/>
+  <rect x="17" y="13" width="30" height="30" rx="8" fill="#f2911f"/>
+  <rect x="17" y="49" width="30" height="4" rx="2" fill="#fff4e8" opacity="0.9"/>
+</svg>
