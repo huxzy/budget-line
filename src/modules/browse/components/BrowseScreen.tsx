@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { AppHeader } from "@/components/shell";
 import { ChatBubble, useChat } from "@/modules/chat";
-import { FitText, MicPill, PlannedTag } from "@/components/ui";
+import { FitText, MicPill } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { formatCompact, lgaSlug, sectorLabel } from "@/modules/budget";
 import { ResultCard } from "@/modules/results";
@@ -62,9 +62,6 @@ export function BrowseScreen({ data, chatAvailable }: { data: BrowseData; chatAv
               </label>
               <span className="flex items-center justify-between rounded-[12px] bg-card px-4 py-3 text-[14px] font-semibold shadow-card">
                 All {lgas.length} local governments <span data-num className="text-muted">{registry.projects?.toLocaleString("en-NG")}</span>
-              </span>
-              <span className="flex items-center justify-between rounded-[12px] bg-card/60 px-4 py-3 text-[14px] font-semibold text-muted">
-                Federal tier <PlannedTag />
               </span>
             </div>
           </div>
