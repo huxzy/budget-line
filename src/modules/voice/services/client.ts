@@ -25,6 +25,7 @@ import type Vapi from "@vapi-ai/web";
 
 import { TOOL_ROUTES, type ToolName } from "@/modules/tools";
 import { firstMessageFor, variablesFor } from "./variables";
+import { createRingback } from "./ringback";
 import type { CallContext, Coverage, ToolResult, VoiceClient, VoiceEvents, VoiceTarget } from "../types";
 
 function parseResult(raw: unknown): Record<string, unknown> {
@@ -66,6 +67,9 @@ export function createVoiceClient(publicKey: string | undefined, target: VoiceTa
 
   let vapi: Vapi | null = null;
   let inCall = false;
+  // Rings from the mic press until Vapi answers (call-start), or until it fails.
+  const ringback = createRingback();
+  listeners.status.add((s) => (s === "connecting" ? ringback.start() : ringback.stop()));
 
   async function client(rawMic = false): Promise<Vapi> {
     if (vapi) return vapi;
