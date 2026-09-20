@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LiveTag, Wordmark } from "@/components/ui";
+import { Wordmark } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { lgaSlug } from "@/modules/budget";
 import { usePreferences } from "@/modules/prefs";
@@ -82,9 +82,6 @@ export function AppHeader({ className, places, state, current }: Props) {
             </span>
           </Link>
         )}
-        <span className="hidden items-center gap-2 rounded-full bg-card px-3.5 py-2 text-[14px] font-semibold text-ink shadow-card sm:inline-flex">
-          English <LiveTag />
-        </span>
       </div>
     </header>
   );

@@ -8,7 +8,7 @@ The assistant's system prompt is assembled by `lib/assistant.ts`:
 responses. One `language.<code>.md` file per language supplies the register
 and any translated fixed responses. Only `en` is live; the others are seams.
 
-Codes follow the registry in `data/languages.json` (`en`, `pcm`, `ha`, ...).
+Codes follow the registry in `data/languages.json`; only `en` is live, the `pcm` and `ha` drafts are not wired to anything.
 
 ## Dry run against the real payload
 
