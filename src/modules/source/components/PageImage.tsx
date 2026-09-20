@@ -21,9 +21,10 @@ export function PageImage({ src, page, cited, zoom }: { src: string; page: numbe
     if (img?.complete && img.naturalWidth > 0) setLoaded(true);
   }, [src]);
 
+  // Centre on the row once the image has its real height (the band sits at 0 before then).
   useEffect(() => {
-    bandRef.current?.scrollIntoView({ block: "center", inline: "start", behavior: "smooth" });
-  }, [cited?.id, zoom]);
+    if (loaded) bandRef.current?.scrollIntoView({ block: "center", inline: "start", behavior: "smooth" });
+  }, [cited?.id, zoom, loaded]);
 
   return (
     <div className={zoom ? "max-h-[70vh] overflow-auto rounded-[12px] bg-white shadow-card" : "rounded-[12px] bg-white shadow-card"}>
