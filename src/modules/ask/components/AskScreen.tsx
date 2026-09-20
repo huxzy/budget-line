@@ -73,8 +73,14 @@ export function AskScreen({ voice, registry, places, languageName, area }: Props
     if (final) lastAssistant.current = final;
     setHeadline(live ?? lastAssistant.current);
   }, [session.partial, session.lines]);
+  // The chat thread persists across pages; only replies that arrive on this page become the headline.
+  const chatSeen = useRef<number | null>(null);
   useEffect(() => {
-    const last = [...chat.messages].reverse().find((m) => m.role === "assistant" && !m.pending);
+    if (chatSeen.current === null) {
+      chatSeen.current = chat.messages.length;
+      return;
+    }
+    const last = [...chat.messages.slice(chatSeen.current)].reverse().find((m) => m.role === "assistant" && !m.pending);
     if (last) {
       lastAssistant.current = { role: "assistant", text: last.text, final: true };
       setHeadline(lastAssistant.current);
