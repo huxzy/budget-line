@@ -4,8 +4,10 @@
  * Vapi's transcriber heard. Needs OPENAI_API_KEY. Not linked from the app.
  */
 import { NextResponse } from "next/server";
+import { debugEnabled } from "@/modules/debug/server";
 
 export async function POST(req: Request) {
+  if (!debugEnabled()) return new NextResponse(null, { status: 404 });
   const key = process.env.OPENAI_API_KEY;
   if (!key) return NextResponse.json({ error: "OPENAI_API_KEY is not set on the server." }, { status: 503 });
   const form = await req.formData();
