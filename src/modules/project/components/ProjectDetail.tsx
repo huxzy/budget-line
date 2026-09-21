@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Amount, Button, SourceLine, SpendBar, Tag } from "@/components/ui";
 import { formatNaira, isPlace, lgaSlug, sectorLabel, type Project, type StateSummary } from "@/modules/budget";
@@ -104,10 +105,41 @@ export function ProjectDetail({ project, registry, chatAvailable }: { project: P
                 ))}
               </dl>
             </section>
+            <section className="rounded-[22px] bg-inset p-5">
+              <span className="font-display text-[15px] font-bold">What you can do next</span>
+              <ol className="mt-2 flex flex-col gap-2.5 text-[13px] leading-snug text-label">
+                <li className="flex gap-2.5">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-marigold text-[11px] font-bold text-clay">1</span>
+                  <span>
+                    The document puts this project under <strong className="text-ink">{project.mda}</strong>. That is the office to ask about it.
+                  </span>
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-marigold text-[11px] font-bold text-clay">2</span>
+                  <span>
+                    Take <strong className="text-ink">page {project.page}</strong> with you to a ward meeting or your councillor.{" "}
+                    <Link href={`/share/${project.id}`} className="font-semibold">
+                      Share it as a card
+                    </Link>{" "}
+                    with the figure, the page and a link anyone can check.
+                  </span>
+                </li>
+                <li className="flex gap-2.5">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-marigold text-[11px] font-bold text-clay">3</span>
+                  <span>
+                    Read the rest of the document yourself.{" "}
+                    <Link href={`/source/${project.state}/${registry.sourcePages?.[0] ?? project.page}`} className="font-semibold">
+                      Open the {registry.document}
+                    </Link>
+                    .
+                  </span>
+                </li>
+              </ol>
+            </section>
             <section className="rounded-[22px] border border-hairline-strong bg-card-soft p-5">
               <span className="font-display text-[15px] font-bold">What the document records</span>
               <p className="mt-1 text-[13px] leading-snug text-muted">
-                Amounts, the ministry and the local government — not the contractor, progress or completion. Asked about those, Budget Line
+                Amounts, the ministry and the local government. Not the contractor, progress or completion; asked about those, Budget Line
                 says the document does not record them.
               </p>
             </section>
