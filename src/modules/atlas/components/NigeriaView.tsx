@@ -5,7 +5,8 @@ import { MicButton, type MicState, PlannedTag } from "@/components/ui";
 import { statePosition } from "../services/positions";
 import type { AtlasData } from "../types";
 import { Cluster } from "./Cluster";
-import { MiniConstellation } from "./MiniConstellation";
+import { PlaceRow } from "./PlaceRow";
+import { StateStrip } from "./StateStrip";
 
 type Props = {
   data: AtlasData;
@@ -17,7 +18,6 @@ type Props = {
 /** The Nigeria view: 37 states as a drifting cluster, Niger live in marigold. */
 export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
   const live = data.states.filter((s) => s.status === "live");
-  const niger = live[0];
   const pendingCount = data.states.length - data.liveCount;
 
   return (
@@ -37,48 +37,24 @@ export function NigeriaView({ data, micState, onMic, onSearch }: Props) {
           status={`${data.liveCount} of ${data.states.length} states available`}
         />
 
-        {/* Phones: the hierarchy inverts — the live state is a full card, the rest a static constellation. */}
+        {/* Phones: the live states as a swipeable strip of cards, then every state as a list. */}
         <div className="mt-5 flex flex-col gap-4 lg:hidden">
           <button type="button" onClick={onSearch} className="flex items-center gap-3 rounded-[14px] bg-card px-4 py-3.5 text-left text-[15px] text-soft shadow-card">
             <span className="h-3.5 w-3.5 rounded-full border-2 border-hairline-strong" aria-hidden /> Search states and areas
           </button>
-          <Link href={niger.href} className="rounded-[20px] bg-marigold p-5 text-clay no-underline shadow-hero hover:no-underline">
-            <span className="flex items-center justify-between">
-              <span className="font-display text-[24px] font-bold">{niger.name} State</span>
-              <span className="rounded-md bg-clay px-2 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-on-clay">Available</span>
-            </span>
-            <span className="mt-3 flex items-end justify-between">
-              <span>
-                <span data-num className="block font-display text-[22px] font-bold">
-                  {niger.figures?.projects.toLocaleString("en-NG")}
-                </span>
-                <span className="text-[12px] font-semibold">capital projects</span>
-              </span>
-              <span className="text-right">
-                <span data-num className="block font-display text-[22px] font-bold">
-                  {niger.figures?.compact}
-                </span>
-                <span className="text-[12px] font-semibold">{niger.figures?.plain}</span>
-              </span>
-            </span>
-            <span className="mt-4 flex items-center justify-between rounded-full bg-clay px-5 py-3 text-[15px] font-semibold text-on-clay">
-              Open {data.lgas.length} local governments <span aria-hidden>→</span>
-            </span>
-          </Link>
+          <StateStrip states={live} />
           <div>
             <div className="flex items-center justify-between">
-              <span className="eyebrow">Next to be read</span>
+              <span className="eyebrow">All states</span>
               <span data-num className="text-[12px] font-semibold text-label">
                 {data.liveCount} of {data.states.length} available
               </span>
             </div>
-            <div className="mt-2">
-              <MiniConstellation states={data.states} />
+            <div className="mt-2 flex flex-col gap-2">
+              {[...live, ...data.states.filter((s) => s.status !== "live")].map((st) => (
+                <PlaceRow key={st.key} place={st} detail={st.figures ? `${st.figures.projects.toLocaleString("en-NG")} projects` : "Budget not available yet"} />
+              ))}
             </div>
-            <p className="mt-2 flex flex-col gap-0.5 text-[12px] text-muted">
-              <span>{pendingCount} states · budgets not available yet</span>
-              <span>Circle size is decorative and carries no data</span>
-            </p>
           </div>
         </div>
       </main>

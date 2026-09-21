@@ -24,7 +24,7 @@ export function PlaceRow({ place, detail, highlight, className }: { place: Place
         place.figures ? (
           <span className="shrink-0 text-right">
             <span data-num className="block font-display text-[19px] font-bold text-ink">
-              {place.kind === "state" ? place.figures.display : place.figures.compact}
+              {place.figures.compact}
             </span>
             <span className="block text-[12px] text-muted">{place.figures.plain.replace(/^about /, "about ")}</span>
           </span>
