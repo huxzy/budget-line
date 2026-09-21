@@ -1,9 +1,12 @@
-# Budget Line
+<h1 align="center">Budget Line</h1>
 
-Ask what government has budgeted where you live. Every figure comes with the
-page of the approved budget it was read from.
+<p align="center"><strong>Ask what government has budgeted where you live.<br>Every figure comes with the page of the approved budget it was read from.</strong></p>
 
-**Live:** https://budget-line-app.vercel.app
+<p align="center">
+  <a href="https://budget-line-app.vercel.app">budget-line-app.vercel.app</a>
+</p>
+
+<p align="center"><img src="docs/source.jpg" width="820" alt="The source screen: page 81 of the Niger State 2026 Approved Budget with the Bida Ring Road row highlighted, and the figure being checked beside it"></p>
 
 Budget Line is a web app over the 2026 approved budgets of eight Nigerian
 states. You pick your state and local government, then ask by voice, type a
@@ -13,6 +16,11 @@ cited row highlighted, so anyone can check it against the source.
 
 Built for the OSF x Andela hackathon, Transparency and Accountability track.
 A working proof of concept, not a production launch.
+
+| | | |
+|:-:|:-:|:-:|
+| ![Nigeria view](docs/home.jpg) | ![The area page for Bida](docs/area.jpg) | ![Projects approved for 2025 with nothing spent](docs/browse.jpg) |
+| Choose a state | Ask about an area | Browse what was approved and never spent |
 
 ## What it does
 
@@ -34,12 +42,22 @@ A working proof of concept, not a production launch.
 ## Information sources
 
 The only source is the 2026 approved budget document published by each state
-government. Eight states are live: Niger, Plateau, Bauchi, Ogun, Sokoto,
-Borno, Anambra and Ebonyi. That is 17,807 capital project lines across 2,986
-pages of documents. Each line keeps its project name, ministry, local
-government, function code, the amounts approved for 2025 and 2026, the amount
-recorded as spent by September 2025, and the page and row position it was read
-from. Nothing is added from anywhere else.
+government. Each line keeps its project name, ministry, local government,
+function code, the amounts approved for 2025 and 2026, the amount recorded as
+spent by September 2025, and the page and row position it was read from.
+Nothing is added from anywhere else.
+
+| State | Projects | Local governments | Document pages | 2026 capital total |
+|---|---:|---:|---:|---:|
+| Ogun | 6,013 | 20 | 567 | ₦1,043,234,210,524.78 |
+| Plateau | 2,417 | 17 | 222 | ₦501,091,599,942.00 |
+| Bauchi | 2,176 | 20 | 360 | ₦568,314,961,119.42 |
+| Sokoto | 1,710 | 20 | 231 | ₦553,343,592,103.46 |
+| Niger | 1,523 | 25 | 399 | ₦783,694,704,491.00 |
+| Ebonyi | 1,512 | 13 | 498 | ₦719,548,322,583.22 |
+| Borno | 1,294 | 22 | 225 | ₦507,323,910,000.00 |
+| Anambra | 1,162 | 6 | 484 | ₦596,771,685,500.00 |
+| **Eight states** | **17,807** | **143** | **2,986** | **₦5.27 trillion** |
 
 Sectors come from the function codes: health (707), roads and works (7045),
 education (709), water (70631), agriculture (70421 to 70423 and 70482). The
