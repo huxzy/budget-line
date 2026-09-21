@@ -6,7 +6,7 @@
   <a href="https://budget-line-app.vercel.app">budget-line-app.vercel.app</a>
 </p>
 
-<p align="center"><img src="docs/source.jpg" width="820" alt="The source screen: page 81 of the Niger State 2026 Approved Budget with the Bida Ring Road row highlighted, and the figure being checked beside it"></p>
+<p align="center"><img src="docs/home.jpg" width="820" alt="The Nigeria view: choose a state, then a local government"></p>
 
 Budget Line is a web app over the 2026 approved budgets of eight Nigerian
 states. You pick your state and local government, then ask by voice, type a
@@ -19,8 +19,8 @@ A working proof of concept, not a production launch.
 
 | | | |
 |:-:|:-:|:-:|
-| ![Nigeria view](docs/home.jpg) | ![The area page for Bida](docs/area.jpg) | ![Projects approved for 2025 with nothing spent](docs/browse.jpg) |
-| Choose a state | Ask about an area | Browse what was approved and never spent |
+| ![The area page for Bida](docs/area.jpg) | ![The source page with the cited row highlighted](docs/source.jpg) | ![Projects approved for 2025 with nothing spent](docs/browse.jpg) |
+| Ask about an area | See the page it came from | Browse what was approved and never spent |
 
 ## What it does
 
@@ -39,7 +39,7 @@ A working proof of concept, not a production launch.
 - The app renders and browses with no Vapi keys; voice and chat show as
   unavailable rather than failing.
 
-## Information sources
+## The data
 
 The only source is the 2026 approved budget document published by each state
 government. Each line keeps its project name, ministry, local government,
@@ -69,48 +69,16 @@ The approved budgets are published by the state governments. The idea of
 making budgets browsable follows BudgIT's Tracka and openstates.ng; Budget
 Line is the voice and citation layer over the same public documents.
 
-## Trust and accuracy
+## How it stays honest
 
-Three rules, and the code enforces them.
-
-1. **The assistant cannot say a figure it was not given.** It has no budget
-   knowledge of its own. Every answer comes from one of four lookup tools over
-   the dataset. Amounts are written out in digits, plain words and spoken
-   words when the data is built, and the assistant reads them as they are. It
-   never rounds, converts or adds anything up.
-2. **Every amount carries its page.** Each project keeps the page it was read
-   from and the position of its row. The source screen shows that page with
-   the row marked, so a reader can check the figure without trusting us.
-3. **A state goes live only when it is complete.** `scripts/extract_ncoa.py`
-   reads each PDF; `npm run data` rebuilds the JSON and fails unless every
-   state's rows add up to that document's own capital total within one naira.
-   States whose documents do not reconcile stay off the app, with the reason
-   recorded in `scripts/states.config.json`.
-
-When there is nothing to find, the assistant says so and does not guess. When
-a project was approved last year with nothing recorded as spent, it says
-exactly that and does not speculate about why. The document does not say why,
-so neither does the app.
-
-## How AI tools were used
-
-The app was built in three days with Claude Code. It wrote the PDF extractor
-and the per-state fixes for awkward layouts, the data build with the
-reconciliation check, the four lookup tools, the screens from the design file,
-the text chat, and a troubleshooting page (`/debug/voice`, development only)
-that compared what the microphone heard with what each speech provider heard.
-That page is how the transcriber was chosen.
-
-The decisions stayed with the author: how function codes map to sectors, the
-one-naira rule, guiding a caller one step at a time, which speech provider to
-ship, and the wording of every fixed response. `CLAUDE.md` holds the rules the
-tools worked under; `PRD.md`, `TASKS.md` and `KICKOFF_PROMPT.md` show how the
-build was directed. Every change to the lookup logic was run against the 25
-checks in `scripts/smoke-api.sh` before it was committed.
-
-Inside the product, Vapi carries the voice call and the text chat, Deepgram
-transcribes the caller, and OpenAI's GPT-4.1 forms the answers from the tool
-results under the rules above.
+The assistant has no budget knowledge of its own. It can only speak figures
+returned by four lookup tools over the dataset, and it reads the spoken form
+generated at build time word for word. Every project keeps the page it was
+read from and the position of its row, so the source screen can show the
+page with the row marked. A state goes live only when its extracted rows add
+up to the document's own capital total within one naira; `npm run data` fails
+otherwise. When there is nothing to find, the assistant says so instead of
+guessing.
 
 ## Run it
 
